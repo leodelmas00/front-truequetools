@@ -11,6 +11,7 @@ function App() {
       <Route path="/" component={LogIn} />
       <Route path="/SignUp" component={SignUp} />
       <Route path="/SignIn" component={SignIn} />
+      {/* esto es un comentario */}
     </Switch>
   );
 }
