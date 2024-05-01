@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'wouter';
-import FONDO_LOGIN from './logo_1/FONDO LOGIN.png'; // Importa la imagen
+import FONDO_LOGIN from '../logo_1/FONDO LOGIN.png'; // Importa la imagen
 
 function LogIn() {
     const [email, setEmail] = useState('');
@@ -47,14 +47,14 @@ function LogIn() {
                     <div style={{ textAlign: 'center' }}>
                         <button type="submit" style={{ width: '401px', height: '40px', fontSize: '1.2em', backgroundColor: '#f2ada7', borderColor: '#f2ada7' }}>Iniciar sesión</button>
                     </div>
+                    <div style={{ textAlign: 'center' }}>
+                        <p>¿Aún no tienes una cuenta?</p>
+                        <Link href='/SignUp'>Regístrate aquí!</Link>
+                    </div>
                 </div>
-            </form>
-            <br />
-            <div>
-                <p>¿Aún no tienes una cuenta?</p>
-                <Link href='/SignUp'>Regístrate aquí!</Link>
-            </div>
-        </div>
+            </form >
+
+        </div >
 
     );
 }
