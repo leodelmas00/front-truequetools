@@ -3,8 +3,6 @@ import SignIn from "./components/SignIn"
 import SignUp from "./components/SignUp";
 import { Route, Switch } from "wouter";
 
-
-
 function App() {
   return (
     <Switch>
