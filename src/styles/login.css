@@ -107,7 +107,6 @@
   margin:10px;
 }
 
-.animate__caja {
-  animation-delay: 1.5s; /* Delay de 1.5 segundos */
-  animation-duration: 1.5s; /* Duración de la animación */
+.animate__delay-3s {
+  animation-delay: 2.8s; /* Delay de 3.5 segundos */
 }

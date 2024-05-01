@@ -43,7 +43,7 @@ function LogIn() {
                             required
                         />
                     </div>
-                    <div className="button-container animate__animated animate__heartBeat animate__slower">
+                    <div className="button-container animate__animated animate__heartBeat animate__slower animate__delay-3s">
                          <Link to="/SignIn" className="signin-link">Iniciar sesión</Link>
                     </div>
                     <div className="signup-text">
