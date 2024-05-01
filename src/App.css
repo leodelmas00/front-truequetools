@@ -90,3 +90,16 @@
 .button:hover {
   background-color: #0056b3; /* Cambia el color al pasar el cursor sobre el botón */
 }
+
+.custom-button {
+  width: 408px;
+  height: 50px;
+  font-size: 1.2em;
+  background-color: #f2ada7;
+  border: 2px solid #f2ada7;
+}
+
+.logo {
+  width: 100px;
+  height: auto;
+}
