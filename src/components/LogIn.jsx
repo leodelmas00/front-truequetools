@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'wouter';
+import FONDO_LOGIN from './logo_1/FONDO LOGIN.png'; // Importa la imagen
 
 function LogIn() {
     const [email, setEmail] = useState('');
@@ -15,6 +16,9 @@ function LogIn() {
 
     return (
         <div style={{ backgroundColor: "#f2f0e4", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", position: "relative" }}>
+
+            <img src={FONDO_LOGIN} alt="Logo" style={{ width: '1920px', height: '1080px', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1 }} />
+
             <form onSubmit={handleSubmit} style={{ zIndex: 1 }}>
                 <div style={{ border: '2px solid black', padding: '5px', width: '550px', height: '600px' }}>
                     <h1 style={{ fontSize: '5em', textAlign: 'center' }}>Trueque<span style={{ color: '#bf4c41' }}>Tools</span></h1>
@@ -29,7 +33,6 @@ function LogIn() {
                             required
                         />
                     </div>
-
                     <div style={{ marginBottom: '20px', textAlign: 'center' }}>
                         <input
                             type="password"
