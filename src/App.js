@@ -18,8 +18,8 @@ function App() {
   return (
     <div align="center">
       <form onSubmit={handleSubmit}>
-        <div style={{ border: '2px solid black', padding: '5px', margin: '20px', width: '600px', height: '700px' }}>
-          <h1 style={{ fontSize: '5em' }}>TruequeTools</h1>
+        <div style={{ border: '2px solid black', padding: '5px', margin: '20px', width: '550px', height: '600px' }}>
+        <h1 style={{ fontSize: '5em' }}>Trueque<span style={{ color: '#bf4c41' }}>Tools</span></h1>
           <h1> Iniciar Sesión </h1>
           <div align="center">
             <input
