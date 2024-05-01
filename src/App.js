@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo_1 from './logo_1/logo_1.png'; // Importa la imagen
+import FONDO_LOGIN from './logo_1/FONDO LOGIN.png'; // Importa la imagen
 
 function App() {
   const [email, setEmail] = useState('');
@@ -16,7 +16,7 @@ function App() {
   return (
     <div style={{ backgroundColor: "#f2f0e4", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", position: "relative" }}>
       
-      
+      <img src={FONDO_LOGIN} alt="Logo" style={{ width: '1920px', height: '1080px', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1 }} />
       
       <form onSubmit={handleSubmit} style={{ zIndex: 1 }}>
         <div style={{ border: '2px solid black', padding: '5px', width: '550px', height: '600px' }}>
