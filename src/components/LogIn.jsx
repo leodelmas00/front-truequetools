@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'wouter';
 import '../styles/login.css'; // Importa el archivo de estilos CSS
-import FONDO_LOGIN from '../logo_1/FONDO LOGIN.png'; // Importa la imagen
+import FONDO_LOGIN from '../logo_1/FONDO_LOGIN.png'; // Importa la imagen
 
 function LogIn() {
     const [email, setEmail] = useState('');
@@ -43,11 +43,11 @@ function LogIn() {
                         />
                     </div>
                     <div className="button-container">
-                        <button type="submit" className="signin-link">Iniciar sesión</button>
+                         <Link to="/SignIn" className="signin-link">Iniciar sesión</Link>
                     </div>
                     <div className="signup-text">
-                        <p>¿Aún no tienes una cuenta?</p>
-                        <Link to="/SignUp" className="signup-link">Regístrate aquí!</Link>
+                        <p>¿Aún no tenés una cuenta?</p>
+                        <Link to="/SignUp" className="signup-link">¡Regístrate acá!</Link>
                     </div>
                 </div>
             </form>

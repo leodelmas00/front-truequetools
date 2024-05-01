@@ -15,7 +15,7 @@
 
 .background-img {
   width: 1920px;
-  height: 1080px;
+  height: 930px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -55,6 +55,37 @@
   text-align: center;
 }
 
+.signin-link{
+  text-decoration: none;
+  padding: 10px 137px;
+  font-size: 1.5em;
+  background-color: #a67c63;
+  border-color: #f2ada7;
+  border-radius: 5px;
+  color:black
+}
+
+
+.signin-link {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #bf4c41;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.signin-link:hover {
+  background-color: #734429 ;
+  color: #f2f0e4
+}
+
+.signin-link:active {
+  transform: translateY(2px);
+}
+
 .button {
   width: 401px;
   height: 40px;
@@ -76,11 +107,4 @@
   border: none;
 }
 
-.signin-link{
-    width: 401px;
-    height: 40px;
-    font-size: 1.2em;
-    background-color: #f2ada7;
-    border-color: #f2ada7;
-    border-radius: 5px;
-}
+
