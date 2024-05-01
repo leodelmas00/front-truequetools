@@ -12,30 +12,38 @@ function App() {
     // Luego puedes enviar los datos al servidor para autenticación
   };
 
+  // JavaScript para establecer el color de fondo del body
+  document.body.style.backgroundColor = "#f2f0e4";
+
   return (
-    <div>
+    <div align="center">
       <form onSubmit={handleSubmit}>
-        <h1> Iniciar Sesión </h1>
-        <div>
-          <input
-            type="email"
-            placeholder="Correo electrónico"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <input
-            type="password"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <button type="submit">Iniciar sesión</button>
+        <div style={{ border: '2px solid black', padding: '5px', margin: '20px', width: '600px', height: '700px' }}>
+          <h1 style={{ fontSize: '5em' }}>TruequeTools</h1>
+          <h1> Iniciar Sesión </h1>
+          <div align="center">
+            <input
+              type="email"
+              placeholder="Correo electrónico"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={{ width: '400px', height: '40px', fontSize: '1.2em' }} // Tamaño de fuente para las casillas de entrada
+              required
+            />
+          </div>
+          <div align="center">
+            <input
+              type="password"
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{ width: '400px', height: '40px', fontSize: '1.2em' }} // Tamaño de fuente para las casillas de entrada
+              required
+            />
+          </div>
+          <div align="center">
+            <button type="submit" style={{ width: '408px', height: '50px', fontSize: '1.2em', backgroundColor: '#f2ada7' }}>Iniciar sesión</button> {/* Modificamos el tamaño de la fuente del botón */}
+          </div>
         </div>
       </form>
     </div>
