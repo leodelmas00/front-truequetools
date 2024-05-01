@@ -1,6 +1,6 @@
 function SignIn() {
     return (
-        <h1>Diseñar pagina de.</h1>
+        <h1>Diseñar pagina de inicio.</h1>
     );
 }
 
