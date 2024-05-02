@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'wouter';
 import '../styles/login.css'; // Importa el archivo de estilos CSS
-import FONDO_LOGIN from '../logo_1/FONDO_LOGIN.png'; // Importa la imagen
+
 import 'animate.css';
 
 function LogIn() {
