@@ -26,10 +26,11 @@ function SignIn() {
         <div className="backgroundHome">
             <input type="text" className="search-box " placeholder="¿Qué estás buscando?" />
             <button className="buscar-button">Buscar</button>
+            
+            <Link to="/Post" className="post-link">
+                <button className="publicar-button">Publicar</button>
+            </Link>
 
-            <button className="publicar-button">
-                <Link to="/Post" className="post-link">Publicar</Link>
-            </button>
             
             <a href="/" onClick={handleLogoClick}> <img src={logoImg} alt="Logo" className="logo" /> </a>
             <div className="rectangle"></div>
@@ -103,19 +104,21 @@ function SignIn() {
                             Contáctanos
                 </h1>
 
-                <button className="form-button">
-                    <Link to="/Form" className="form-link">Rellenar formulario</Link>
-                </button>
+                <Link to="/Form" className="form-link">
+                    <button className="form-button">Rellenar formulario</button>
+                </Link>
+
 
                 <div className="texto-configuracion-menu-negritas">
                          <Link to="/Config" className="configuration-link">Configuración</Link>
                 </div>
 
-                <button className="cerrar-sesion-button">
-                    <Link to="/Login" className="close-sesion-link">Cerrar sesión</Link>
-                </button>
- 
+                <Link to="/Login" className="close-sesion-link">
+                     <button className="cerrar-sesion-button">Cerrar sesión</button>
+                </Link>
+
             </div>
+
             <button className="menu-button" onClick={toggleMenu}>Menú</button>
             
         </div>
