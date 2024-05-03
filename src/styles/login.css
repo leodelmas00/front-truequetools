@@ -14,20 +14,21 @@
 }
 
 .background-img {
-  width: 1920px;
-  height: 930px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
+  background: url("../logo_1/FONDO_LOGIN.png") no-repeat center;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  max-width: 1920px;
+  max-height: 1080px;
 }
 
 .form-container {
-  border: 2px solid black;
-  padding: 5px;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  padding: 16px;
   width: 550px;
   height: 600px;
+  border-radius: 20px;
+  background-color: #ee9d95;
   z-index: 1;
 }
 
@@ -41,11 +42,12 @@
 }
 
 .input-container {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   text-align: center;
 }
 
 .input-field {
+  padding-left: 20px;
   width: 400px;
   height: 40px;
   font-size: 1.2em;
@@ -53,29 +55,20 @@
 
 .button-container {
   text-align: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .signin-link{
   text-decoration: none;
-  padding: 10px 137px;
+  padding: 8px 145px;
   font-size: 1.5em;
-  background-color: #a67c63;
+  background-color: #bf4c41;
   border-color: #f2ada7;
   border-radius: 5px;
   color:black
 }
 
-
-.signin-link {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #bf4c41;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
 
 .signin-link:hover {
   background-color: #734429 ;
@@ -95,16 +88,25 @@
 }
 
 .signup-text {
+  
   text-align: center;
+  font-size: 25px;
 }
 
 .signup-link {
-  text-decoration: none;
-  padding: 10px 20px;
-  background-color: #f2ada7;
-  color: black;
+  text-decoration:none;
+  padding: 5px 20px;
+  background-color: #f2f0e4;
+  color: #734429;
   border-radius: 5px;
   border: none;
+  font-size: 22px;
 }
 
+.signup-text p{
+  margin:10px;
+}
 
+.animate__delay-3s {
+  animation-delay: 2.8s; /* Delay de 3.5 segundos */
+}

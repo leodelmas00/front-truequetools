@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'wouter';
 import '../styles/login.css'; // Importa el archivo de estilos CSS
 import FONDO_LOGIN from '../logo_1/FONDO_LOGIN.png'; // Importa la imagen
+import 'animate.css';
 
 function LogIn() {
     const [email, setEmail] = useState('');
@@ -16,12 +17,12 @@ function LogIn() {
     };
 
     return (
-        <div className="container">
-            <img src={FONDO_LOGIN} alt="Logo" className="background-img" />
-            <form onSubmit={handleSubmit} className="form-container">
+        <div className="container background-img">
+            <div className="form-container animate__animated animate__backInDown animate__slower">
+            <h1 className="title">Trueque<span className='colorRojo'>Tools</span></h1>
+            <h2 className="subtitle">Iniciar Sesión</h2>
+            <form onSubmit={handleSubmit} className="">
                 <div>
-                    <h1 className="title">Trueque<span className='colorRojo'>Tools</span></h1>
-                    <h2 className="subtitle">Iniciar Sesión</h2>
                     <div className="input-container">
                         <input
                             type="email"
@@ -42,7 +43,7 @@ function LogIn() {
                             required
                         />
                     </div>
-                    <div className="button-container">
+                    <div className="button-container animate__animated animate__heartBeat animate__slower animate__delay-3s">
                          <Link to="/SignIn" className="signin-link">Iniciar sesión</Link>
                     </div>
                     <div className="signup-text">
@@ -51,6 +52,7 @@ function LogIn() {
                     </div>
                 </div>
             </form>
+            </div>
         </div>
     );
 }
