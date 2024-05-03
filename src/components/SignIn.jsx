@@ -112,7 +112,7 @@ function SignIn() {
                 </div>
 
                 <button className="cerrar-sesion-button">
-                    <Link to="/CloseSesion" className="close-sesion-link">Cerrar sesión</Link>
+                    <Link to="/Login" className="close-sesion-link">Cerrar sesión</Link>
                 </button>
  
             </div>

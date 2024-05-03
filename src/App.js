@@ -1,4 +1,4 @@
-import CloseSesion from "./components/CloseSesion";
+
 import LogIn from "./components/LogIn";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
@@ -14,7 +14,7 @@ function App() {
       <Route path="/" component={LogIn} />
       <Route path="/SignUp" component={SignUp} />
       <Route path="/SignIn" component={SignIn} />
-      <Route path="/CloseSesion" component={CloseSesion}/>
+      <Route path="/Login" component={LogIn}/>
       <Route path="/Config" component={Config}/>
       <Route path="/Form" component={Form}/>
       <Route path="/Post" component={Post}/>
