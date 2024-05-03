@@ -17,6 +17,11 @@ function SignIn() {
         window.location.reload();
     };
 
+    const [selectedOption, setSelectedOption] = useState("Rango de precios");
+
+    const selectOption = (option) => {
+        setSelectedOption(option);
+    }
     return (
         <div className="backgroundHome">
             <input type="text" className="search-box " placeholder="¿Qué estás buscando?" />
@@ -81,12 +86,13 @@ function SignIn() {
                     <li>
                         <h1 className={`texto-caracteristicas-menu-negritas texto-rango-de-precio-menu`} 
                         >
-                            <div class="dropdown">
-                                <button class="dropbtn">Rango de precio</button>
-                                <div class="dropdown-content">
-                                    <a href="#">-$5000</a>
-                                    <a href="#">$5000 a $10000</a>
-                                    <a href="#">+$10000</a>
+                            <div className="dropdown">
+                                <button className="dropbtn">{selectedOption}</button>
+                                <div className="dropdown-content">
+                                    <a href="#" onClick={() => selectOption('Rango de precios')}> Rango de precios</a>
+                                    <a href="#" onClick={() => selectOption('-$5000')}>-$5000</a>
+                                    <a href="#" onClick={() => selectOption('$5000 a $10000')}>$5000 a $10000</a>
+                                    <a href="#" onClick={() => selectOption('+$10000')}>+$10000</a>
                                 </div>
                             </div>
                         </h1>
@@ -96,17 +102,19 @@ function SignIn() {
                         >
                             Contáctanos
                 </h1>
-                <div className="form-button">
-                         <Link to="/Form" className="form-link">Rellenar formulario</Link>
-                </div>
+
+                <button className="form-button">
+                    <Link to="/Form" className="form-link">Rellenar formulario</Link>
+                </button>
 
                 <div className="texto-configuracion-menu-negritas">
                          <Link to="/Config" className="configuration-link">Configuración</Link>
                 </div>
 
-                <div className="cerrar-sesion-button">
-                         <Link to="/CloseSesion" className="close-sesion-link">Cerrar sesión</Link>
-                </div>
+                <button className="cerrar-sesion-button">
+                    <Link to="/CloseSesion" className="close-sesion-link">Cerrar sesión</Link>
+                </button>
+ 
             </div>
             <button className="menu-button" onClick={toggleMenu}>Menú</button>
             

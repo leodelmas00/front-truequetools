@@ -177,6 +177,7 @@ a {
     border: none; /* Sin borde */
     cursor: pointer; /* Cursor de puntero al pasar el ratón */
     border-radius: 3%;
+    font-size: 0.8em;
   }
   
   /* Estilos del contenedor desplegable */
@@ -220,7 +221,7 @@ a {
   
   /* Estilos adicionales para adaptarse a tu diseño específico */
   .dropdown-content a {
-    font-size: 14px; /* Tamaño de fuente de las opciones */
+    font-size:medium; /* Tamaño de fuente de las opciones */
     text-align: center;
   }
   
@@ -278,3 +279,13 @@ a {
     border-radius: 0.5px;
 }
 
+.window-notice {
+    background: rgba(33, 41, 52, .85);
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    display: flex;
+    position: fixed;
+    z-index: 999;
+}
