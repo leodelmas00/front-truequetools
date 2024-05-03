@@ -25,15 +25,15 @@
 .form-container {
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
   padding: 16px;
-  width: 550px;
-  height: 600px;
+  width: 500px;
+  height: 550px;
   border-radius: 20px;
   background-color: #ee9d95;
   z-index: 1;
 }
 
 .title {
-  font-size: 5em;
+  font-size: 4em;
   text-align: center;
 }
 
@@ -44,6 +44,7 @@
 .input-container {
   margin-bottom: 15px;
   text-align: center;
+  
 }
 
 .input-field {

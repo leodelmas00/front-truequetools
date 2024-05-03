@@ -1,0 +1,273 @@
+.backgroundHome {
+    position: relative; /* Asegura que el menú esté posicionado correctamente dentro de este contenedor */
+}
+
+.rectangle {
+    width: 100%;
+    height: 100px; /* Altura del rectángulo */
+    background-color: #f2ada7; /* Color del rectángulo */
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.menu {
+    position: absolute;
+    top: 100px; /* Coloca el menú justo debajo del rectángulo */
+    left: 0;
+    background-color: white;
+    padding: 10px;
+    display: none;
+    font-size: large;
+}
+
+.menu.open {
+    display: block;
+    width: 15%;
+    height: 86.9vh;
+    background-color: #f2ada7;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    font-size: large;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu li {
+    padding: 8px 0;
+}
+
+.menu-button {
+    position: absolute;
+    top: 4vh;
+    left: 5vw;
+    z-index: 9999; /* Asegura que el botón del menú esté arriba de otros elementos */
+    border-radius: 15px;
+    width: 6%;
+    height: 36%;
+    color:#f2f0e4;
+    background-color: #bf4c41;
+    border-color: #bf4c41;
+    font-size: large;
+    overflow: hidden; /* Oculta el texto que se desborde */
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.buscar-button{
+    position: absolute;
+    top: 4vh;
+    left: 58%;
+    z-index: 9999; /* Asegura que el botón del menú esté arriba de otros elementos */
+    border-radius: 15px;
+    width: 6%;
+    height: 36%;
+    color:#f2f0e4;
+    background-color: #bf4c41;
+    border-color: #bf4c41;
+    font-size: large;
+    overflow: hidden; /* Oculta el texto que se desborde */
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.search-box {
+    position: absolute;
+    top: 4vh; /* Ajusta la posición vertical */
+    left: 42%; /* Centra horizontalmente */
+    transform: translateX(-50%); /* Ajusta el centrado horizontal */
+    width: 28%; /* Ancho de la casilla de búsqueda */
+    height: 28%; /* Altura de la casilla de búsqueda */
+    border: 0px solid #f2f0e4; /* Borde de la casilla de búsqueda */
+    border-radius: 15px; /* Borde redondeado */
+    padding: 5px; /* Espacio interno */
+    background-color: #a67c63;
+    color: #f2f0e4;
+    font-size: large;
+    overflow: hidden; /* Oculta el texto que se desborde */
+    text-overflow: ellipsis;
+}
+
+.search-box::placeholder {
+    color: #f2f0e4; /* Cambia el color del texto del marcador de posición */
+    padding-left: 1em;
+    font-size: large;
+    overflow: hidden; /* Oculta el texto que se desborde */
+    text-overflow: ellipsis;
+}
+
+.publicar-button{
+    position: absolute;
+    top: 4vh;
+    left: 70%;
+    z-index: 9999; 
+    border-radius: 15px;
+    width: 6%;
+    height: 36%;
+    color:#f2f0e4;
+    background-color: #a67c63;
+    border-color: #a67c63;
+    font-size: large;
+    overflow: hidden; /* Oculta el texto que se desborde */
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.cerrar-sesion-button{
+    position: absolute;
+    top: 80vh;
+    left: 6.5%;
+    z-index: 9999; 
+    border-radius: 15px;
+    width: 50%;
+    height: 6%;
+    color:#f2f0e4;
+    background-color: #a67c63;
+    border-color: #a67c63;
+    font-size: large;
+    overflow: hidden; /* Oculta el texto que se desborde */
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+
+.logo {
+    position: absolute;
+    left: 90vw;
+    width: 100px; /* Ancho deseado */
+    height: auto; /* Esto permite mantener la proporción de la imagen */
+}
+
+.title-most-searched {
+    position: absolute;
+    left: 11.5%;
+    transition: transform 0.5s ease;
+}
+
+.slide-right {
+    transform: translateX(45%);
+}
+
+/* el a (metodo de la linea de abajo) hace que cuando pases el mouse cambie el color la fuente, de nada leo */
+a {
+    background-color:transparent;
+    color:black;
+    transition: color 0.3s;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    background-color: transparent;
+    color:#f2f0e4;
+    text-decoration: none;
+}
+
+/* Estilos del botón */
+.dropbtn {
+    background-color: #a67c63 ; /* Color de fondo del botón */
+    color: #f2f0e4; /* Color del texto del botón */
+    padding: 10px 20px; /* Espaciado interno del botón */
+    font-size: 16px; /* Tamaño de la fuente del botón */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Cursor de puntero al pasar el ratón */
+    border-radius: 3%;
+  }
+  
+  /* Estilos del contenedor desplegable */
+  .dropdown {
+    position: relative; /* Posición relativa para posicionar el menú */
+    display: inline-block; /* Visualización en línea */
+    border-radius: 3%;
+    align-self: center;
+  }
+  
+  /* Estilos del contenido desplegable */
+  .dropdown-content {
+    display: none; /* Por defecto, el contenido está oculto */
+    position: absolute; /* Posicionamiento absoluto */
+    background-color: #a67c63; /* Color de fondo del contenido */
+    min-width: 160px; /* Ancho mínimo */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.6); /* Sombra */
+    border-radius: 3%;
+    z-index: 1; /* Índice z para superponer sobre otros elementos */
+  }
+  
+  /* Estilos de las opciones del contenido desplegable */
+  .dropdown-content a {
+    color: black; /* Color del texto de las opciones */
+    padding: 20px ; /* Espaciado interno de las opciones */
+    text-decoration: none; /* Sin subrayado */
+    display: block; /* Visualización de bloque */
+    border-radius: 3%;
+  }
+  
+  /* Estilos de las opciones al pasar el ratón */
+  .dropdown-content a:hover {
+    background-color: #f1f1f1; /* Color de fondo al pasar el ratón */
+    border-radius: 3%;
+  }
+  
+  /* Mostrar el contenido cuando se haga clic en el botón */
+  .dropdown:hover .dropdown-content {
+    display: block; /* Mostrar el contenido al pasar el ratón sobre el botón */
+  }
+  
+  /* Estilos adicionales para adaptarse a tu diseño específico */
+  .dropdown-content a {
+    font-size: 14px; /* Tamaño de fuente de las opciones */
+    text-align: center;
+  }
+  
+  .dropbtn:hover {
+    border-radius: 3%;
+    background-color: #AD8771; /* Cambiar el color de fondo al pasar el ratón sobre el botón */
+   }
+  
+   .form-button{
+    position: absolute;
+    top: 50vh;
+    left: 6.5%;
+    z-index: 0; /* Asegura que el botón del menú esté arriba de otros elementos */
+    border-radius: 18px;
+    width: 50%;
+    height: 5.5%;
+    color:#f2f0e4;
+    background-color: #bf4c41;
+    border-color: #bf4c41;
+    font-size: large;
+    overflow: hidden; /* Oculta el texto que se desborde */
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.texto-caracteristicas-menu-negritas{
+    margin-top: 2px;
+    font-size:larger;
+    margin-left: 13px; /* Ajusta el margen izquierdo según sea necesario */
+    margin-bottom: 10px;
+}
+
+.texto-caracteristicas-menu{
+    font-size:medium;
+    margin-top: -10px;
+    margin-left: 35px; /* Ajusta el margen izquierdo según sea necesario */
+    font-weight: normal; /* Establece el peso de la fuente como normal */
+}
+
+.texto-configuracion-menu-negritas{
+    position: absolute;
+    top: 75vh;
+    left: 7.4%;
+    overflow: hidden; /* Oculta el texto que se desborde */
+    text-overflow: ellipsis;
+    cursor: pointer;
+    font-size: larger;
+    text-decoration:underline;
+}
+
+.close-sesion-link{
+    border-radius: 0.5px;
+}
+.configuration-link{
+    border-radius: 0.5;
+}
