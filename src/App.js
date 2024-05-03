@@ -1,9 +1,10 @@
 import CloseSesion from "./components/CloseSesion";
 import LogIn from "./components/LogIn";
-import SignIn from "./components/SignIn"
+import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
+import Form from "./components/Form";
 import Config from "./components/Config";
-import  Form from "./components/Form"
+
 import { Route, Switch } from "wouter";
 
 function App() {
