@@ -21,10 +21,10 @@ function SignIn() {
         <div className="backgroundHome">
             <input type="text" className="search-box " placeholder="¿Qué estás buscando?" />
             <button className="buscar-button">Buscar</button>
-            
-            <div className="publicar-button">
-                 <Link to="/Post" className="post-link">Publicar</Link>
-            </div>
+
+            <button className="publicar-button">
+                <Link to="/Post" className="post-link">Publicar</Link>
+            </button>
             
             <a href="/" onClick={handleLogoClick}> <img src={logoImg} alt="Logo" className="logo" /> </a>
             <div className="rectangle"></div>
