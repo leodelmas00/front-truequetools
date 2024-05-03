@@ -21,7 +21,11 @@ function SignIn() {
         <div className="backgroundHome">
             <input type="text" className="search-box " placeholder="¿Qué estás buscando?" />
             <button className="buscar-button">Buscar</button>
-            <button className="publicar-button">Publicar</button>
+            
+            <div className="publicar-button">
+                 <Link to="/Post" className="post-link">Publicar</Link>
+            </div>
+            
             <a href="/" onClick={handleLogoClick}> <img src={logoImg} alt="Logo" className="logo" /> </a>
             <div className="rectangle"></div>
             <h1 className={`title-most-searched ${menuOpen ? 'slide-right' : ''}`}>Mas buscados</h1>

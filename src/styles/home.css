@@ -111,6 +111,7 @@
     overflow: hidden; /* Oculta el texto que se desborde */
     text-overflow: ellipsis;
     cursor: pointer;
+
 }
 
 .cerrar-sesion-button{
@@ -270,4 +271,21 @@ a {
 }
 .configuration-link{
     border-radius: 0.5;
+}
+
+.post-link {
+    padding: 8px 145px;
+    font-size: 1.5em;
+    background-color: #a67c63;
+    border-color: #f2ada7;
+    color: #f2f0e4; /* Asegúrate de que el color del texto sea visible */
+}
+
+.post-link:hover {
+    background-color: #734429;
+    color: #f2f0e4;
+}
+
+.post-link:active {
+    transform: translateY(2px);
 }

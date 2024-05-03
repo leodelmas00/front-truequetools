@@ -4,6 +4,7 @@ import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import Form from "./components/Form";
 import Config from "./components/Config";
+import Post from "./components/Post";
 
 import { Route, Switch } from "wouter";
 
@@ -16,7 +17,7 @@ function App() {
       <Route path="/CloseSesion" component={CloseSesion}/>
       <Route path="/Config" component={Config}/>
       <Route path="/Form" component={Form}/>
-      {/* esto es un comentario */}
+      <Route path="/Post" component={Post}/>
     </Switch>
   );
 }
