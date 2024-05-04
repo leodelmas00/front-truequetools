@@ -35,7 +35,7 @@ function SignIn() {
             <a href="/" onClick={handleLogoClick}> <img src={logoImg} alt="Logo" className="logo" /> </a>
             <div className="rectangle"></div>
             <h1 className={`title-most-searched ${menuOpen ? 'slide-right' : ''}`}>Mas buscados</h1>
-            <div className={`menu ${menuOpen ? 'open' : ''}`}>
+            <div className={`menu ${menuOpen ? 'open' : ''}`} style={{ overflow: 'auto' }}>
                 <ul>
                     <li>
                         <h1 className={`texto-caracteristicas-menu-negritas`} 
@@ -70,20 +70,7 @@ function SignIn() {
                             <a href="#">Categoria 4</a>
                         </h1>
                     </li>
-                    <li>
-                        <h1
-                            className={`texto-caracteristicas-menu`}
-                        >
-                            <a href="#">Categoria 5</a>
-                        </h1>
-                    </li>
-                    <li>
-                        <h1
-                            className={`texto-caracteristicas-menu`}
-                        >
-                            <a href="#">Categoria 6</a>
-                        </h1>
-                    </li>
+                    
                     <li>
                         <h1 className={`texto-caracteristicas-menu-negritas texto-rango-de-precio-menu`} 
                         >

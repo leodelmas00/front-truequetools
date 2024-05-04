@@ -1,0 +1,109 @@
+
+.subtitle-post{
+    text-align: center;
+    font-size: 3em;
+    overflow: hidden; /* Oculta el texto que se desborde */
+    text-overflow: ellipsis;
+    margin-top: 0%;
+}
+
+.custom-file-upload {
+    margin-left: 0%; /* Ajusta el margen izquierdo para mover el botón hacia la derecha *//* Ajusta el margen superior para mover el botón hacia abajo */
+    margin-right: 9%;
+    cursor: pointer;
+    padding: 2% 5% 2.5% 5%;
+    background-color: #a67c63;
+    color: #f2f0e4;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.4em;
+    overflow: hidden; /* Oculta el texto que se desborde */
+    text-overflow: ellipsis;
+}
+
+
+.custom-file-upload:hover {
+    background-color: #f2ada7;
+    overflow: hidden; /* Oculta el texto que se desborde */
+    text-overflow: ellipsis;
+}
+
+.form-post-container {
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    padding: 16px;
+    width: 40%;
+    height: 70%;
+    border-radius: 20px;
+    background-color: #ee9d95;
+    z-index: 1;
+    text-align: center;
+    overflow: hidden; /* Oculta el texto que se desborde */
+    text-overflow: ellipsis;
+  }
+  
+  .signin-post-link{
+    left: 90%;
+    top: 50%;
+    margin-left: 12%;
+    margin-top: -3em;
+    margin-bottom: 2%;
+    cursor: pointer;
+    padding: 2.2% 5%;
+    background-color:#bf4c41;
+    color: #f2f0e4;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.4em;
+    overflow: hidden; /* Oculta el texto que se desborde */
+    text-overflow: ellipsis;
+  }
+
+  .signin-post-link:hover{
+    background-color:#734429;
+    overflow: hidden; /* Oculta el texto que se desborde */
+    text-overflow: ellipsis;
+  }
+  
+.input-field-descripcion {
+    resize: none;
+    border-radius: 15px;
+    height: 3em; /* Ajusta la altura según sea necesario */
+    font-size: x-large;
+    width: 21em;
+}
+
+
+.contador-caracteres{
+    position: absolute;
+    left: 68%;
+    top: 79%;
+}
+
+.input-field{
+    border-radius: 15px;
+    border-color: none;
+}
+
+.eliminar-imagen-button{
+    text-align:center;
+    cursor: pointer;
+    width: 8em;
+    height: 2.7em;
+    padding: 2.3% 5% 6% 5%;
+    background-color: #bf4c41;
+    color: #f2f0e4;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.4em;
+    overflow: hidden; /* Oculta el texto que se desborde */
+    text-overflow: ellipsis;
+}
+
+.eliminar-imagen-button:hover{
+    background-color:#734429;
+}
+
+.form-post-container {
+    max-height: 80vh; /* Establece una altura máxima del 80% del viewport height */
+    overflow-y: auto; /* Habilita el desplazamiento vertical cuando los elementos exceden la altura máxima */
+}
