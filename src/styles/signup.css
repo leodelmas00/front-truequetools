@@ -1,22 +1,50 @@
 .container {
-    background-color: #f2f0e4;
-    min-height: 100vh;
+    background: url("../logo_1/FONDO_LOGIN.png") no-repeat center;
+    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
 }
 
-form {
-    width: 40rem; /* Ancho del formulario */
-    background-color: #f2ada7;
-    text-align: center;
-}
-
 .titulo {
-    font-size: 5em;
+    font-size: 6em;
     text-align: center;
     font-weight: bold;
+}
+
+.subtitulo {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    font-size: 1.5em;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.cajaFormulario { 
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 40rem;
+    height: 36rem;
+    background-color: #f2ada7;
+    border-radius: 1rem;
+    border-color: black;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+form { /* Formulario */
+    width: 36rem;
+    height: 32rem;
+    display: flex;
+    position: relative;
+    position: fixed;
+    font-size: 1.4rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.formIzq, .formDer {
+    flex: 1;
 }
 
 .fecha input {
@@ -24,16 +52,40 @@ form {
     margin-right: 0.4rem;
 }
 
-p {
-    font-size: 1.5em;
+input {
+    width: 16rem;
+    height: 2rem;
+    font-size: 1rem;
 }
-  
-div {
-    margin-bottom: 0.4rem;
+
+select {
+    width: 15rem;
+    height: 2rem;
+    font-size: 1rem;
 }
-  
-input, select {
-    width: 20rem; /* Ancho completo */
-    box-sizing: border-box; /* Incluir el padding y borde en el ancho */
-    font-size: 1.2em;
+
+.botonRegistrar {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 35px;
+}
+
+button {
+    height: 2rem;
+    font-size: 1rem;
+    border-radius: 0.2rem;
+}
+
+form div {
+    margin-bottom: 1.5rem;
+}
+
+.background-img {
+    background: url("../logo_1/FONDO_LOGIN.png") no-repeat center;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    max-width: 1920px;
+    max-height: 1080px;
 }
