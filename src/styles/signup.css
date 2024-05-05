@@ -1,0 +1,39 @@
+.container {
+    background-color: #f2f0e4;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+form {
+    width: 40rem; /* Ancho del formulario */
+    background-color: #f2ada7;
+    text-align: center;
+}
+
+.titulo {
+    font-size: 5em;
+    text-align: center;
+    font-weight: bold;
+}
+
+.fecha input {
+    width: 4rem;
+    margin-right: 0.4rem;
+}
+
+p {
+    font-size: 1.5em;
+}
+  
+div {
+    margin-bottom: 0.4rem;
+}
+  
+input, select {
+    width: 20rem; /* Ancho completo */
+    box-sizing: border-box; /* Incluir el padding y borde en el ancho */
+    font-size: 1.2em;
+}
