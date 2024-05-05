@@ -106,7 +106,7 @@ function LogIn() {
                                 placeholder="Artículo"
                                 value={articulo}
                                 onChange={handleArticuloChange}
-                                className="input-field"
+                                className="input-field-articulo input-field"
                                 required
                             />
                         </div> 

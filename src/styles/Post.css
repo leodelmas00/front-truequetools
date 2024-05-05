@@ -97,6 +97,7 @@
     font-size: 1.4em;
     overflow: hidden; /* Oculta el texto que se desborde */
     text-overflow: ellipsis;
+    line-height: 0.9;
 }
 
 .eliminar-imagen-button:hover{
@@ -106,4 +107,8 @@
 .form-post-container {
     max-height: 80vh; /* Establece una altura máxima del 80% del viewport height */
     overflow-y: auto; /* Habilita el desplazamiento vertical cuando los elementos exceden la altura máxima */
+}
+
+.input-field-articulo{
+    margin-top: 5%;
 }
