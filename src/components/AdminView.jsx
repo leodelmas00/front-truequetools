@@ -196,14 +196,23 @@ function AdminView() {
                     onChange={handleInputChange}
                     className="center-input-container-alta-admin"
                 />
-                <input
+                <select
                     type="text"
                     name="branch"
                     placeholder="Sucursal"
-                    value={newEmployeeData.branch}
-                    onChange={handleInputChange}
                     className="center-input-container-alta-admin"
-                />
+
+                    
+                        value={selectedBranch || ''}
+                        onChange={handleBranchChange}
+                        style={{ margin: 'auto', display: 'block', textAlign: 'center' }}
+                    >
+                        <option value="">Seleccionar sucursal del empleado</option>
+                        {branches.map(branch => (
+                            <option key={branch} value={branch}>{branch}</option>
+                        ))}
+                </select>
+
                 <div className="center-button-admin">
                     <button onClick={handleAddEmployee}>Dar de alta empleado</button>
                 </div>
