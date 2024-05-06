@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import '../styles/adminView.css'; // Importa el archivo de estilos CSS para el componente AdminView
+import { Link } from 'wouter';
+import '../styles/adminView.css';
 
 function AdminView() {
     const [searchTerm, setSearchTerm] = useState(''); // Estado para almacenar el término de búsqueda
@@ -10,6 +11,7 @@ function AdminView() {
     ]); // Estado para almacenar la lista de empleados
     const [newEmployeeData, setNewEmployeeData] = useState({ dni: '', name: '', lastName: '', branch: '' }); // Estado para almacenar los datos del nuevo empleado
     const [confirmRemove, setConfirmRemove] = useState({ show: false, employeeId: null, employeeName: '' }); // Estado para mostrar el modal de confirmación
+    const [confirmLogout, setConfirmLogout] = useState(false); // Estado para mostrar el modal de confirmación de cerrar sesión
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value); // Actualiza el término de búsqueda
@@ -45,6 +47,20 @@ function AdminView() {
         setConfirmRemove({ show: false, employeeId: null, employeeName: '' }); // Oculta el modal de confirmación
     };
 
+    const handleLogout = () => {
+        setConfirmLogout(true); // Muestra el modal de confirmación de cerrar sesión
+    };
+
+    const confirmLogoutAction = () => {
+        localStorage.removeItem('token'); // Elimina el token de localStorage
+        localStorage.removeItem('token-info');
+        window.location.href = "/Login"; // Redirecciona al usuario a la página de inicio de sesión
+    };
+
+    const cancelLogoutAction = () => {
+        setConfirmLogout(false); // Oculta el modal de confirmación de cerrar sesión
+    };
+
     const filteredEmployees = employees.filter(employee =>
         employee.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -53,6 +69,8 @@ function AdminView() {
         <div className="admin-view-container">
             <h1 style={{ textAlign: 'center' }}>Panel de Administrador</h1>
             
+            <button className="cerrar-sesion-adminview-button" onClick={handleLogout}>Cerrar sesión</button>
+
             <div className="employee-list-container">
                 <h2 style={{ textAlign: 'center' }}>Lista de Empleados</h2>
                 <input
@@ -122,6 +140,18 @@ function AdminView() {
                         <div className="modal-buttons">
                             <button onClick={confirmRemoveEmployee}>Sí</button>
                             <button onClick={cancelRemoveEmployee}>No</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {confirmLogout && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <p>¿Estás seguro de cerrar sesión?</p>
+                        <div className="modal-buttons">
+                            <button onClick={confirmLogoutAction}>Sí</button>
+                            <button onClick={cancelLogoutAction}>No</button>
                         </div>
                     </div>
                 </div>
