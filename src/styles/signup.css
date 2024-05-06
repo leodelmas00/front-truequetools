@@ -7,13 +7,13 @@
     position: relative;
 }
 
-.titulo{
+.container-signup .titulo{
     font-size: 6em;
     text-align: center;
     font-weight: bold;
 }
 
-.subtitulo{
+.container-signup .subtitulo{
     text-align: center;
     font-weight: bold;
     margin-bottom: 2rem;
@@ -21,7 +21,7 @@
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.cajaFormulario{ 
+.container-signup .cajaFormulario{ 
     align-items: center;
     justify-content: center;
     display: flex;
@@ -33,7 +33,7 @@
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
-.form-signup{ /* Formulario */
+.container-signup form{ /* Formulario */
     width: 36rem;
     height: 32rem;
     display: flex;
@@ -43,45 +43,45 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-.formIzq, .formDer {
+.container-signup .formIzq, .formDer {
     flex: 1;
 }
 
-.fecha input {
+.container-signup .fecha input {
     width: 4rem;
     margin-right: 0.4rem;
 }
 
-input-signup {
+.container-signup input {
     width: 16rem;
     height: 2rem;
     font-size: 1rem;
 }
 
-select {
+.container-signup select {
     width: 15rem;
     height: 2rem;
     font-size: 1rem;
 }
 
-.botonRegistrar {
+.container-signup .botonRegistrar {
     position: absolute;
     bottom: 0;
     right: 0;
     margin-right: 35px;
 }
 
-button {
+.container-signup button {
     height: 2rem;
     font-size: 1rem;
     border-radius: 0.2rem;
 }
 
-form div {
+.container-signup form div {
     margin-bottom: 1.5rem;
 }
 
-.background-img {
+.container-signup .background-img {
     background: url("../logo_1/FONDO_LOGIN.png") no-repeat center;
     background-size: cover;
     width: 100vw;
