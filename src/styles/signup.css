@@ -1,4 +1,4 @@
-.container {
+.container-signup {
     background: url("../logo_1/FONDO_LOGIN.png") no-repeat center;
     background-size: cover;
     display: flex;
@@ -7,13 +7,13 @@
     position: relative;
 }
 
-.titulo {
+.titulo{
     font-size: 6em;
     text-align: center;
     font-weight: bold;
 }
 
-.subtitulo {
+.subtitulo{
     text-align: center;
     font-weight: bold;
     margin-bottom: 2rem;
@@ -21,7 +21,7 @@
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.cajaFormulario { 
+.cajaFormulario{ 
     align-items: center;
     justify-content: center;
     display: flex;
@@ -33,7 +33,7 @@
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
-form { /* Formulario */
+.form-signup{ /* Formulario */
     width: 36rem;
     height: 32rem;
     display: flex;
@@ -52,7 +52,7 @@ form { /* Formulario */
     margin-right: 0.4rem;
 }
 
-input {
+input-signup {
     width: 16rem;
     height: 2rem;
     font-size: 1rem;

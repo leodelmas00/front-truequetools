@@ -3,7 +3,7 @@ import '../styles/signup.css'; // Importa el archivo de estilos CSS
 
 function SignUp() {
     return (
-        <div className='container'>
+        <div className='container-signup'>
             <div>
                 <header className="titulo"> Trueque<span style={{ color: '#BF4C41' }}>Tools</span> </header>
                 <p className="subtitulo"> Registrarse, ¡mas facil que nunca! </p>
