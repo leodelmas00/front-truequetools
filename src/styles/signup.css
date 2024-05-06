@@ -1,0 +1,91 @@
+.container {
+    background: url("../logo_1/FONDO_LOGIN.png") no-repeat center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.titulo {
+    font-size: 6em;
+    text-align: center;
+    font-weight: bold;
+}
+
+.subtitulo {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    font-size: 1.5em;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.cajaFormulario { 
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 40rem;
+    height: 36rem;
+    background-color: #f2ada7;
+    border-radius: 1rem;
+    border-color: black;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+form { /* Formulario */
+    width: 36rem;
+    height: 32rem;
+    display: flex;
+    position: relative;
+    position: fixed;
+    font-size: 1.4rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.formIzq, .formDer {
+    flex: 1;
+}
+
+.fecha input {
+    width: 4rem;
+    margin-right: 0.4rem;
+}
+
+input {
+    width: 16rem;
+    height: 2rem;
+    font-size: 1rem;
+}
+
+select {
+    width: 15rem;
+    height: 2rem;
+    font-size: 1rem;
+}
+
+.botonRegistrar {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 35px;
+}
+
+button {
+    height: 2rem;
+    font-size: 1rem;
+    border-radius: 0.2rem;
+}
+
+form div {
+    margin-bottom: 1.5rem;
+}
+
+.background-img {
+    background: url("../logo_1/FONDO_LOGIN.png") no-repeat center;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    max-width: 1920px;
+    max-height: 1080px;
+}
