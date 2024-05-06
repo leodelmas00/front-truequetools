@@ -71,7 +71,7 @@ select {
     margin-right: 35px;
 }
 
-button {
+.button-signup {
     height: 2rem;
     font-size: 1rem;
     border-radius: 0.2rem;
