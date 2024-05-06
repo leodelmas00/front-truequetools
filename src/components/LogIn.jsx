@@ -10,19 +10,20 @@ function LogIn() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-    
-        // Ahora utiliza las variables email y password del estado local
+        
         if (email === "user" && password === "user") {
-            console.log("Inicio de sesión exitoso");
-            setRedirect(true);
+            console.log("Inicio de sesión exitoso como usuario");
+            setRedirect("/SignIn");
+        } else if (email === "admin" && password === "admin") {
+            console.log("Inicio de sesión exitoso como administrador");
+            setRedirect("/AdminView");
         } else {
             console.log("Credenciales incorrectas");
         }
     };
-    
 
     if (redirect) {
-        return <Redirect to="/SignIn" />; // Redirige a la ruta '/SignIn' si el estado de redirección es verdadero
+        return <Redirect to={redirect} />;
     }
 
     return (

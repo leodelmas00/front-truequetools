@@ -1,0 +1,44 @@
+.admin-view-container {
+    position: relative; /* Añade una posición relativa */
+    border: 1px solid #ccc; /* Añade un borde sólido de 1px con color gris claro */
+    padding: 2vw; /* Añade un espacio de relleno alrededor del contenido */
+    width: 70vw; /* Define un ancho fijo para el contenedor */
+    margin: 5% 5% 0% 12%; /* Centra el contenedor horizontalmente */
+    border-radius: 25px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.employee-list-container{
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    margin-right: 0%;
+    width: 25%; /* Cambiado el ancho para dar espacio a ambos contenedores */
+    display: inline-block; /* Hace que los contenedores se muestren en línea */
+    vertical-align: top; /* Alinea los contenedores en la parte superior */
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.center-button-admin {
+    display: flex;
+    justify-content: center;
+    margin: 5%;
+}
+
+.center-input-container-alta-admin {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+    margin-bottom: 5% ;
+}
+
+.dar-alta-container {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    width: 20%; /* Cambiado el ancho para dar espacio a ambos contenedores */
+    display: inline-block; /* Hace que los contenedores se muestren en línea */
+    vertical-align: top; /* Alinea los contenedores en la parte superior */
+    margin-left: 5% ;
+}
+
