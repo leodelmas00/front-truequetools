@@ -1,19 +1,31 @@
 import React, { useState } from 'react';
-import { Link } from 'wouter';
+import { Link, Redirect } from 'wouter'; // Importa Redirect de wouter
 import '../styles/login.css'; // Importa el archivo de estilos CSS
 import 'animate.css';
 
 function LogIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [redirect, setRedirect] = useState(false); // Estado para controlar la redirección
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Aquí puedes agregar la lógica para enviar los datos de inicio de sesión al servidor
-        console.log("Email:", email);
-        console.log("Contraseña:", password);
-        // Luego puedes enviar los datos al servidor para autenticación
+
+        const email = "user";
+        const password = "user";
+        if (email === "user" && password === "user") {
+            // Redirigir al usuario a la página de inicio de sesión
+            console.log("Inicio de sesión exitoso");
+            setRedirect(true); // Establece el estado para redirigir a true
+        } else {
+            // En caso contrario, mostrar un mensaje de error o realizar alguna acción
+            console.log("Credenciales incorrectas");
+        }
     };
+
+    if (redirect) {
+        return <Redirect to="/SignIn" />; // Redirige a la ruta '/SignIn' si el estado de redirección es verdadero
+    }
 
     return (
         <div className="container background-img">
@@ -24,7 +36,7 @@ function LogIn() {
                     <div>
                         <div className="input-container">
                             <input
-                                type="email"
+                                type="text" // Cambia el tipo de entrada a texto
                                 placeholder="Correo electrónico"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -43,7 +55,7 @@ function LogIn() {
                             />
                         </div>
                         <div className="button-container animate__animated animate__heartBeat animate__slower animate__delay-3s">
-                            <Link to="/SignIn" className="signin-link">Iniciar sesión</Link>
+                            <button type="submit" className="signin-link">Iniciar sesión</button>
                         </div>
                         <div className="signup-text">
                             <p>¿Aún no tenés una cuenta?</p>

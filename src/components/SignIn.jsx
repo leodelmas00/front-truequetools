@@ -4,10 +4,10 @@ import 'animate.css';
 import logoImg from '../logo_1/logo_1_sinfondo.png';
 import { Link } from 'wouter';
 
-
 function SignIn() {
     const [menuOpen, setMenuOpen] = useState(false);
-    
+    const [isLoggedIn, setIsLoggedIn] = useState(true); // Agregado el estado de isLoggedIn
+
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
@@ -22,58 +22,56 @@ function SignIn() {
     const selectOption = (option) => {
         setSelectedOption(option);
     }
+
+    const handleLogout = () => {
+        localStorage.removeItem('token'); // 
+        localStorage.removeItem("token-info");
+        setIsLoggedIn(false); // Actualiza el estado de isLoggedIn a false
+        window.location.href = "/Login";
+    };
+
     return (
         <div className="backgroundHome">
             <input type="text" className="search-box " placeholder="¿Qué estás buscando?" />
             <button className="buscar-button">Buscar</button>
-            
+
             <Link to="/Post" className="post-link">
                 <button className="publicar-button">Publicar</button>
             </Link>
 
-            
             <a href="/" onClick={handleLogoClick}> <img src={logoImg} alt="Logo" className="logo" /> </a>
             <div className="rectangle"></div>
             <h1 className={`title-most-searched ${menuOpen ? 'slide-right' : ''}`}>Mas buscados</h1>
             <div className={`menu ${menuOpen ? 'open' : ''}`} style={{ overflow: 'auto' }}>
                 <ul>
                     <li>
-                        <h1 className={`texto-caracteristicas-menu-negritas`} 
-                        >
+                        <h1 className={`texto-caracteristicas-menu-negritas`}>
                             Categorias
                         </h1>
                     </li>
                     <li>
-                        <h1
-                            className={`texto-caracteristicas-menu`}
-                        >
+                        <h1 className={`texto-caracteristicas-menu`}>
                             <a href="#">Categoria 1</a>
                         </h1>
                     </li>
                     <li>
-                        <h1
-                            className={`texto-caracteristicas-menu`}
-                        >
-                             <a href="#">Categoria 2</a>
-                        </h1></li>
+                        <h1 className={`texto-caracteristicas-menu`}>
+                            <a href="#">Categoria 2</a>
+                        </h1>
+                    </li>
                     <li>
-                        <h1
-                            className={`texto-caracteristicas-menu`}
-                        >
+                        <h1 className={`texto-caracteristicas-menu`}>
                             <a href="#">Categoria 3</a>
                         </h1>
                     </li>
                     <li>
-                        <h1
-                            className={`texto-caracteristicas-menu`}
-                        >
+                        <h1 className={`texto-caracteristicas-menu`}>
                             <a href="#">Categoria 4</a>
                         </h1>
                     </li>
-                    
+
                     <li>
-                        <h1 className={`texto-caracteristicas-menu-negritas texto-rango-de-precio-menu`} 
-                        >
+                        <h1 className={`texto-caracteristicas-menu-negritas texto-rango-de-precio-menu`}>
                             <div className="dropdown">
                                 <button className="dropbtn">{selectedOption}</button>
                                 <div className="dropdown-content">
@@ -86,28 +84,22 @@ function SignIn() {
                         </h1>
                     </li>
                 </ul>
-                <h1 className={`texto-caracteristicas-menu-negritas`} 
-                        >
-                            Contáctanos
+                <h1 className={`texto-caracteristicas-menu-negritas`}>
+                    Contáctanos
                 </h1>
 
                 <Link to="/Form" className="form-link">
                     <button className="form-button">Rellenar formulario</button>
                 </Link>
 
-
                 <div className="texto-configuracion-menu-negritas">
-                         <Link to="/Config" className="configuration-link">Configuración</Link>
+                    <Link to="/Config" className="configuration-link">Configuración</Link>
                 </div>
 
-                <Link to="/Login" className="close-sesion-link">
-                     <button className="cerrar-sesion-button">Cerrar sesión</button>
-                </Link>
-
+                <button className="cerrar-sesion-button" onClick={handleLogout}>Cerrar sesión</button>
             </div>
 
             <button className="menu-button" onClick={toggleMenu}>Menú</button>
-            
         </div>
     );
 }
