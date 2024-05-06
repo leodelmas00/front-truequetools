@@ -112,3 +112,20 @@
 .input-field-articulo{
     margin-top: 5%;
 }
+
+.signin-post-link-disabled{
+    left: 90%;
+    top: 50%;
+    margin-left: 12%;
+    margin-top: -3em;
+    margin-bottom: 2%;
+    cursor: pointer;
+    padding: 2.2% 5%;
+    background-color:#f2f0e4;
+    color: #bf4c41;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.4em;
+    overflow: hidden; /* Oculta el texto que se desborde */
+    text-overflow: ellipsis;
+}

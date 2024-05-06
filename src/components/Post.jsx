@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import '../styles/login.css';
 import '../styles/Post.css';
@@ -10,7 +10,19 @@ function LogIn() {
     const [descripcion, setDescripcion] = useState('');
     const [contador, setContador] = useState(0);
     const [categoria, setCategoria] = useState('');
-    const [inputsCompletos, setInputsCompletos] = useState(false);
+    const [formularioValido, setFormularioValido] = useState(false);
+
+    useEffect(() => {
+        const validarFormulario = () => {
+            if (articulo.trim() !== '' && descripcion.trim() !== '' && categoria.trim() !== '') {
+                setFormularioValido(true);
+            } else {
+                setFormularioValido(false);
+            }
+        };
+
+        validarFormulario();
+    }, [articulo, descripcion, categoria]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -39,7 +51,6 @@ function LogIn() {
     const handleArticuloChange = (e) => {
         const { value } = e.target;
         setArticulo(value);
-        checkInputs();
     };
 
     const handleDescripcionChange = (e) => {
@@ -47,22 +58,12 @@ function LogIn() {
         if (value.length <= 250) {
             setDescripcion(value);
             setContador(value.length);
-            checkInputs();
         }
     };
 
     const handleCategoriaChange = (e) => {
         const { value } = e.target;
         setCategoria(value);
-        checkInputs();
-    };
-
-    const checkInputs = () => {
-        const articuloCompleto = articulo.trim().length > 0;
-        const descripcionCompleta = descripcion.trim().length > 0;
-        const categoriaCompleta = categoria.trim().length > 0;
-        const inputsCompleted = articuloCompleto && descripcionCompleta && categoriaCompleta;
-        setInputsCompletos(inputsCompleted);
     };
 
     return (
@@ -87,11 +88,11 @@ function LogIn() {
                             </button>
                         )}
 
-                        {inputsCompletos && (
-                            <Link to="/SignIn" className="post-link">
-                                <button className="signin-post-link">Publicar</button>
-                            </Link>
-                        )}
+                        <Link to="/SignIn" className="post-link">
+                            <button className={formularioValido ? "signin-post-link" : "signin-post-link-disabled"} disabled={!formularioValido}>
+                                Publicar
+                            </button>
+                        </Link>
 
                         {imagen && (
                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1em', marginBottom: '2em'}}>
