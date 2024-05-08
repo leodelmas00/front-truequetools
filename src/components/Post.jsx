@@ -4,17 +4,18 @@ import '../styles/login.css';
 import '../styles/Post.css';
 import 'animate.css';
 
-function LogIn() {
+function Post() {
     const [articulo, setArticulo] = useState('');
     const [imagen, setImagen] = useState(null);
     const [descripcion, setDescripcion] = useState('');
     const [contador, setContador] = useState(0);
     const [categoria, setCategoria] = useState('');
+    const [sucursal, setSucursal] = useState('');
     const [formularioValido, setFormularioValido] = useState(false);
 
     useEffect(() => {
         const validarFormulario = () => {
-            if (articulo.trim() !== '' && descripcion.trim() !== '' && categoria.trim() !== '') {
+            if (articulo.trim() !== '' && descripcion.trim() !== '' && categoria.trim() !== '' && sucursal.trim() !== '') {
                 setFormularioValido(true);
             } else {
                 setFormularioValido(false);
@@ -22,7 +23,7 @@ function LogIn() {
         };
 
         validarFormulario();
-    }, [articulo, descripcion, categoria]);
+    }, [articulo, descripcion, categoria, sucursal]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -31,6 +32,7 @@ function LogIn() {
         console.log("Imagen:", imagen);
         console.log("Descripción:", descripcion);
         console.log("Categoría:", categoria);
+        console.log("Sucursal:", sucursal);
         // Luego puedes enviar los datos al servidor para autenticación
         // Redirigir al usuario a /SignIn
     };
@@ -66,10 +68,20 @@ function LogIn() {
         setCategoria(value);
     };
 
+    const handleSucursalChange = (e) => {
+        const { value } = e.target;
+        setSucursal(value);
+    };
+
+    // Array de sucursales (puedes cambiarlo según tus necesidades)
+    const sucursales = ['Sucursal A', 'Sucursal B', 'Sucursal C'];
+
     return (
         <div className="container background-img">
             <div className="form-post-container animate__animated animate__backInDown animate__slower" style={{overflow: 'auto'}}>
                 <h1 className="subtitle-post">Subir publicación</h1>
+
+                {/* Formulario de Publicación */}
                 <form onSubmit={handleSubmit} className="">
                     <div>
                         <input
@@ -138,12 +150,28 @@ function LogIn() {
                                 className="input-field"
                                 required
                             />
-                        </div>   
+                        </div>  
+
+                        <div className="input-container">
+                            <select
+                                name="sucursal"
+                                value={sucursal}
+                                onChange={handleSucursalChange}
+                                className="input-field"
+                                required
+                            >
+                                <option value="" disabled>Elige una sucursal</option>
+                                {sucursales.map((sucursal, index) => (
+                                    <option key={index} value={sucursal}>{sucursal}</option>
+                                ))}
+                            </select>
+                        </div>  
                     </div>
                 </form>
+                {/* Fin del formulario de Publicación */}
             </div>
         </div>
     );
 }
 
-export default LogIn;
+export default Post;
