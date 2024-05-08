@@ -44,7 +44,7 @@ function SignIn() {
             <h1 className={`title-most-searched ${menuOpen ? 'slide-right' : ''}`}>Mas buscados</h1>
             <div className={`menu ${menuOpen ? 'open' : ''}`} style={{ overflow: 'auto' }}>
                 {/* <ul>
-                    {/* <li>
+                    <li>
                         <h1 className={`texto-caracteristicas-menu-negritas`}>
                             Categorias
                         </h1>
@@ -94,7 +94,7 @@ function SignIn() {
 
                 <div className="texto-configuracion-menu-negritas">
                     <Link to="/Config" className="configuration-link">Configuración</Link>
-                </div> */} 
+                </div> */}
 
                 <button className="cerrar-sesion-button" onClick={handleLogout}>Cerrar sesión</button>
             </div>
