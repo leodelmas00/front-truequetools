@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'wouter';
+import { Link, useLocation, useRoute } from 'wouter'; // Importa useRoute
 import '../styles/login.css';
 import '../styles/Post.css';
 import 'animate.css';
 
-function Post() {
+function LogIn() {
     const [articulo, setArticulo] = useState('');
     const [imagen, setImagen] = useState(null);
     const [descripcion, setDescripcion] = useState('');
     const [contador, setContador] = useState(0);
     const [categoria, setCategoria] = useState('');
-    const [sucursal, setSucursal] = useState('');
     const [formularioValido, setFormularioValido] = useState(false);
 
     useEffect(() => {
         const validarFormulario = () => {
-            if (articulo.trim() !== '' && descripcion.trim() !== '' && categoria.trim() !== '' && sucursal.trim() !== '') {
+            if (articulo.trim() !== '' && descripcion.trim() !== '' && categoria.trim() !== '') {
                 setFormularioValido(true);
             } else {
                 setFormularioValido(false);
@@ -23,7 +22,7 @@ function Post() {
         };
 
         validarFormulario();
-    }, [articulo, descripcion, categoria, sucursal]);
+    }, [articulo, descripcion, categoria]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -32,7 +31,6 @@ function Post() {
         console.log("Imagen:", imagen);
         console.log("Descripción:", descripcion);
         console.log("Categoría:", categoria);
-        console.log("Sucursal:", sucursal);
         // Luego puedes enviar los datos al servidor para autenticación
         // Redirigir al usuario a /SignIn
     };
@@ -50,122 +48,74 @@ function Post() {
         setImagen(null);
     };
 
-    const handleArticuloChange = (e) => {
-        const { value } = e.target;
-        setArticulo(value);
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setForm(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
     };
-
-    const handleDescripcionChange = (e) => {
-        const { value } = e.target;
-        if (value.length <= 250) {
-            setDescripcion(value);
-            setContador(value.length);
-        }
-    };
-
-    const handleCategoriaChange = (e) => {
-        const { value } = e.target;
-        setCategoria(value);
-    };
-
-    const handleSucursalChange = (e) => {
-        const { value } = e.target;
-        setSucursal(value);
-    };
-
-    // Array de sucursales (puedes cambiarlo según tus necesidades)
-    const sucursales = ['Sucursal A', 'Sucursal B', 'Sucursal C'];
 
     return (
         <div className="container background-img">
-            <div className="form-post-container animate__animated animate__backInDown animate__slower" style={{overflow: 'auto'}}>
+            <div className="form-post-container animate__animated animate__backInDown animate__slower" style={{ overflow: 'auto' }}>
                 <h1 className="subtitle-post">Subir publicación</h1>
 
                 {/* Formulario de Publicación */}
                 <form onSubmit={handleSubmit} className="">
                     <div>
-                        <input
-                            id="file-upload"
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImagenSeleccionada}
-                            style={{ display: 'none' }}
-                        />
-                        <label htmlFor="file-upload" className="custom-file-upload">
-                            Subir foto
-                        </label>
-                        {imagen && (
-                            <button onClick={handleEliminarImagen} className="eliminar-imagen-button">
-                                Eliminar imagen
-                            </button>
-                        )}
-
-                        <Link to="/SignIn" className="post-link">
-                            <button className={formularioValido ? "signin-post-link" : "signin-post-link-disabled"} disabled={!formularioValido}>
-                                Publicar
-                            </button>
-                        </Link>
-
-                        {imagen && (
-                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1em', marginBottom: '2em'}}>
-                                <img src={imagen} alt="Imagen seleccionada" style={{ maxWidth: '40%', maxHeight: '10em' }} />
-                            </div>
-                        )}
-
+                        <button className="signin-post-link">
+                            Publicar
+                        </button>
                         <div className="input-container">
                             <input
                                 type="text"
-                                name="articulo"
-                                placeholder="Artículo"
-                                value={articulo}
-                                onChange={handleArticuloChange}
+                                name="titulo"
+                                placeholder="Título"
+                                value={form.titulo}
+                                onChange={handleChange}
                                 className="input-field-articulo input-field"
                                 required
                             />
-                        </div> 
+                        </div>
 
                         <div className="input-container">
                             <textarea
                                 name="descripcion"
                                 placeholder="Descripción"
-                                value={descripcion}
-                                onChange={handleDescripcionChange}
+                                value={form.descripcion}
+                                onChange={handleChange}
                                 className="input-field-descripcion"
                                 rows={4}
                                 maxLength={250}
                                 required
                             />
-                            <div className="contador-caracteres">
-                                {contador} / 250
-                            </div>
-                        </div>   
-
-                        <div className="input-container">
-                            <input
-                                type="text"
-                                name="categoria"
-                                placeholder="Categoría"
-                                value={categoria}
-                                onChange={handleCategoriaChange}
-                                className="input-field"
-                                required
-                            />
-                        </div>  
+                        </div>
 
                         <div className="input-container">
                             <select
-                                name="sucursal"
-                                value={sucursal}
-                                onChange={handleSucursalChange}
+                                name="categoria"
+                                value={form.categoria}
+                                onChange={handleChange}
                                 className="input-field"
                                 required
                             >
-                                <option value="" disabled>Elige una sucursal</option>
-                                {sucursales.map((sucursal, index) => (
-                                    <option key={index} value={sucursal}>{sucursal}</option>
+                                <option value="" disabled>Selecciona una categoría</option>
+                                {categorias.map((categoria, index) => (
+                                    <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
                                 ))}
                             </select>
-                        </div>  
+                        </div>
+
+                        <div className="input-container">
+                            <select
+                                name="sucursal_destino"
+                                value={form.sucursal_destino.id}
+                                onChange={handleChange}
+                                className="input-field"
+                                required
+                            />
+                        </div>   
                     </div>
                 </form>
                 {/* Fin del formulario de Publicación */}
@@ -174,4 +124,4 @@ function Post() {
     );
 }
 
-export default Post;
+export default LogIn;

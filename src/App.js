@@ -4,6 +4,12 @@ import SignUp from "./components/SignUp";
 import Form from "./components/Form";
 import Config from "./components/Config";
 import Post from "./components/Post";
+import PostList from "./components/PostList";
+import UserList from "./components/UserList";
+import CommentList from "./components/CommentList";
+import PostDetail from "./components/PostDetail";
+
+
 import AdminView from "./components/AdminView"; // Corrige la ruta de importación de AdminView
 import PostList from "./datosBack/PostList";
 import FailedTrades from "./datosBack/FailedTrades";
@@ -20,8 +26,6 @@ function App() {
       <Route path="/Form" component={Form}/>
       <Route path="/Post" component={Post}/>
       <Route path="/AdminView" component={AdminView}/>
-      <Route path="/PostList" component={PostList}/>
-      <Route path="/FailedTrades" component={FailedTrades}/>
     </Switch>
   );
 }
