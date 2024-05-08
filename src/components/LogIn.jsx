@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Redirect } from 'wouter'; // Importa Redirect de wouter
 import axios from 'axios';
 import { baseURL } from '../api/trueque.api';
+import { Link } from 'wouter';
+
 
 function LogIn() {
     const [form, setForm] = useState({
@@ -73,6 +75,11 @@ function LogIn() {
                         <div className="button-container animate__animated animate__heartBeat animate__slower animate__delay-3s">
                             <button type="submit" className="signin-link">Iniciar sesión</button>
                         </div>
+                            
+                        </div>
+                        <div className="signup-text">
+                            <p>¿Aún no tenés una cuenta?</p>
+                            <Link to="/SignUp" className="signup-link">Registrate acá </Link>
                     </div>
                 </form>
             </div>
