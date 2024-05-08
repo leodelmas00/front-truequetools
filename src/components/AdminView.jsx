@@ -22,8 +22,6 @@ function AdminView() {
     return (
         <div className="admin-view-container">
             <h1 style={{ textAlign: 'center' }}>Panel de Administrador</h1>
-            
-            g
 
             {confirmLogout && (
                 <div className="modal">

@@ -3,49 +3,54 @@ import { Link, useLocation, useRoute } from 'wouter'; // Importa useRoute
 import '../styles/login.css';
 import '../styles/Post.css';
 import 'animate.css';
+import { getAllCategorias, getAllSucursales } from '../api/trueque.api';
+import axios from 'axios';
+import { baseURL } from '../api/trueque.api';
 
-function LogIn() {
-    const [articulo, setArticulo] = useState('');
-    const [imagen, setImagen] = useState(null);
-    const [descripcion, setDescripcion] = useState('');
-    const [contador, setContador] = useState(0);
-    const [categoria, setCategoria] = useState('');
-    const [formularioValido, setFormularioValido] = useState(false);
+function PostProduct() {
+    const [form, setForm] = useState({
+        titulo: '',
+        descripcion: '',
+        categoria: '',
+        sucursal_destino: '',
+    });
+    const [categorias, setCategorias] = useState([]);
+    const [sucursales, setSucursales] = useState([]);
+    const [, push] = useRoute(); // Usa useRoute para acceder a la función push
+    const [error, setError] = useState('');
 
     useEffect(() => {
-        const validarFormulario = () => {
-            if (articulo.trim() !== '' && descripcion.trim() !== '' && categoria.trim() !== '') {
-                setFormularioValido(true);
-            } else {
-                setFormularioValido(false);
-            }
-        };
+        async function loadCategorias() {
+            const res = await getAllCategorias()
+            setCategorias(res.data)
+        }
 
-        validarFormulario();
-    }, [articulo, descripcion, categoria]);
+        async function loadSucursales() {
+            const res = await getAllSucursales()
+            setSucursales(res.data)
+        }
+        loadCategorias();
+        loadSucursales();
+    }, [])
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // Aquí puedes agregar la lógica para enviar los datos de inicio de sesión al servidor
-        console.log("Artículo:", articulo);
-        console.log("Imagen:", imagen);
-        console.log("Descripción:", descripcion);
-        console.log("Categoría:", categoria);
-        // Luego puedes enviar los datos al servidor para autenticación
-        // Redirigir al usuario a /SignIn
-    };
+        try {
+            const response = await axios.post(baseURL + 'createPost/', form, {
+                headers: {
+                    Authorization: `Token ${localStorage.getItem('token')}` // Obtén el token de autenticación del almacenamiento local
+                }
+            });
 
-    const handleImagenSeleccionada = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setImagen(reader.result);
-        };
-        reader.readAsDataURL(file);
-    };
-
-    const handleEliminarImagen = () => {
-        setImagen(null);
+            if (response.status === 201 && response.data.id) {
+                push(`/api/post/${response.data.id}/`); // Usa la función push para redirigir
+            } else {
+                setError('Los datos ingresados no son válidos, por favor inténtelo nuevamente');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setError('Los datos ingresados no son válidos, por favor inténtelo nuevamente');
+        }
     };
 
     const handleChange = (event) => {
@@ -55,6 +60,7 @@ function LogIn() {
             [name]: value
         }));
     };
+
 
     return (
         <div className="container background-img">
@@ -114,8 +120,13 @@ function LogIn() {
                                 onChange={handleChange}
                                 className="input-field"
                                 required
-                            />
-                        </div>   
+                            >
+                                <option value="" disabled>Selecciona una sucursal</option>
+                                {sucursales.map((sucursal, index) => (
+                                    <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{sucursal.direccion}</option>
+                                ))}
+                            </select>
+                        </div>
                     </div>
                 </form>
                 {/* Fin del formulario de Publicación */}
@@ -124,4 +135,4 @@ function LogIn() {
     );
 }
 
-export default LogIn;
+export default PostProduct;

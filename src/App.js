@@ -8,11 +8,8 @@ import PostList from "./components/PostList";
 import UserList from "./components/UserList";
 import CommentList from "./components/CommentList";
 import PostDetail from "./components/PostDetail";
-
-
-import AdminView from "./components/AdminView"; // Corrige la ruta de importación de AdminView
-import PostList from "./datosBack/PostList";
 import FailedTrades from "./datosBack/FailedTrades";
+import AdminView from "./components/AdminView";
 import { Route, Switch } from "wouter";
 
 function App() {
