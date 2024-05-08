@@ -9,8 +9,12 @@
   position: relative;
 }
 
-.colorRojo{
-    color:#bf4c41;
+.error-message {
+  color: red
+}
+
+.colorRojo {
+  color: #bf4c41;
 }
 
 .background-img {
@@ -44,7 +48,7 @@
 .input-container {
   margin-bottom: 15px;
   text-align: center;
-  
+
 }
 
 .input-field {
@@ -60,19 +64,19 @@
   margin-bottom: 30px;
 }
 
-.signin-link{
+.signin-link {
   text-decoration: none;
   padding: 8px 145px;
   font-size: 1.5em;
   background-color: #bf4c41;
   border-color: #f2ada7;
   border-radius: 5px;
-  color:black
+  color: black
 }
 
 
 .signin-link:hover {
-  background-color: #734429 ;
+  background-color: #734429;
   color: #f2f0e4
 }
 
@@ -89,13 +93,13 @@
 }
 
 .signup-text {
-  
+
   text-align: center;
   font-size: 25px;
 }
 
 .signup-link {
-  text-decoration:none;
+  text-decoration: none;
   padding: 5px 20px;
   background-color: #f2f0e4;
   color: #734429;
@@ -104,10 +108,11 @@
   font-size: 22px;
 }
 
-.signup-text p{
-  margin:10px;
+.signup-text p {
+  margin: 10px;
 }
 
 .animate__delay-3s {
-  animation-delay: 2.8s; /* Delay de 3.5 segundos */
+  animation-delay: 2.8s;
+  /* Delay de 3.5 segundos */
 }

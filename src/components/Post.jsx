@@ -1,144 +1,130 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'wouter';
+import { Link, useLocation, useRoute } from 'wouter'; // Importa useRoute
 import '../styles/login.css';
 import '../styles/Post.css';
 import 'animate.css';
+import { getAllCategorias, getAllSucursales } from '../api/trueque.api';
+import axios from 'axios';
+import { baseURL } from '../api/trueque.api';
 
-function LogIn() {
-    const [articulo, setArticulo] = useState('');
-    const [imagen, setImagen] = useState(null);
-    const [descripcion, setDescripcion] = useState('');
-    const [contador, setContador] = useState(0);
-    const [categoria, setCategoria] = useState('');
-    const [formularioValido, setFormularioValido] = useState(false);
+function PostProduct() {
+    const [form, setForm] = useState({
+        titulo: '',
+        descripcion: '',
+        categoria: '',
+        sucursal_destino: '',
+    });
+    const [categorias, setCategorias] = useState([]);
+    const [sucursales, setSucursales] = useState([]);
+    const [, push] = useRoute(); // Usa useRoute para acceder a la función push
+    const [error, setError] = useState('');
 
     useEffect(() => {
-        const validarFormulario = () => {
-            if (articulo.trim() !== '' && descripcion.trim() !== '' && categoria.trim() !== '') {
-                setFormularioValido(true);
-            } else {
-                setFormularioValido(false);
-            }
-        };
+        async function loadCategorias() {
+            const res = await getAllCategorias()
+            setCategorias(res.data)
+        }
 
-        validarFormulario();
-    }, [articulo, descripcion, categoria]);
+        async function loadSucursales() {
+            const res = await getAllSucursales()
+            setSucursales(res.data)
+        }
+        loadCategorias();
+        loadSucursales();
+    }, [])
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // Aquí puedes agregar la lógica para enviar los datos de inicio de sesión al servidor
-        console.log("Artículo:", articulo);
-        console.log("Imagen:", imagen);
-        console.log("Descripción:", descripcion);
-        console.log("Categoría:", categoria);
-        // Luego puedes enviar los datos al servidor para autenticación
-        // Redirigir al usuario a /SignIn
-    };
+        try {
+            const response = await axios.post(baseURL + 'createPost/', form, {
+                headers: {
+                    Authorization: `Token ${localStorage.getItem('token')}` // Obtén el token de autenticación del almacenamiento local
+                }
+            });
 
-    const handleImagenSeleccionada = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setImagen(reader.result);
-        };
-        reader.readAsDataURL(file);
-    };
-
-    const handleEliminarImagen = () => {
-        setImagen(null);
-    };
-
-    const handleArticuloChange = (e) => {
-        const { value } = e.target;
-        setArticulo(value);
-    };
-
-    const handleDescripcionChange = (e) => {
-        const { value } = e.target;
-        if (value.length <= 250) {
-            setDescripcion(value);
-            setContador(value.length);
+            if (response.status === 201 && response.data.id) {
+                push(`/api/post/${response.data.id}/`); // Usa la función push para redirigir
+            } else {
+                setError('Los datos ingresados no son válidos, por favor inténtelo nuevamente');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setError('Los datos ingresados no son válidos, por favor inténtelo nuevamente');
         }
     };
 
-    const handleCategoriaChange = (e) => {
-        const { value } = e.target;
-        setCategoria(value);
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setForm(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
     };
+
 
     return (
         <div className="container background-img">
-            <div className="form-post-container animate__animated animate__backInDown animate__slower" style={{overflow: 'auto'}}>
+            <div className="form-post-container animate__animated animate__backInDown animate__slower" style={{ overflow: 'auto' }}>
                 <h1 className="subtitle-post">Subir publicación</h1>
                 <form onSubmit={handleSubmit} className="">
                     <div>
-                        <input
-                            id="file-upload"
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImagenSeleccionada}
-                            style={{ display: 'none' }}
-                        />
-                        <label htmlFor="file-upload" className="custom-file-upload">
-                            Subir foto
-                        </label>
-                        {imagen && (
-                            <button onClick={handleEliminarImagen} className="eliminar-imagen-button">
-                                Eliminar imagen
-                            </button>
-                        )}
-
-                        <Link to="/SignIn" className="post-link">
-                            <button className={formularioValido ? "signin-post-link" : "signin-post-link-disabled"} disabled={!formularioValido}>
-                                Publicar
-                            </button>
-                        </Link>
-
-                        {imagen && (
-                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1em', marginBottom: '2em'}}>
-                                <img src={imagen} alt="Imagen seleccionada" style={{ maxWidth: '40%', maxHeight: '10em' }} />
-                            </div>
-                        )}
-
+                        <button className="signin-post-link">
+                            Publicar
+                        </button>
                         <div className="input-container">
                             <input
                                 type="text"
-                                name="articulo"
-                                placeholder="Artículo"
-                                value={articulo}
-                                onChange={handleArticuloChange}
+                                name="titulo"
+                                placeholder="Título"
+                                value={form.titulo}
+                                onChange={handleChange}
                                 className="input-field-articulo input-field"
                                 required
                             />
-                        </div> 
+                        </div>
 
                         <div className="input-container">
                             <textarea
                                 name="descripcion"
                                 placeholder="Descripción"
-                                value={descripcion}
-                                onChange={handleDescripcionChange}
+                                value={form.descripcion}
+                                onChange={handleChange}
                                 className="input-field-descripcion"
                                 rows={4}
                                 maxLength={250}
                                 required
                             />
-                            <div className="contador-caracteres">
-                                {contador} / 250
-                            </div>
-                        </div>   
+                        </div>
 
                         <div className="input-container">
-                            <input
-                                type="text"
+                            <select
                                 name="categoria"
-                                placeholder="Categoría"
-                                value={categoria}
-                                onChange={handleCategoriaChange}
+                                value={form.categoria}
+                                onChange={handleChange}
                                 className="input-field"
                                 required
-                            />
-                        </div>   
+                            >
+                                <option value="" disabled>Selecciona una categoría</option>
+                                {categorias.map((categoria, index) => (
+                                    <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="input-container">
+                            <select
+                                name="sucursal_destino"
+                                value={form.sucursal_destino.id}
+                                onChange={handleChange}
+                                className="input-field"
+                                required
+                            >
+                                <option value="" disabled>Selecciona una sucursal</option>
+                                {sucursales.map((sucursal, index) => (
+                                    <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{sucursal.direccion}</option>
+                                ))}
+                            </select>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -146,4 +132,4 @@ function LogIn() {
     );
 }
 
-export default LogIn;
+export default PostProduct;
