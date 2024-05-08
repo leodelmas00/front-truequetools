@@ -1,29 +1,43 @@
 import React, { useState } from 'react';
-import { Link, Redirect } from 'wouter'; // Importa Redirect de wouter
-import '../styles/login.css'; // Importa el archivo de estilos CSS
-import 'animate.css';
+import { Redirect } from 'wouter'; // Importa Redirect de wouter
+import axios from 'axios';
+import { baseURL } from '../api/trueque.api';
 
 function LogIn() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [form, setForm] = useState({
+        email: '',
+        password: ''
+    });
     const [redirect, setRedirect] = useState(false); // Estado para controlar la redirección
+    const [error, setError] = useState(''); // Estado para manejar el mensaje de error
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        
-        if (email === "user" && password === "user") {
-            console.log("Inicio de sesión exitoso como usuario");
-            setRedirect("/SignIn");
-        } else if (email === "admin" && password === "admin") {
-            console.log("Inicio de sesión exitoso como administrador");
-            setRedirect("/AdminView");
-        } else {
-            console.log("Credenciales incorrectas");
+        try {
+            const response = await axios.post(baseURL + 'login/', form);
+
+            if (response.status === 200 && response.data.token) {
+                localStorage.setItem('token', response.data.token);
+                setRedirect(true); // credenciales válidas, habilito redirección
+            } else {
+                setError('Correo electrónico o contraseña incorrectos');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setError('Correo electrónico o contraseña incorrecta');
         }
     };
 
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setForm(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
     if (redirect) {
-        return <Redirect to={redirect} />;
+        return <Redirect to="/signIn" />;
     }
 
     return (
@@ -31,14 +45,16 @@ function LogIn() {
             <div className="form-container animate__animated animate__backInDown animate__slower" style={{ overflow: 'auto' }}>
                 <h1 className="title">Trueque<span className='colorRojo'>Tools</span></h1>
                 <h2 className="subtitle">Iniciar Sesión</h2>
+                {error && <p className="error-message">{error}</p>}
                 <form onSubmit={handleSubmit} className="">
                     <div>
                         <div className="input-container">
                             <input
-                                type="text" // Cambia el tipo de entrada a texto
+                                type="text"
                                 placeholder="Correo electrónico"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                name="email"
+                                value={form.email}
+                                onChange={handleChange}
                                 className="input-field"
                                 required
                             />
@@ -47,18 +63,15 @@ function LogIn() {
                             <input
                                 type="password"
                                 placeholder="Contraseña"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                name="password"
+                                value={form.password}
+                                onChange={handleChange}
                                 className="input-field"
                                 required
                             />
                         </div>
                         <div className="button-container animate__animated animate__heartBeat animate__slower animate__delay-3s">
                             <button type="submit" className="signin-link">Iniciar sesión</button>
-                        </div>
-                        <div className="signup-text">
-                            <p>¿Aún no tenés una cuenta?</p>
-                            <Link to="/SignUp" className="signup-link">¡Regístrate acá!</Link>
                         </div>
                     </div>
                 </form>
