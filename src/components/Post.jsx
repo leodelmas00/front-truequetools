@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'wouter'; // Importa useRoute
+import { Redirect } from 'wouter';
 import '../styles/login.css';
 import '../styles/Post.css';
 import 'animate.css';
