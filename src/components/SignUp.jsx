@@ -1,31 +1,89 @@
-import { Link } from 'wouter';
-import '../styles/signup.css'; // Importa el archivo de estilos CSS
+import '../styles/signup.css';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { baseURL } from '../api/trueque.api';
+import { getAllSucursales } from '../api/trueque.api';
+import { Redirect } from 'wouter';
 
 function SignUp() {
+    const [form, setForm] = useState({
+        username: '',
+        email: '',
+        password: '',
+        sucursal_favorita: '',
+        fecha_de_nacimiento: ''
+    });
+
+    const [error, setError] = useState('');
+    const [redirect, setRedirect] = useState(false);
+    const [sucursales, setSucursales] = useState([]);
+
+    useEffect(() => {
+        async function loadSucursales() {
+            const res = await getAllSucursales()
+            setSucursales(res.data)
+        }
+        loadSucursales();
+    }, [])
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const response = await axios.post(baseURL + 'register/', form);
+
+            if (response.status === 201 && response.data.token) {
+                localStorage.setItem('token', response.data.token);
+                setRedirect(true);
+            } else {
+                setError('Error al registrar usuario');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setError('Error al registrar usuario');
+        }
+    };
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setForm(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    if (redirect) {
+        return <Redirect to="/signIn" />;
+    }
+
     return (
         <div className='container-signup'>
             <div>
                 <header className="titulo"> Trueque<span style={{ color: '#BF4C41' }}>Tools</span> </header>
                 <p className="subtitulo"> Registrarse, ¡mas facil que nunca! </p>
                 <div className='cajaFormulario'>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className='formIzq'>
-                            <div> * Nombre <div> <input placeholder="Ingresa tu nombre" required/> </div> </div>
-                            <div> * Apellido <div> <input placeholder="Ingresa tu apellido"required/> </div> </div>
-                            <div> * Correo electronico <div> <input placeholder="Ingresa tu correo" type="email" required/> </div> </div>
-                            <div> * Contraseña <div> <input placeholder="Ingresa tu contraseña" type="password" required/> </div> </div>
+                            <div> * Nombre de usuario<div> <input name="username" placeholder="Ingrese su nombre de usuario" required onChange={handleChange} /> </div> </div>
+                            <div> * Correo electronico <div> <input placeholder="Ingrese su correo" name="email" type="email" required onChange={handleChange} /> </div> </div>
+                            <div className="input-container"> Sucursal favorita
+                                <select
+                                    name="sucursal_favorita"
+                                    value={form.sucursal_favorita}
+                                    onChange={handleChange}
+                                    className="input-field"
+                                    required
+                                >
+                                    <option value="" disabled>Selecciona una sucursal</option>
+                                    {sucursales.map((sucursal, index) => (
+                                        <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{sucursal.direccion}</option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
                         <div className='formDer'>
                             <div> * Fecha de nacimiento
-                                <input type="date" placeholder="Dia" required/>
+                                <input type="date" name="fecha_de_nacimiento" placeholder="Dia" required onChange={handleChange} />
                             </div>
-                            <div> * Sucursal
-                                <select>
-                                    <option value="opcion1">Sucursal 1</option>
-                                    <option value="opcion2">Sucursal 2</option>
-                                    <option value="opcion3">Sucursal 3</option>
-                                </select>
-                            </div>
+                            <div> * Contraseña <div> <input placeholder="Ingrese su contraseña" type="password" name="password" required onChange={handleChange} /> </div> </div>
                             <div className="botonRegistrar"> <button>Registrarse</button> </div>
                         </div>
                     </form>
