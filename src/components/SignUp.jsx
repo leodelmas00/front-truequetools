@@ -38,7 +38,6 @@ function SignUp() {
         } catch (error) {
             console.log(error);
             if (error.response && error.response.status === 406) {
-                console.log('El usuario es menor de edad. Se está mostrando el mensaje de error.');
                 setError('Para registrarse en TruequeTools debe ser mayor de edad');
             } else {
                 console.error('Error:', error);

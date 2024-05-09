@@ -91,27 +91,8 @@ function PostProduct() {
         <div className="container background-img">
             <div className="form-post-container animate__animated animate__backInDown animate__slower" style={{ overflow: 'auto' }}>
                 <h1 className="subtitle-post">Subir publicación</h1>
-                <button type="submit" className="signin-post-link" onClick={handleSubmit}>
-                    Publicar
-                </button>
-                <form className="">
+                <form onSubmit={handleSubmit} className="">
                     <div>
-                        <input
-                            id="file-upload"
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImagenSeleccionada}
-                            style={{ display: 'none' }}
-                        />
-                        <label htmlFor="file-upload" className="custom-file-upload">
-                            Subir foto
-                        </label>
-                        {form.imagen && (
-                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1em', marginBottom: '2em' }}>
-                                <img src={URL.createObjectURL(form.imagen)} alt="Imagen seleccionada" style={{ maxWidth: '40%', maxHeight: '10em' }} />
-                            </div>
-                        )}
-
                         <div className="input-container">
                             <input
                                 type="text"
@@ -152,7 +133,7 @@ function PostProduct() {
                         <div className="input-container">
                             <select
                                 name="sucursal_destino"
-                                value={form.sucursal_destino}
+                                value={form.sucursal_destino.id}
                                 onChange={handleChange}
                                 className="input-field"
                                 required
@@ -163,6 +144,40 @@ function PostProduct() {
                                 ))}
                             </select>
                         </div>
+                        <div className="input-container">
+                            {form.imagen ? (
+                                <div className="image-preview-container">
+                                    <img src={URL.createObjectURL(form.imagen)} alt="Vista previa de la imagen" className='imagen-preview' />
+                                    <div className="button-container">
+                                        <button
+                                            type="button"
+                                            onClick={() => setForm(prevState => ({ ...prevState, imagen: null }))}
+                                            className="eliminar-foto-button"
+                                        >
+                                            Eliminar foto
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <label htmlFor="file-upload" className="custom-file-upload">
+                                    Subir foto
+                                    <input
+                                        id="file-upload"
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleImagenSeleccionada}
+                                        style={{ display: 'none' }}
+                                    />
+                                </label>
+                            )}
+                        </div>
+
+
+                    </div>
+                    <div className="button-container">
+                        <button type="submit" className="signin-post-link">
+                            Publicar
+                        </button>
                     </div>
                 </form>
             </div>

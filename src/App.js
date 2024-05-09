@@ -18,15 +18,15 @@ function App() {
       <Route path="/" component={LogIn} />
       <Route path="/SignUp" component={SignUp} />
       <Route path="/SignIn" component={SignIn} />
-      <Route path="/Login" component={LogIn}/>
-      <Route path="/Config" component={Config}/>
-      <Route path="/Form" component={Form}/>
-      <Route path="/Post" component={Post}/>
-      <Route path="/AdminView" component={AdminView}/>
-      <Route path="/PostList" component={PostList}/>
-      <Route path="/UserList" component={UserList}/>
-      <Route path="/CommentList" component={CommentList}/>
-      <Route path="/PostDetail" component={PostDetail}/>
+      <Route path="/Login" component={LogIn} />
+      <Route path="/Config" component={Config} />
+      <Route path="/Form" component={Form} />
+      <Route path="/Post" component={Post} />
+      <Route path="/AdminView" component={AdminView} />
+      <Route path="/PostList" component={PostList} />
+      <Route path="/UserList" component={UserList} />
+      <Route path="/CommentList" component={CommentList} />
+      <Route path="/PostDetail" component={PostDetail} />
     </Switch>
   );
 }
