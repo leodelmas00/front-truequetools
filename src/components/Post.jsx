@@ -13,12 +13,12 @@ function PostProduct() {
         descripcion: '',
         categoria: '',
         sucursal_destino: '',
+        imagen: null, // Añade un estado para la imagen
     });
     const [categorias, setCategorias] = useState([]);
     const [sucursales, setSucursales] = useState([]);
     const [error, setError] = useState('');
-    const [redirect, setRedirect] = useState(false);
-    const [imagen, setImagen] = useState(null); // Mover aquí la declaración de useState para imagen
+    const [redirect, setRedirect] = useState(false); // Estado para controlar la redirección
 
     useEffect(() => {
         async function loadCategorias() {
@@ -37,9 +37,22 @@ function PostProduct() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post(baseURL + 'createPost/', form, {
+            const requestData = {
+                titulo: form.titulo,
+                descripcion: form.descripcion,
+                categoria: form.categoria,
+                sucursal_destino: form.sucursal_destino,
+                estado: 'PUBLICADA',
+            };
+
+            if (form.imagen) {
+                requestData.imagen = form.imagen;
+            }
+
+            const response = await axios.post(baseURL + 'createPost/', requestData, {
                 headers: {
-                    Authorization: `Token ${localStorage.getItem('token')}`
+                    Authorization: `Token ${localStorage.getItem('token')}`,
+                    'Content-Type': 'multipart/form-data', // Añade el tipo de contenido para FormData
                 }
             });
 
@@ -63,8 +76,11 @@ function PostProduct() {
     };
 
     const handleImagenSeleccionada = (event) => {
-        const selectedImage = event.target.files[0];
-        setImagen(URL.createObjectURL(selectedImage));
+        const imagenSeleccionada = event.target.files[0];
+        setForm(prevState => ({
+            ...prevState,
+            imagen: imagenSeleccionada,
+        }));
     };
 
     if (redirect) {
@@ -75,27 +91,8 @@ function PostProduct() {
         <div className="container background-img">
             <div className="form-post-container animate__animated animate__backInDown animate__slower" style={{ overflow: 'auto' }}>
                 <h1 className="subtitle-post">Subir publicación</h1>
-                <button type="submit" className="signin-post-link">
-                    Publicar
-                </button>
                 <form onSubmit={handleSubmit} className="">
                     <div>
-                        <input
-                            id="file-upload"
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImagenSeleccionada}
-                            style={{ display: 'none' }}
-                        />
-                        <label htmlFor="file-upload" className="custom-file-upload">
-                            Subir foto
-                        </label>
-                        {imagen && (
-                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1em', marginBottom: '2em' }}>
-                                <img src={imagen} alt="Imagen seleccionada" style={{ maxWidth: '40%', maxHeight: '10em' }} />
-                            </div>
-                        )}
-    
                         <div className="input-container">
                             <input
                                 type="text"
@@ -147,7 +144,40 @@ function PostProduct() {
                                 ))}
                             </select>
                         </div>
-    
+                        <div className="input-container">
+                            {form.imagen ? (
+                                <div className="image-preview-container">
+                                    <img src={URL.createObjectURL(form.imagen)} alt="Vista previa de la imagen" className='imagen-preview' />
+                                    <div className="button-container">
+                                        <button
+                                            type="button"
+                                            onClick={() => setForm(prevState => ({ ...prevState, imagen: null }))}
+                                            className="eliminar-foto-button"
+                                        >
+                                            Eliminar foto
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <label htmlFor="file-upload" className="custom-file-upload">
+                                    Subir foto
+                                    <input
+                                        id="file-upload"
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleImagenSeleccionada}
+                                        style={{ display: 'none' }}
+                                    />
+                                </label>
+                            )}
+                        </div>
+
+
+                    </div>
+                    <div className="button-container">
+                        <button type="submit" className="signin-post-link">
+                            Publicar
+                        </button>
                     </div>
                 </form>
             </div>
