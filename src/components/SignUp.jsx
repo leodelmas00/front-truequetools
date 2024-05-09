@@ -25,20 +25,25 @@ function SignUp() {
         }
         loadSucursales();
     }, [])
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
             const response = await axios.post(baseURL + 'register/', form);
-
+            console.log(response.status);
             if (response.status === 201 && response.data.token) {
                 localStorage.setItem('token', response.data.token);
                 setRedirect(true);
-            } else {
-                setError('Error al registrar usuario');
             }
         } catch (error) {
-            console.error('Error:', error);
-            setError('Error al registrar usuario');
+            console.log(error);
+            if (error.response && error.response.status === 406) {
+                console.log('El usuario es menor de edad. Se está mostrando el mensaje de error.');
+                setError('Para registrarse en TruequeTools debe ser mayor de edad');
+            } else {
+                console.error('Error:', error);
+                setError('Ha ocurrido un error. Por favor, inténtelo nuevamente.');
+            }
         }
     };
 
@@ -60,6 +65,7 @@ function SignUp() {
                 <header className="titulo"> Trueque<span style={{ color: '#BF4C41' }}>Tools</span> </header>
                 <p className="subtitulo"> Registrarse, ¡mas facil que nunca! </p>
                 <div className='cajaFormulario'>
+                    {error && <h3 className="error-message">{error}</h3>}
                     <form onSubmit={handleSubmit}>
                         <div className='formIzq'>
                             <div> * Nombre de usuario<div> <input name="username" placeholder="Ingrese su nombre de usuario" required onChange={handleChange} /> </div> </div>

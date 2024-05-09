@@ -10,9 +10,8 @@ function LogIn() {
         email: '',
         password: ''
     });
-    const [redirect, setRedirect] = useState(false); // Estado para controlar la redirección
-    const [error, setError] = useState(''); // Estado para manejar el mensaje de error
-
+    const [redirect, setRedirect] = useState(false);
+    const [error, setError] = useState('');
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -47,7 +46,7 @@ function LogIn() {
             <div className="form-container animate__animated animate__backInDown animate__slower" style={{ overflow: 'auto' }}>
                 <h1 className="title">Trueque<span className='colorRojo'>Tools</span></h1>
                 <h2 className="subtitle">Iniciar Sesión</h2>
-                {error && <p className="error-message">{error}</p>}
+                {error && <h3 className="error-message">{error}</h3>}
                 <form onSubmit={handleSubmit} className="">
                     <div>
                         <div className="input-container">
@@ -75,11 +74,11 @@ function LogIn() {
                         <div className="button-container animate__animated animate__heartBeat animate__slower animate__delay-3s">
                             <button type="submit" className="signin-link">Iniciar sesión</button>
                         </div>
-                            
-                        </div>
-                        <div className="signup-text">
-                            <p>¿Aún no tenés una cuenta?</p>
-                            <Link to="/SignUp" className="signup-link">Registrate acá </Link>
+
+                    </div>
+                    <div className="signup-text">
+                        <p>¿Aún no tenés una cuenta?</p>
+                        <Link to="/SignUp" className="signup-link">Registrate acá </Link>
                     </div>
                 </form>
             </div>
