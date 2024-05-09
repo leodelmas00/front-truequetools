@@ -37,7 +37,9 @@ function SignUp() {
             }
         } catch (error) {
             console.log(error);
-            if (error.response && error.response.status === 406) {
+            if (error.response && error.response.status === 409) {
+                setError('El correo electrónico ya está en uso');
+            } else if (error.response && error.response.status === 406) {
                 setError('Para registrarse en TruequeTools debe ser mayor de edad');
             } else {
                 console.error('Error:', error);
