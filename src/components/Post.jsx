@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useRoute } from 'wouter'; // Importa useRoute
+import { Redirect } from 'wouter'; // Importa useRoute
 import '../styles/login.css';
 import '../styles/Post.css';
 import 'animate.css';
 import { getAllCategorias, getAllSucursales } from '../api/trueque.api';
 import axios from 'axios';
 import { baseURL } from '../api/trueque.api';
+import { redirect } from 'react-router-dom';
 
 function PostProduct() {
     const [form, setForm] = useState({
@@ -16,8 +17,9 @@ function PostProduct() {
     });
     const [categorias, setCategorias] = useState([]);
     const [sucursales, setSucursales] = useState([]);
-    const [, push] = useRoute(); // Usa useRoute para acceder a la función push
     const [error, setError] = useState('');
+    const [redirect, setRedirect] = useState(false); // Estado para controlar la redirección
+
 
     useEffect(() => {
         async function loadCategorias() {
@@ -38,12 +40,12 @@ function PostProduct() {
         try {
             const response = await axios.post(baseURL + 'createPost/', form, {
                 headers: {
-                    Authorization: `Token ${localStorage.getItem('token')}` // Obtén el token de autenticación del almacenamiento local
+                    Authorization: `Token ${localStorage.getItem('token')}`
                 }
             });
 
             if (response.status === 201 && response.data.id) {
-                push(`/api/post/${response.data.id}/`); // Usa la función push para redirigir
+                setRedirect(true)
             } else {
                 setError('Los datos ingresados no son válidos, por favor inténtelo nuevamente');
             }
@@ -60,7 +62,9 @@ function PostProduct() {
             [name]: value
         }));
     };
-
+    if (redirect) {
+        return <Redirect to="/signIn" />;
+    }
 
     return (
         <div className="container background-img">
