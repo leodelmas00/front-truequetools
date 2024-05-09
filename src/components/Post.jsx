@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'wouter'; // Importa useRoute
+import { Redirect } from 'wouter';
 import '../styles/login.css';
 import '../styles/Post.css';
 import 'animate.css';
 import { getAllCategorias, getAllSucursales } from '../api/trueque.api';
 import axios from 'axios';
 import { baseURL } from '../api/trueque.api';
-import { redirect } from 'react-router-dom';
 
 function PostProduct() {
     const [form, setForm] = useState({
@@ -18,8 +17,8 @@ function PostProduct() {
     const [categorias, setCategorias] = useState([]);
     const [sucursales, setSucursales] = useState([]);
     const [error, setError] = useState('');
-    const [redirect, setRedirect] = useState(false); // Estado para controlar la redirección
-
+    const [redirect, setRedirect] = useState(false);
+    const [imagen, setImagen] = useState(null); // Mover aquí la declaración de useState para imagen
 
     useEffect(() => {
         async function loadCategorias() {
@@ -62,6 +61,12 @@ function PostProduct() {
             [name]: value
         }));
     };
+
+    const handleImagenSeleccionada = (event) => {
+        const selectedImage = event.target.files[0];
+        setImagen(URL.createObjectURL(selectedImage));
+    };
+
     if (redirect) {
         return <Redirect to="/signIn" />;
     }
@@ -148,7 +153,6 @@ function PostProduct() {
             </div>
         </div>
     );
-    
 }
 
 export default PostProduct;
