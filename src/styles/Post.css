@@ -1,30 +1,30 @@
-
-.subtitle-post{
+.subtitle-post {
     text-align: center;
     font-size: 3em;
-    overflow: hidden; /* Oculta el texto que se desborde */
+    overflow: hidden;
+    /* Oculta el texto que se desborde */
     text-overflow: ellipsis;
     margin-top: 0%;
 }
 
 .custom-file-upload {
-    margin-left: 0%; /* Ajusta el margen izquierdo para mover el botón hacia la derecha *//* Ajusta el margen superior para mover el botón hacia abajo */
-    margin-right: 9%;
+    margin: 2em auto;
     cursor: pointer;
-    padding: 2% 5% 2.5% 5%;
-    background-color: #a67c63;
+    padding: 1em 2em;
+    background-color: #bf4c41;
     color: #f2f0e4;
     border: none;
     border-radius: 5px;
     font-size: 1.4em;
-    overflow: hidden; /* Oculta el texto que se desborde */
+    overflow: hidden;
     text-overflow: ellipsis;
 }
 
 
 .custom-file-upload:hover {
     background-color: #f2ada7;
-    overflow: hidden; /* Oculta el texto que se desborde */
+    overflow: hidden;
+    /* Oculta el texto que se desborde */
     text-overflow: ellipsis;
 }
 
@@ -37,55 +37,56 @@
     background-color: #ee9d95;
     z-index: 1;
     text-align: center;
-    overflow: hidden; /* Oculta el texto que se desborde */
+    overflow: hidden;
+    /* Oculta el texto que se desborde */
     text-overflow: ellipsis;
-  }
-  
-  .signin-post-link{
-    left: 90%;
-    top: 50%;
-    margin-left: 12%;
-    margin-top: -3em;
-    margin-bottom: 2%;
+}
+
+.signin-post-link {
+    margin: 2em auto;
     cursor: pointer;
-    padding: 2.2% 5%;
-    background-color:#bf4c41;
+    padding: 1em 2em;
+    background-color: #bf4c41;
     color: #f2f0e4;
     border: none;
     border-radius: 5px;
     font-size: 1.4em;
-    overflow: hidden; /* Oculta el texto que se desborde */
+    overflow: hidden;
     text-overflow: ellipsis;
-  }
+    display: block;
+}
 
-  .signin-post-link:hover{
-    background-color:#734429;
-    overflow: hidden; /* Oculta el texto que se desborde */
+
+.signin-post-link:hover {
+    background-color: #734429;
+    overflow: hidden;
+    /* Oculta el texto que se desborde */
     text-overflow: ellipsis;
-  }
-  
+}
+
 .input-field-descripcion {
     resize: none;
     border-radius: 15px;
-    height: 3em; /* Ajusta la altura según sea necesario */
+    height: 3em;
+    /* Ajusta la altura según sea necesario */
     font-size: x-large;
     width: 21em;
 }
 
 
-.contador-caracteres{
+.contador-caracteres {
     position: absolute;
     left: 68%;
     top: 79%;
 }
 
-.input-field{
+.input-field {
     border-radius: 15px;
     border-color: none;
 }
 
-.eliminar-imagen-button{
-    text-align:center;
+.eliminar-imagen-button {
+    text-align: center;
     cursor: pointer;
     width: 8em;
     height: 2.7em;
@@ -95,25 +96,28 @@
     border: none;
     border-radius: 5px;
     font-size: 1.4em;
-    overflow: hidden; /* Oculta el texto que se desborde */
+    overflow: hidden;
+    /* Oculta el texto que se desborde */
     text-overflow: ellipsis;
     line-height: 0.9;
 }
 
-.eliminar-imagen-button:hover{
-    background-color:#734429;
+.eliminar-imagen-button:hover {
+    background-color: #734429;
 }
 
 .form-post-container {
-    max-height: 80vh; /* Establece una altura máxima del 80% del viewport height */
-    overflow-y: auto; /* Habilita el desplazamiento vertical cuando los elementos exceden la altura máxima */
+    max-height: 80vh;
+    /* Establece una altura máxima del 80% del viewport height */
+    overflow-y: auto;
+    /* Habilita el desplazamiento vertical cuando los elementos exceden la altura máxima */
 }
 
-.input-field-articulo{
+.input-field-articulo {
     margin-top: 5%;
 }
 
-.signin-post-link-disabled{
+.signin-post-link-disabled {
     left: 90%;
     top: 50%;
     margin-left: 12%;
@@ -121,11 +125,69 @@
     margin-bottom: 2%;
     cursor: pointer;
     padding: 2.2% 5%;
-    background-color:#f2f0e4;
+    background-color: #f2f0e4;
     color: #bf4c41;
     border: none;
     border-radius: 5px;
     font-size: 1.4em;
-    overflow: hidden; /* Oculta el texto que se desborde */
+    overflow: hidden;
+    /* Oculta el texto que se desborde */
     text-overflow: ellipsis;
+}
+
+.imagen-preview {
+    max-width: 30%;
+    max-height: 30%;
+    object-fit: contain;
+    vertical-align: middle;
+}
+
+.image-preview-container {
+    position: relative;
+    margin-bottom: 10px;
+    /* Agrega un margen inferior para separar del botón */
+}
+
+.image-container {
+    position: relative;
+}
+
+.eliminar-foto-container {
+    position: absolute;
+    bottom: 5px;
+    /* Ajusta la posición del contenedor del botón debajo de la imagen */
+    left: 50%;
+    /* Centra el contenedor horizontalmente */
+    transform: translateX(-50%);
+    /* Centra el contenedor horizontalmente */
+}
+
+.eliminar-foto-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    /* Agrega un margen superior para separar del botón */
+}
+
+
+
+.custom-file-upload {
+    cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    /* Ajusta el margen inferior para separar del botón eliminar */
+    margin-bottom: 10px;
+    background-color: #a67c63;
+    color: #f2f0e4;
+}
+
+.custom-file-upload:hover {
+    background-color: #f2ada7;
 }
