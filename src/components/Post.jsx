@@ -6,7 +6,6 @@ import 'animate.css';
 import { getAllCategorias, getAllSucursales } from '../api/trueque.api';
 import axios from 'axios';
 import { baseURL } from '../api/trueque.api';
-import { redirect } from 'react-router-dom';
 
 function PostProduct() {
     const [form, setForm] = useState({
@@ -14,12 +13,12 @@ function PostProduct() {
         descripcion: '',
         categoria: '',
         sucursal_destino: '',
+        imagen: null, // Añade un estado para la imagen
     });
     const [categorias, setCategorias] = useState([]);
     const [sucursales, setSucursales] = useState([]);
     const [error, setError] = useState('');
     const [redirect, setRedirect] = useState(false); // Estado para controlar la redirección
-
 
     useEffect(() => {
         async function loadCategorias() {
@@ -38,9 +37,22 @@ function PostProduct() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post(baseURL + 'createPost/', form, {
+            const requestData = {
+                titulo: form.titulo,
+                descripcion: form.descripcion,
+                categoria: form.categoria,
+                sucursal_destino: form.sucursal_destino,
+                estado: 'PUBLICADA',
+            };
+
+            if (form.imagen) {
+                requestData.imagen = form.imagen;
+            }
+
+            const response = await axios.post(baseURL + 'createPost/', requestData, {
                 headers: {
-                    Authorization: `Token ${localStorage.getItem('token')}`
+                    Authorization: `Token ${localStorage.getItem('token')}`,
+                    'Content-Type': 'multipart/form-data', // Añade el tipo de contenido para FormData
                 }
             });
 
@@ -62,6 +74,15 @@ function PostProduct() {
             [name]: value
         }));
     };
+
+    const handleImagenSeleccionada = (event) => {
+        const imagenSeleccionada = event.target.files[0];
+        setForm(prevState => ({
+            ...prevState,
+            imagen: imagenSeleccionada,
+        }));
+    };
+
     if (redirect) {
         return <Redirect to="/signIn" />;
     }
@@ -70,10 +91,10 @@ function PostProduct() {
         <div className="container background-img">
             <div className="form-post-container animate__animated animate__backInDown animate__slower" style={{ overflow: 'auto' }}>
                 <h1 className="subtitle-post">Subir publicación</h1>
-                <button type="submit" className="signin-post-link">
+                <button type="submit" className="signin-post-link" onClick={handleSubmit}>
                     Publicar
                 </button>
-                <form onSubmit={handleSubmit} className="">
+                <form className="">
                     <div>
                         <input
                             id="file-upload"
@@ -85,12 +106,12 @@ function PostProduct() {
                         <label htmlFor="file-upload" className="custom-file-upload">
                             Subir foto
                         </label>
-                        {imagen && (
+                        {form.imagen && (
                             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1em', marginBottom: '2em' }}>
-                                <img src={imagen} alt="Imagen seleccionada" style={{ maxWidth: '40%', maxHeight: '10em' }} />
+                                <img src={URL.createObjectURL(form.imagen)} alt="Imagen seleccionada" style={{ maxWidth: '40%', maxHeight: '10em' }} />
                             </div>
                         )}
-    
+
                         <div className="input-container">
                             <input
                                 type="text"
@@ -131,7 +152,7 @@ function PostProduct() {
                         <div className="input-container">
                             <select
                                 name="sucursal_destino"
-                                value={form.sucursal_destino.id}
+                                value={form.sucursal_destino}
                                 onChange={handleChange}
                                 className="input-field"
                                 required
@@ -142,13 +163,11 @@ function PostProduct() {
                                 ))}
                             </select>
                         </div>
-    
                     </div>
                 </form>
             </div>
         </div>
     );
-    
 }
 
 export default PostProduct;
