@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useRoute } from 'wouter'; // Importa useRoute
+import { useRoute } from 'wouter';
 import '../styles/login.css';
 import '../styles/Post.css';
 import 'animate.css';
@@ -16,8 +16,9 @@ function PostProduct() {
     });
     const [categorias, setCategorias] = useState([]);
     const [sucursales, setSucursales] = useState([]);
-    const [, push] = useRoute(); // Usa useRoute para acceder a la función push
+    const [, push] = useRoute();
     const [error, setError] = useState('');
+    const [imagen, setImagen] = useState(null);
 
     useEffect(() => {
         async function loadCategorias() {
@@ -38,12 +39,12 @@ function PostProduct() {
         try {
             const response = await axios.post(baseURL + 'createPost/', form, {
                 headers: {
-                    Authorization: `Token ${localStorage.getItem('token')}` // Obtén el token de autenticación del almacenamiento local
+                    Authorization: `Token ${localStorage.getItem('token')}`
                 }
             });
 
             if (response.status === 201 && response.data.id) {
-                push(`/api/post/${response.data.id}/`); // Usa la función push para redirigir
+                push(`/api/post/${response.data.id}/`);
             } else {
                 setError('Los datos ingresados no son válidos, por favor inténtelo nuevamente');
             }
@@ -61,18 +62,44 @@ function PostProduct() {
         }));
     };
 
+    const handleImagenSeleccionada = (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImagen(reader.result);
+        };
+        reader.readAsDataURL(file);
+    };
+
+    const handleEliminarImagen = () => {
+        setImagen(null);
+    };
 
     return (
         <div className="container background-img">
             <div className="form-post-container animate__animated animate__backInDown animate__slower" style={{ overflow: 'auto' }}>
                 <h1 className="subtitle-post">Subir publicación</h1>
-
-                {/* Formulario de Publicación */}
+                <button type="submit" className="signin-post-link">
+                    Publicar
+                </button>
                 <form onSubmit={handleSubmit} className="">
                     <div>
-                        <button className="signin-post-link">
-                            Publicar
-                        </button>
+                        <input
+                            id="file-upload"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImagenSeleccionada}
+                            style={{ display: 'none' }}
+                        />
+                        <label htmlFor="file-upload" className="custom-file-upload">
+                            Subir foto
+                        </label>
+                        {imagen && (
+                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1em', marginBottom: '2em' }}>
+                                <img src={imagen} alt="Imagen seleccionada" style={{ maxWidth: '40%', maxHeight: '10em' }} />
+                            </div>
+                        )}
+    
                         <div className="input-container">
                             <input
                                 type="text"
@@ -84,7 +111,6 @@ function PostProduct() {
                                 required
                             />
                         </div>
-
                         <div className="input-container">
                             <textarea
                                 name="descripcion"
@@ -97,7 +123,6 @@ function PostProduct() {
                                 required
                             />
                         </div>
-
                         <div className="input-container">
                             <select
                                 name="categoria"
@@ -112,7 +137,6 @@ function PostProduct() {
                                 ))}
                             </select>
                         </div>
-
                         <div className="input-container">
                             <select
                                 name="sucursal_destino"
@@ -127,12 +151,13 @@ function PostProduct() {
                                 ))}
                             </select>
                         </div>
+    
                     </div>
                 </form>
-                {/* Fin del formulario de Publicación */}
             </div>
         </div>
     );
+    
 }
 
 export default PostProduct;

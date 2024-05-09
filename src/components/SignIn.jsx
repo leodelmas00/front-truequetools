@@ -32,8 +32,8 @@ function SignIn() {
 
     return (
         <div className="backgroundHome">
-            <input type="text" className="search-box " placeholder="¿Qué estás buscando?" />
-            <button className="buscar-button">Buscar</button>
+            {/* <input type="text" className="search-box " placeholder="¿Qué estás buscando?" />
+            <button className="buscar-button">Buscar</button> */}
 
             <Link to="/Post" className="post-link">
                 <button className="publicar-button">Publicar</button>
@@ -41,7 +41,7 @@ function SignIn() {
 
             <a href="/" onClick={handleLogoClick}> <img src={logoImg} alt="Logo" className="logo" /> </a>
             <div className="rectangle"></div>
-            <h1 className={`title-most-searched ${menuOpen ? 'slide-right' : ''}`}>Mas buscados</h1>
+            <h1 className={`title-most-searched ${menuOpen ? 'slide-right' : ''}`}>Mas destacados</h1>
             <div className={`menu ${menuOpen ? 'open' : ''}`} style={{ overflow: 'auto' }}>
                 {/* <ul>
                     <li>
