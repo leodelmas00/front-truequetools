@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'wouter'; // Importa useRoute
+import { useLocation } from "wouter";
 import '../styles/login.css';
 import '../styles/Post.css';
 import 'animate.css';
@@ -18,7 +18,8 @@ function PostProduct() {
     const [categorias, setCategorias] = useState([]);
     const [sucursales, setSucursales] = useState([]);
     const [error, setError] = useState('');
-    const [redirect, setRedirect] = useState(false); // Estado para controlar la redirección
+    const [location, setLocation] = useLocation();
+
 
     useEffect(() => {
         async function loadCategorias() {
@@ -32,7 +33,9 @@ function PostProduct() {
         }
         loadCategorias();
         loadSucursales();
-    }, [])
+    }, []) //  <--- arreglo de depencias, si está vacio se ejecuta solo una vez (cuando carga la pagina)
+    // si tiene un valor (estado) se ejecuta cada vez que hay un cambio en ese estado
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -55,9 +58,12 @@ function PostProduct() {
                     'Content-Type': 'multipart/form-data', // Añade el tipo de contenido para FormData
                 }
             });
+            console.log(response)
 
             if (response.status === 201 && response.data.id) {
-                setRedirect(true)
+                console.log(response)
+                setLocation(`/post/${response.data.id}`)
+
             } else {
                 setError('Los datos ingresados no son válidos, por favor inténtelo nuevamente');
             }
@@ -83,15 +89,12 @@ function PostProduct() {
         }));
     };
 
-    if (redirect) {
-        return <Redirect to="/signIn" />;
-    }
 
     return (
         <div className="container background-img">
             <div className="form-post-container animate__animated animate__backInDown animate__slower" style={{ overflow: 'auto' }}>
                 <h1 className="subtitle-post">Subir publicación</h1>
-                <form onSubmit={handleSubmit} className="">
+                <form >
                     <div>
                         <div className="input-container">
                             <input
@@ -175,7 +178,7 @@ function PostProduct() {
 
                     </div>
                     <div className="button-container">
-                        <button type="submit" className="signin-post-link">
+                        <button onClick={handleSubmit} type="submit" className="signin-post-link">
                             Publicar
                         </button>
                     </div>
