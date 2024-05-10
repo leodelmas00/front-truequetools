@@ -26,7 +26,7 @@ function App() {
       <Route path="/PostList" component={PostList} />
       <Route path="/UserList" component={UserList} />
       <Route path="/CommentList" component={CommentList} />
-      <Route path="/PostDetail" component={PostDetail} />
+      <Route path="/Post/:postId" component={PostDetail} />
     </Switch>
   );
 }
