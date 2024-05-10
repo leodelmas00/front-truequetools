@@ -19,7 +19,7 @@ function PostProduct() {
     const [sucursales, setSucursales] = useState([]);
     const [error, setError] = useState('');
     const [location, setLocation] = useLocation();
-
+    const [descripcionLength, setDescripcionLength] = useState(0);
 
     useEffect(() => {
         async function loadCategorias() {
@@ -33,9 +33,7 @@ function PostProduct() {
         }
         loadCategorias();
         loadSucursales();
-    }, []) //  <--- arreglo de depencias, si está vacio se ejecuta solo una vez (cuando carga la pagina)
-    // si tiene un valor (estado) se ejecuta cada vez que hay un cambio en ese estado
-
+    }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -55,15 +53,12 @@ function PostProduct() {
             const response = await axios.post(baseURL + 'createPost/', requestData, {
                 headers: {
                     Authorization: `Token ${localStorage.getItem('token')}`,
-                    'Content-Type': 'multipart/form-data', // Añade el tipo de contenido para FormData
+                    'Content-Type': 'multipart/form-data',
                 }
             });
-            console.log(response)
 
             if (response.status === 201 && response.data.id) {
-                console.log(response)
-                setLocation(`/post/${response.data.id}`)
-
+                setLocation(`/post/${response.data.id}`);
             } else {
                 setError('Los datos ingresados no son válidos, por favor inténtelo nuevamente');
             }
@@ -89,12 +84,20 @@ function PostProduct() {
         }));
     };
 
+    const handleDescripcionChange = (event) => {
+        const descripcionValue = event.target.value;
+        setForm(prevState => ({
+            ...prevState,
+            descripcion: descripcionValue
+        }));
+        setDescripcionLength(descripcionValue.length);
+    };
 
     return (
         <div className="container background-img">
             <div className="form-post-container animate__animated animate__backInDown animate__slower" style={{ overflow: 'auto' }}>
                 <h1 className="subtitle-post">Subir publicación</h1>
-                <form >
+                <form>
                     <div>
                         <div className="input-container">
                             <input
@@ -112,12 +115,13 @@ function PostProduct() {
                                 name="descripcion"
                                 placeholder="Descripción"
                                 value={form.descripcion}
-                                onChange={handleChange}
+                                onChange={handleDescripcionChange}
                                 className="input-field-descripcion"
                                 rows={4}
-                                maxLength={250}
+                                maxLength={200} // Establece la longitud máxima
                                 required
                             />
+                            <div className="character-counter">{descripcionLength}/200</div> {/* Contador de caracteres */}
                         </div>
                         <div className="input-container">
                             <select
@@ -174,8 +178,6 @@ function PostProduct() {
                                 </label>
                             )}
                         </div>
-
-
                     </div>
                     <div className="button-container">
                         <button onClick={handleSubmit} type="submit" className="signin-post-link">
