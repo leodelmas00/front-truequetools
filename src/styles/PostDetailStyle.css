@@ -1,0 +1,64 @@
+.post-container {
+    max-width: 600px;
+    /* Ancho máximo de la publicación */
+    margin: 0 auto;
+    /* Centrar la publicación en la pantalla */
+    padding: 20px;
+    /* Añadir un espacio alrededor de la publicación */
+}
+
+.post-card {
+    background-color: #FCEDEA;
+    /* Rosa claro */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+    border: 2px solid #F3D9C5;
+    /* Marrón claro */
+    margin-bottom: 20px;
+    /* Espacio debajo de la publicación */
+}
+
+.post-title {
+    font-size: 24px;
+    color: #A67B5B;
+    /* Marrón claro */
+    margin-bottom: 10px;
+}
+
+.post-description {
+    font-size: 18px;
+    color: #5C4B51;
+    /* Marrón oscuro */
+    margin-bottom: 20px;
+}
+
+.post-date {
+    font-size: 16px;
+    color: #000000;
+    /* Marrón claro */
+    margin-bottom: 20px;
+}
+
+.post-comments {
+    background-color: #F9EBF2;
+    /* Rosa claro */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+    margin-bottom: 20px;
+    /* Espacio debajo de la sección de comentarios */
+}
+
+.comment {
+    background-color: #FFFFFF;
+    /* Blanco */
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    /* Espacio entre comentarios */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+}
