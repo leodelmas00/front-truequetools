@@ -1,64 +1,134 @@
+.background-image-published {
+    background-image: url('../logo_1/Fondo_Invertido_Published.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    max-width: 1920px;
+    max-height: 1080px;
+    width: 100vw;
+    height: 100vh;
+}
+
 .post-container {
-    max-width: 600px;
+    max-width: 35%;
     /* Ancho máximo de la publicación */
     margin: 0 auto;
     /* Centrar la publicación en la pantalla */
-    padding: 20px;
+    padding: 2vw;
     /* Añadir un espacio alrededor de la publicación */
+    
 }
 
 .post-card {
-    background-color: #FCEDEA;
-    /* Rosa claro */
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* Sombra suave */
-    border: 2px solid #F3D9C5;
-    /* Marrón claro */
-    margin-bottom: 20px;
-    /* Espacio debajo de la publicación */
+    
+    background-color: #f2f0e4;
+    border-radius: 15px;
+    padding: 10%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border: none;
+    margin-bottom: 4%;
+    overflow: auto; 
 }
 
 .post-title {
-    font-size: 24px;
+    font-size: 200%;
     color: #A67B5B;
     /* Marrón claro */
     margin-bottom: 10px;
 }
 
 .post-description {
-    font-size: 18px;
+    font-size: 125%;
     color: #5C4B51;
     /* Marrón oscuro */
     margin-bottom: 20px;
+    max-width: 100px;
+    
 }
 
 .post-date {
+    margin-top: -10%;
     font-size: 16px;
     color: #000000;
-    /* Marrón claro */
-    margin-bottom: 20px;
+    margin-bottom: 8px;
 }
 
 .post-comments {
-    background-color: #F9EBF2;
+    background-color: #f2f0e4;
     /* Rosa claro */
     border-radius: 10px;
     padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* Sombra suave */
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     margin-bottom: 20px;
     /* Espacio debajo de la sección de comentarios */
+    overflow-y: auto; /* Añadir barra de desplazamiento vertical */
+    max-height: 23em;
 }
 
 .comment {
     background-color: #FFFFFF;
     /* Blanco */
-    border-radius: 8px;
-    padding: 10px;
+    border-radius: 15px;
+    padding: 0%;
     margin-bottom: 10px;
     /* Espacio entre comentarios */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* Sombra suave */
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    overflow-y: auto;
 }
+
+.comment-letter{
+    margin-top: 1%;
+    margin-left: 3%;
+}
+
+.input-field-comment{
+    border-radius: 15px;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    resize: none;
+    border-radius: 15px;
+    height: 2.2em;
+    /* Ajusta la altura según sea necesario */
+    font-size: large;
+    width: 86%;
+    margin-right: 1%;
+    
+    
+}
+
+.comment-button{
+    border-radius: 15px;
+    height: 4.5vh;
+    width: 12.3%;
+    border:none;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-color:#bf4c41;
+    color:#f2f0e4;
+    overflow: auto;
+}
+
+.comment-button:hover{
+    background-color: #734429;
+    color:#f2f0e4;
+    
+}
+
+.signin-link-from-postdetail{
+  text-decoration: none;
+  padding: 15px 30px;
+  font-size: 1.5em;
+  background-color: #bf4c41;
+  border-color: #f2ada7;
+  border-radius: 5px;
+  color: black;
+  position: absolute;
+  top: 4.4%;
+  left: 15%;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;}
+
+.signin-link-from-postdetail:hover{
+  background-color: #734429;
+  color: #f2f0e4
+}
+
+
