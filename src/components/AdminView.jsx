@@ -34,7 +34,7 @@ function AdminView() {
                     </div>
                 </div>
             )}
-            <button>Registrar Cliente</button>
+            <button onClick={handleLogout}>Cerrar Sesión</button>
             <button>
                 <Link to="/PostList">Ver publicaciones</Link>
             </button>
