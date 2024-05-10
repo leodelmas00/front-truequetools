@@ -37,7 +37,9 @@ function SignUp() {
             }
         } catch (error) {
             console.log(error);
-            if (error.response && error.response.status === 406) {
+            if (error.response && error.response.status === 409) {
+                setError('El correo electrónico ya está en uso');
+            } else if (error.response && error.response.status === 406) {
                 setError('Para registrarse en TruequeTools debe ser mayor de edad');
             } else {
                 console.error('Error:', error);
@@ -59,39 +61,49 @@ function SignUp() {
     }
 
     return (
-        <div className='container-signup'>
-            <div>
-                <header className="titulo"> Trueque<span style={{ color: '#BF4C41' }}>Tools</span> </header>
-                <p className="subtitulo"> Registrarse, ¡mas facil que nunca! </p>
-                <div className='cajaFormulario'>
-                    {error && <h3 className="error-message">{error}</h3>}
-                    <form onSubmit={handleSubmit}>
-                        <div className='formIzq'>
-                            <div> * Nombre de usuario<div> <input name="username" placeholder="Ingrese su nombre de usuario" required onChange={handleChange} /> </div> </div>
-                            <div> * Correo electronico <div> <input placeholder="Ingrese su correo" name="email" type="email" required onChange={handleChange} /> </div> </div>
-                            <div className="input-container"> Sucursal favorita
+        <div className="container background-img">
+            <div className='container-signup'>
+                <div>
+                    <header className="titulo"> Trueque<span style={{ color: '#BF4C41' }}>Tools</span> </header>
+                    <p className="subtitulo"> Registrarse, ¡más fácil que nunca! </p>
+                    <div className='cajaFormulario' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        {error && <h3 className="error-message">{error}</h3>}
+                        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem' }}>
+                                <div style={{ marginBottom: '0.5rem' }}>Nombre de usuario</div>
+                                <input className="input-user" name="username" placeholder="Ingrese su nombre de usuario" required onChange={handleChange} style={{ fontSize: '20px' }}/>
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem' }}>
+                                <div style={{ marginBottom: '0.5rem' }}>Correo electrónico</div>
+                                <input className="input-user" placeholder="Ingrese su correo" name="email" type="email" required onChange={handleChange} style={{ fontSize: '20px' }}/>
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem' }}>
+                                <div style={{ marginBottom: '0.5rem' }}>Contraseña</div>
+                                <input className="input-user" placeholder="Ingrese su contraseña" type="password" name="password" required onChange={handleChange} />
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem' }}>
+                                <div style={{ marginBottom: '0.5rem' }}>Fecha de nacimiento</div>
+                                <input className='input-user' type="date" name="fecha_de_nacimiento" placeholder="Dia" required onChange={handleChange} />
+                            </div>
+
+                            <div className="input-container" style={{ marginBottom: '1rem' }}>Sucursal favorita</div>
                                 <select
                                     name="sucursal_favorita"
                                     value={form.sucursal_favorita}
                                     onChange={handleChange}
-                                    className="input-field"
+                                    className="input-select-sucursal"
                                     required
+                                    style={{ fontSize: '20px' }}
                                 >
-                                    <option value="" disabled>Selecciona una sucursal</option>
+                                    <option className="input-select-sucursal" value="" disabled>Selecciona una sucursal</option>
                                     {sucursales.map((sucursal, index) => (
                                         <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{sucursal.direccion}</option>
                                     ))}
                                 </select>
-                            </div>
-                        </div>
-                        <div className='formDer'>
-                            <div> * Fecha de nacimiento
-                                <input type="date" name="fecha_de_nacimiento" placeholder="Dia" required onChange={handleChange} />
-                            </div>
-                            <div> * Contraseña <div> <input placeholder="Ingrese su contraseña" type="password" name="password" required onChange={handleChange} /> </div> </div>
-                            <div className="botonRegistrar"> <button>Registrarse</button> </div>
-                        </div>
-                    </form>
+                            
+                            <div className="botonRegistrar" style={{ marginBottom: '1rem' }}><button>Registrarse</button></div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
