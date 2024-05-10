@@ -67,15 +67,14 @@ function SignUp() {
                     <header className="titulo"> Trueque<span style={{ color: '#BF4C41' }}>Tools</span> </header>
                     <p className="subtitulo"> Registrarse, ¡más fácil que nunca! </p>
                     <div className='cajaFormulario' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        {error && <h3 className="error-message">{error}</h3>}
                         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem' }}>
                                 <div style={{ marginBottom: '0.5rem' }}>Nombre de usuario</div>
-                                <input className="input-user" name="username" placeholder="Ingrese su nombre de usuario" required onChange={handleChange} style={{ fontSize: '20px' }}/>
+                                <input className="input-user" name="username" placeholder="Ingrese su nombre de usuario" required onChange={handleChange} style={{ fontSize: '20px' }} />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem' }}>
                                 <div style={{ marginBottom: '0.5rem' }}>Correo electrónico</div>
-                                <input className="input-user" placeholder="Ingrese su correo" name="email" type="email" required onChange={handleChange} style={{ fontSize: '20px' }}/>
+                                <input className="input-user" placeholder="Ingrese su correo" name="email" type="email" required onChange={handleChange} style={{ fontSize: '20px' }} />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem' }}>
                                 <div style={{ marginBottom: '0.5rem' }}>Contraseña</div>
@@ -87,20 +86,20 @@ function SignUp() {
                             </div>
 
                             <div className="input-container" style={{ marginBottom: '1rem' }}>Sucursal favorita</div>
-                                <select
-                                    name="sucursal_favorita"
-                                    value={form.sucursal_favorita}
-                                    onChange={handleChange}
-                                    className="input-select-sucursal"
-                                    required
-                                    style={{ fontSize: '20px' }}
-                                >
-                                    <option className="input-select-sucursal" value="" disabled>Selecciona una sucursal</option>
-                                    {sucursales.map((sucursal, index) => (
-                                        <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{sucursal.direccion}</option>
-                                    ))}
-                                </select>
-                            
+                            <select
+                                name="sucursal_favorita"
+                                value={form.sucursal_favorita}
+                                onChange={handleChange}
+                                className="input-select-sucursal"
+                                required
+                                style={{ fontSize: '20px' }}
+                            >
+                                <option className="input-select-sucursal" value="" disabled>Selecciona una sucursal</option>
+                                {sucursales.map((sucursal, index) => (
+                                    <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{sucursal.direccion}</option>
+                                ))}
+                            </select>
+                            {error && <h5 className="error-message">{error}</h5>}
                             <div className="botonRegistrar" style={{ marginBottom: '1rem' }}><button>Registrarse</button></div>
                         </form>
                     </div>

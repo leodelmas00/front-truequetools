@@ -10,6 +10,7 @@ function PostDetail() {
     const [nuevoComentario, setNuevoComentario] = useState('');
     const params = useParams();
     const [loading, setLoading] = useState(true);
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -21,6 +22,7 @@ function PostDetail() {
                     }
                 });
                 setPost(response.data);
+                console.log(response.data.imagen)
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -37,12 +39,17 @@ function PostDetail() {
         setNuevoComentario(event.target.value);
     };
 
+
     const handleSubmit = async (event) => {
         event.preventDefault();
+        if (nuevoComentario.trim() === '') {
+            setErrorMessage('No es posible publicar una pregunta vacía');
+            return;
+        }
         try {
             const token = localStorage.getItem('token');
             const response = await axios.post(`${baseURL}post/${params.postId}/comments/`, {
-                contenido: nuevoComentario // Agregar el contenido del comentario
+                contenido: nuevoComentario
             }, {
                 headers: {
                     Authorization: `Token ${token}`,
@@ -65,28 +72,31 @@ function PostDetail() {
     }
 
     return (
-            <div className="background-image-published">
-                <div className="post-container">
-                    <div className="post-card">
-                        <p className="post-date">{post.fecha}</p>
-                        <hr></hr>
-                        <h3>Subido por: {post.usuario_propietario.username}</h3>
-                        <h1 className="post-title">{post.titulo}</h1>
-                        
-                        <p className="post-description">{post.descripcion}</p>
-                    </div>
-                    <div className="post-comments">
-                        <h2>Comentarios:</h2>
-                        {post.comentarios.map((comentario, index) => (
-                            <div key={index} className="comment">
-                                <p className='comment-letter'><b>Por:</b> {comentario.usuario_propietario.username}</p>
-                                <hr className='margenhr'></hr>
-                                <div className='comment-letter'>{comentario.contenido}</div>
-                                
-                                
-                            </div>
-                        ))}
-                        <form onSubmit={handleSubmit}>
+        <div className="background-image-published">
+            <div className="post-container-detail">
+                <div className="post-card">
+                    <p className="post-date">{post.fecha}</p>
+                    <hr></hr>
+                    <h3>Subido por: {post.usuario_propietario.username}</h3>
+                    <h1 className="post-title">{post.titulo}</h1>
+                    <p className="post-description">{post.descripcion}</p>
+                    {post.imagen && <img src={`http://127.0.0.1:8000${post.imagen}`} alt="Imagen del post" className='imagen-preview-detail' />}
+                </div>
+                <div className="post-comments">
+                    <h2>Comentarios:</h2>
+                    {post.comentarios.map((comentario, index) => (
+                        <div key={index} className="comment">
+                            <p className='comment-letter'><b>Por:</b> {comentario.usuario_propietario.username}</p>
+                            <hr className='margenhr'></hr>
+                            <div className='comment-letter'>{comentario.contenido}</div>
+
+
+
+
+
+                        </div>
+                    ))}
+                    <form onSubmit={handleSubmit}>
                         <div>
                             <input
                                 type="text"
@@ -99,14 +109,15 @@ function PostDetail() {
                         </div>
                         <button type="submit" className="comment-button">Enviar</button>
                         <p>Caracteres ingresados: {nuevoComentario.length}/200</p>
-                        </form>
-                    </div>
+                        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                    </form>
                 </div>
-                
-                
-                    <Link to="/SignIn" className={"signin-link-from-postdetail"}>Volver al inicio</Link>
-                
             </div>
+
+
+            <Link to="/SignIn" className={"signin-link-from-postdetail"}>Volver al inicio</Link>
+
+        </div>
     );
 }
 

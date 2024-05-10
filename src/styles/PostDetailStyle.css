@@ -9,25 +9,31 @@
     height: 100vh;
 }
 
-.post-container {
+.post-container-detail {
     max-width: 35%;
-    /* Ancho máximo de la publicación */
     margin: 0 auto;
-    /* Centrar la publicación en la pantalla */
     padding: 2vw;
-    /* Añadir un espacio alrededor de la publicación */
-    
 }
 
+
+
+.imagen-preview-detail {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    vertical-align: middle;
+}
+
+
 .post-card {
-    
+
     background-color: #f2f0e4;
     border-radius: 15px;
     padding: 10%;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border: none;
     margin-bottom: 4%;
-    overflow: auto; 
+    overflow: auto;
 }
 
 .post-title {
@@ -60,7 +66,8 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     margin-bottom: 20px;
     /* Espacio debajo de la sección de comentarios */
-    overflow-y: auto; /* Añadir barra de desplazamiento vertical */
+    overflow-y: auto;
+    /* Añadir barra de desplazamiento vertical */
     max-height: 23em;
 }
 
@@ -75,12 +82,12 @@
     overflow-y: auto;
 }
 
-.comment-letter{
+.comment-letter {
     margin-top: 1%;
     margin-left: 3%;
 }
 
-.input-field-comment{
+.input-field-comment {
     border-radius: 15px;
     border: none;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -90,45 +97,46 @@
     /* Ajusta la altura según sea necesario */
     font-size: large;
     width: 99%;
-    
+
 }
 
-.comment-button{
+.comment-button {
     border-radius: 15px;
     height: 4.5vh;
     width: 99.6%;
-    border:none;
+    border: none;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    background-color:#bf4c41;
-    color:#f2f0e4;
+    background-color: #bf4c41;
+    color: #f2f0e4;
     overflow: auto;
 }
 
-.comment-button:hover{
+.comment-button:hover {
     background-color: #734429;
-    color:#f2f0e4;
-    
+    color: #f2f0e4;
+
 }
 
-.signin-link-from-postdetail{
-  text-decoration: none;
-  padding: 15px 30px;
-  font-size: 1.5em;
-  background-color: #bf4c41;
-  border-color: #f2ada7;
-  border-radius: 5px;
-  color: black;
-  position: absolute;
-  top: 4.4%;
-  left: 15%;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;}
+.signin-link-from-postdetail {
+    text-decoration: none;
+    padding: 15px 30px;
+    font-size: 1.5em;
+    background-color: #bf4c41;
+    border-color: #f2ada7;
+    border-radius: 5px;
+    color: black;
+    position: absolute;
+    top: 4.4%;
+    left: 15%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
 
-.signin-link-from-postdetail:hover{
-  background-color: #734429;
-  color: #f2f0e4
+.signin-link-from-postdetail:hover {
+    background-color: #734429;
+    color: #f2f0e4
 }
 
 
-.margenhr{
+.margenhr {
     margin-top: -15px;
 }

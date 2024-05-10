@@ -1,0 +1,24 @@
+/* styles.css */
+.post-container {
+    margin-bottom: 20px;
+    /* Espacio entre cada publicación */
+    border: 1px solid black;
+    /* Borde negro alrededor de cada publicación */
+    padding: 10px;
+    /* Espacio interno dentro de cada publicación */
+}
+
+.author {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    /* Espacio entre el autor y el título */
+    text-align: center;
+    /* Centra el texto del autor */
+}
+
+.title {
+    font-size: 24px;
+    margin-bottom: 10px;
+    /* Espacio entre el título y el siguiente autor */
+}
