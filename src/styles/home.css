@@ -37,26 +37,52 @@
     padding: 8px 0;
 }
 
-.menu-button {
+.buttons-container {
     position: absolute;
+    width: 100%;
+    height: 12%;
     top: 4vh;
     left: 5vw;
-    z-index: 9999; /* Asegura que el botón del menú esté arriba de otros elementos */
+    z-index: 9999;
+    display: inline-block;
+
+}
+
+.menu-button {
     border-radius: 15px;
     width: 6%;
     height: 36%;
-    color:#f2f0e4;
+    color: #f2f0e4;
     background-color: #bf4c41;
     border-color: #bf4c41;
     font-size: large;
-    overflow: hidden; /* Oculta el texto que se desborde */
+    overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
 }
 
-.menu-button:hover{
+.menu-button:hover {
     background-color: #a67c63;
-    color:#f2f0e4;
+    transition: color 0.2s;
+}
+
+.publicar-button {
+    position: absolute;
+    left: 65%;
+    border-radius: 15px;
+    width: 6%;
+    height: 36%;
+    color: #f2f0e4;
+    background-color: #a67c63;
+    border-color: #a67c63;
+    font-size: large;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.publicar-button:hover {
+    background-color: #bf4c41;
     transition: color 0.2s;
 }
 
@@ -102,28 +128,7 @@
     text-overflow: ellipsis;
 }
 
-.publicar-button{
-    position: absolute;
-    top: 4vh;
-    left: 70%;
-    z-index: 9999; 
-    border-radius: 15px;
-    width: 6%;
-    height: 36%;
-    color:#f2f0e4;
-    background-color: #a67c63;
-    border-color: #a67c63;
-    font-size: large;
-    overflow: hidden; /* Oculta el texto que se desborde */
-    text-overflow: ellipsis;
-    cursor: pointer;
-}
 
-.publicar-button:hover{
-    background-color: #bf4c41;
-    color:#f2f0e4;
-    transition: color 0.2s;
-}
 
 
 .cerrar-sesion-button{
@@ -160,7 +165,9 @@
 .title-most-searched {
     position: absolute;
     left: 11.5%;
+    top:11%;
     transition: transform 0.5s ease;
+    
 }
 
 .slide-right {
@@ -310,3 +317,42 @@ a {
     position: fixed;
     z-index: 999;
 }
+
+.signin-post-container {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: inline-block;
+    margin: 2% 2.5%;
+    max-width: 20%;
+    min-width: 20%;
+    border-radius: 15px;
+    background-color: #f2ada7;
+    text-align: center;
+}
+
+.signin-post-container:hover{
+    animation-name: animate__flipInY;
+    animation-duration: 0.5s;
+}
+
+.post-image {
+    width: 100%;
+    height: auto;
+    max-height: 200px; /* Ajusta este valor según tus necesidades */
+    border-radius: 15px;
+}
+
+
+.author-signin{
+
+}
+
+.title-signin{
+
+}
+
+.backgroundHome{
+    margin-bottom: 1.4%;
+    overflow-x: hidden;
+    
+}
+

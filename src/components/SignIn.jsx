@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/home.css';
 import 'animate.css';
 import logoImg from '../logo_1/logo_1_sinfondo.png';
-import { Link } from 'wouter';
+import { Link, Redirect } from 'wouter';
+import { getAllPosts } from '../api/trueque.api';
+import '../styles/PostList.css'
 
 function SignIn() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -24,84 +26,69 @@ function SignIn() {
     }
 
     const handleLogout = () => {
-        localStorage.removeItem('token'); // 
+        localStorage.removeItem('token');
         localStorage.removeItem("token-info");
-        setIsLoggedIn(false); // Actualiza el estado de isLoggedIn a false
+        setIsLoggedIn(false);
         window.location.href = "/Login";
     };
 
+    const [posts, setPosts] = useState([]);
+    const [redirect, setRedirect] = useState(null); // Estado para redirección
+
+    useEffect(() => {
+        async function loadPosts() {
+            const res = await getAllPosts();
+            console.log(res.data);
+            setPosts(res.data);
+        }
+        loadPosts();
+    }, []);
+
+    const handlePostClick = (id) => {
+        setRedirect(`/post/${id}`);
+    };
+
+    if (redirect) {
+        return <Redirect to={redirect} />;
+    }
+
     return (
         <div className="backgroundHome">
-            {/* <input type="text" className="search-box " placeholder="¿Qué estás buscando?" />
-            <button className="buscar-button">Buscar</button> */}
-
-            <Link to="/Post" className="post-link">
-                <button className="publicar-button">Publicar</button>
-            </Link>
-
+            <div className="buttons-container">
+                <button className="menu-button" onClick={toggleMenu}>Menú</button>
+                <Link to="/Post" className="post-link">
+                    <button className="publicar-button">Publicar</button>
+                </Link>
+                
+            </div>
             <a href="/" onClick={handleLogoClick}> <img src={logoImg} alt="Logo" className="logo" /> </a>
             <div className="rectangle"></div>
-            <h1 className={`title-most-searched ${menuOpen ? 'slide-right' : ''}`}>Mas destacados</h1>
+            <div className="backgroundHome">
+                <br /> {/* Salto de línea antes del título */}
+                <h1 className={`title-most-searched ${menuOpen ? 'slide-right' : ''}`}>Mas destacados</h1>
+            </div>
+            <div className='separate-div'></div>
+            <div>
+                {posts.map(post => (
+                    <Link key={post.id} to={`/post/${post.id}`} onClick={() => handlePostClick(post.id)}>
+                        <div className="signin-post-container animate__animated animate__flipInY">
+                            <h3 className="author-signin">
+                                Autor: {post.usuario_propietario.username}
+                            </h3>
+                            <h2 className="title-signin ">
+                                {post.titulo}
+                            </h2>
+                            <img src={post.imagen} alt="Imagen del post" className="post-image" />
+                        </div>
+                    </Link>
+                ))}
+            </div>
             <div className={`menu ${menuOpen ? 'open' : ''}`} style={{ overflow: 'auto' }}>
-                {/* <ul>
-                    <li>
-                        <h1 className={`texto-caracteristicas-menu-negritas`}>
-                            Categorias
-                        </h1>
-                    </li>
-                    <li>
-                        <h1 className={`texto-caracteristicas-menu`}>
-                            <a href="#">Categoria 1</a>
-                        </h1>
-                    </li>
-                    <li>
-                        <h1 className={`texto-caracteristicas-menu`}>
-                            <a href="#">Categoria 2</a>
-                        </h1>
-                    </li>
-                    <li>
-                        <h1 className={`texto-caracteristicas-menu`}>
-                            <a href="#">Categoria 3</a>
-                        </h1>
-                    </li>
-                    <li>
-                        <h1 className={`texto-caracteristicas-menu`}>
-                            <a href="#">Categoria 4</a>
-                        </h1>
-                    </li>
-
-                    <li>
-                        <h1 className={`texto-caracteristicas-menu-negritas texto-rango-de-precio-menu`}>
-                            <div className="dropdown">
-                                <button className="dropbtn">{selectedOption}</button>
-                                <div className="dropdown-content">
-                                    <a href="#" onClick={() => selectOption('Rango de precios')}> Rango de precios</a>
-                                    <a href="#" onClick={() => selectOption('-$5000')}>-$5000</a>
-                                    <a href="#" onClick={() => selectOption('$5000 a $10000')}>$5000 a $10000</a>
-                                    <a href="#" onClick={() => selectOption('+$10000')}>+$10000</a>
-                                </div>
-                            </div>
-                        </h1>
-                    </li>
-                </ul>
-                <h1 className={`texto-caracteristicas-menu-negritas`}>
-                    Contáctanos
-                </h1>
-
-                <Link to="/Form" className="form-link">
-                    <button className="form-button">Rellenar formulario</button>
-                </Link>
-
-                <div className="texto-configuracion-menu-negritas">
-                    <Link to="/Config" className="configuration-link">Configuración</Link>
-                </div> */}
-
                 <button className="cerrar-sesion-button" onClick={handleLogout}>Cerrar sesión</button>
             </div>
-
-            <button className="menu-button" onClick={toggleMenu}>Menú</button>
         </div>
     );
+
 }
 
 export default SignIn;
