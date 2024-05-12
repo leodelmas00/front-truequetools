@@ -1,11 +1,22 @@
 /* styles.css */
-.post-container {
+.list-post-container {
+    background-color: #f2ada7;
+    margin-top: 2%;
+    border-radius: 15px;
     margin-bottom: 20px;
-    /* Espacio entre cada publicación */
-    border: 1px solid black;
-    /* Borde negro alrededor de cada publicación */
-    padding: 10px;
-    /* Espacio interno dentro de cada publicación */
+    margin-left: 2%;
+    margin-right: 2%;
+    border: none;
+    padding: 2%;
+    display:inline-block;
+    max-width: 25%;
+    min-width: 25%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    
+}
+
+.list-post-container:hover{
+    color: #bf4c41;
 }
 
 .author {
@@ -17,8 +28,27 @@
     /* Centra el texto del autor */
 }
 
-.title {
+.title-list-post {
     font-size: 24px;
     margin-bottom: 10px;
     /* Espacio entre el título y el siguiente autor */
 }
+
+.bottom-page{
+    position:absolute;
+    top:80%;
+    left: 15%;
+    border-radius: 15px;
+    border: none;
+    background-color: #bf4c41;
+    color: white;
+    cursor:pointer;
+    height: 8%;
+    width: 10%;
+    font-size: larger;
+}
+
+.bottom-page:hover{
+    background-color: #734429;
+}
+
