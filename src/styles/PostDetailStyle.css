@@ -140,3 +140,32 @@
 .margenhr {
     margin-top: -15px;
 }
+
+.reply-section {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.input-field-reply {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.reply-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 20px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.reply-button:hover {
+    background-color: #45a049;
+}

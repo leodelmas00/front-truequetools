@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { baseURL } from '../api/trueque.api';
 import { useParams } from "wouter";
@@ -11,8 +11,6 @@ function PostDetail() {
     const params = useParams();
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
-    const [shouldScroll, setShouldScroll] = useState(false); // Estado para controlar el desplazamiento
-    const bottomRef = useRef(null); // Referencia al elemento al final de la página
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -24,6 +22,7 @@ function PostDetail() {
                     }
                 });
                 setPost(response.data);
+                console.log(response.data.imagen)
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -39,6 +38,7 @@ function PostDetail() {
     const handleInputChange = (event) => {
         setNuevoComentario(event.target.value);
     };
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -61,18 +61,13 @@ function PostDetail() {
                     comentarios: [...prevPost.comentarios, response.data]
                 }));
                 setNuevoComentario('');
+                setErrorMessage('')
             }
         } catch (error) {
             console.error(error);
         }
     };
 
-    useEffect(() => {
-        if (shouldScroll && bottomRef.current) {
-            bottomRef.current.scrollIntoView({ behavior: 'smooth' });
-            setShouldScroll(false); // Reiniciar el estado después del desplazamiento
-        }
-    }, [shouldScroll]);
 
     if (loading) {
         return <div>Cargando...</div>;
@@ -96,6 +91,15 @@ function PostDetail() {
                             <p className='comment-letter'><b>Por:</b> {comentario.usuario_propietario.username}</p>
                             <hr className='margenhr'></hr>
                             <div className='comment-letter'>{comentario.contenido}</div>
+                            <div className='reply-section'>
+                                <input
+                                    type="text"
+                                    placeholder="Responder..."
+                                    className="input-field-reply"
+                                    maxLength={200}
+                                />
+                                <button className="reply-button">Enviar</button>
+                            </div>
                         </div>
                     ))}
                     <form onSubmit={handleSubmit}>
@@ -116,11 +120,8 @@ function PostDetail() {
                 </div>
             </div>
 
-            {post.comentarios.length > 0 && (
-                <button className='bottom-page' onClick={() => setShouldScroll(true)}>Ver comentarios</button>
-            )}
 
-            <div ref={bottomRef} /> {/* Elemento al final de la página */}
+            <Link to="/SignIn" className={"signin-link-from-postdetail"}>Volver al inicio</Link>
 
         </div>
     );

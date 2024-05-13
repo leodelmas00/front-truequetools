@@ -27,6 +27,7 @@ function App() {
       <Route path="/CommentList" component={CommentList} />
       <Route path="/Post/:postId" component={PostDetail} />
       <Route path="/PostList" component={PostList} />
+
     </Switch>
   );
 }
