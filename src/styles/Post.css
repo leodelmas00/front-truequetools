@@ -163,8 +163,8 @@
 }
 
 .eliminar-foto-button {
-    background-color: #f44336;
-    color: white;
+    background-color: #f2f0e4;
+    color: black;
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
@@ -172,6 +172,12 @@
     font-size: 16px;
     margin-top: 10px;
     /* Agrega un margen superior para separar del botón */
+}
+
+.eliminar-foto-button:hover{
+    background-color: #a67c63;
+
+
 }
 
 
@@ -191,3 +197,4 @@
 .custom-file-upload:hover {
     background-color: #f2ada7;
 }
+
