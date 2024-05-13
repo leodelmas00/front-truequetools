@@ -61,11 +61,13 @@ function PostDetail() {
                     comentarios: [...prevPost.comentarios, response.data]
                 }));
                 setNuevoComentario('');
+                setErrorMessage('')
             }
         } catch (error) {
             console.error(error);
         }
     };
+
 
     if (loading) {
         return <div>Cargando...</div>;
@@ -89,11 +91,15 @@ function PostDetail() {
                             <p className='comment-letter'><b>Por:</b> {comentario.usuario_propietario.username}</p>
                             <hr className='margenhr'></hr>
                             <div className='comment-letter'>{comentario.contenido}</div>
-
-
-
-
-
+                            <div className='reply-section'>
+                                <input
+                                    type="text"
+                                    placeholder="Responder..."
+                                    className="input-field-reply"
+                                    maxLength={200}
+                                />
+                                <button className="reply-button">Enviar</button>
+                            </div>
                         </div>
                     ))}
                     <form onSubmit={handleSubmit}>
