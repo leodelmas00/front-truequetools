@@ -2,21 +2,52 @@ import axios from 'axios';
 export const baseURL = 'http://127.0.0.1:8000/api/'
 
 export const getAllPosts = () => {
-    return axios.get(`${baseURL}publicaciones/`)
+    const token = localStorage.getItem('token');
+
+    return axios.get(`${baseURL}publicaciones/`, {
+        headers: {
+            Authorization: `Token ${token}`
+        }
+    });
 }
 
+
 export const getAllUsers = () => {
-    return axios.get(`${baseURL}usuarios/`)
+    const token = localStorage.getItem('token');
+
+    return axios.get(`${baseURL}usuarios/`, {
+        headers: {
+            Authorization: `Token ${token}`
+        }
+    });
 }
 
 export const getAllComments = () => {
-    return axios.get(`${baseURL}comentarios/`)
+    const token = localStorage.getItem('token');
+
+    return axios.get(`${baseURL}comentarios/`, {
+        headers: {
+            Authorization: `Token ${token}`
+        }
+    });
 }
 
 export const getAllCategorias = () => {
-    return axios.get(`${baseURL}categorias/`)
+    const token = localStorage.getItem('token');
+
+    return axios.get(`${baseURL}categorias/`, {
+        headers: {
+            Authorization: `Token ${token}`
+        }
+    });
 }
 
 export const getAllSucursales = () => {
-    return axios.get(`${baseURL}sucursales/`)
+    const token = localStorage.getItem('token');
+
+    return axios.get(`${baseURL}sucursales/`, {
+        headers: {
+            Authorization: `Token ${token}`
+        }
+    });
 }
