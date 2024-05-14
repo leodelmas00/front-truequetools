@@ -7,10 +7,18 @@ import '../styles/PostDetailStyle.css';
 
 function PostDetail() {
     const [post, setPost] = useState(null);
-    const [nuevoComentario, setNuevoComentario] = useState('');
     const params = useParams();
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
+    const [nuevoComentario, setNuevoComentario] = useState('');
+    const [reply, setReply] = useState(null);
+
+
+    useEffect(() => {
+        console.log(reply)
+
+
+    }, [reply])
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -37,6 +45,35 @@ function PostDetail() {
 
     const handleInputChange = (event) => {
         setNuevoComentario(event.target.value);
+    };
+
+    const handleReplyChange = (event) => {
+        setReply(event.target.value);
+    };
+
+
+    const handleSubmitReply = async (comentarioId, event) => {
+        event.preventDefault();
+        if (reply.trim() === '') {
+            setErrorMessage('No es posible publicar una respuesta vacía');
+            return;
+        }
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.post(`${baseURL}post/${params.postId}/comments/${comentarioId}/`, {
+                contenido: reply
+            }, {
+                headers: {
+                    Authorization: `Token ${token}`,
+                }
+            });
+            if (response.status === 201 && response.data) {
+                setReply(response.data);
+            }
+        } catch (error) {
+            console.error(error);
+            setErrorMessage(error)
+        }
     };
 
 
@@ -97,9 +134,24 @@ function PostDetail() {
                                     placeholder="Responder..."
                                     className="input-field-reply"
                                     maxLength={200}
+                                    onChange={handleReplyChange}
+                                    disabled={comentario.respuesta !== null} // Deshabilitar el input si ya hay una respuesta
                                 />
-                                <button className="reply-button">Enviar</button>
+                                <button
+                                    className="reply-button"
+                                    onClick={(event) => handleSubmitReply(comentario.id, event)}
+                                    disabled={comentario.respuesta !== null} // Deshabilitar el botón si ya hay una respuesta
+                                >
+                                    Enviar
+                                </button>
                             </div>
+                            {comentario.respuesta && (
+                                <div className="respuesta-container">
+                                    <div className="respuesta">
+                                        <p className='comment-letter respuesta-letter'><b>Respuesta:</b> {comentario.respuesta.contenido}</p>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     ))}
                     <form onSubmit={handleSubmit}>
@@ -119,12 +171,11 @@ function PostDetail() {
                     </form>
                 </div>
             </div>
-
-
             <Link to="/SignIn" className={"signin-link-from-postdetail"}>Volver al inicio</Link>
-
         </div>
     );
+
+
 }
 
 export default PostDetail;
