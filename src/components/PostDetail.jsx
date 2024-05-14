@@ -7,11 +7,18 @@ import '../styles/PostDetailStyle.css';
 
 function PostDetail() {
     const [post, setPost] = useState(null);
-    const [nuevoComentario, setNuevoComentario] = useState('');
     const params = useParams();
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
-    const [reply, setReply] = useState('');
+    const [nuevoComentario, setNuevoComentario] = useState('');
+    const [reply, setReply] = useState(null);
+
+
+    useEffect(() => {
+        console.log(reply)
+
+
+    }, [reply])
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -61,15 +68,11 @@ function PostDetail() {
                 }
             });
             if (response.status === 201 && response.data) {
-                setPost(prevPost => ({
-                    ...prevPost,
-                    comentarios: [...prevPost.comentarios, response.data]
-                }));
-                setReply('');
-                setErrorMessage('')
+                setReply(response.data);
             }
         } catch (error) {
             console.error(error);
+            setErrorMessage(error)
         }
     };
 
