@@ -169,3 +169,15 @@
 .reply-button:hover {
     background-color: #45a049;
 }
+
+.respuesta-container {
+    margin-left: 20px;
+    /* Añade una sangría a la respuesta */
+}
+
+.respuesta {
+    background-color: #f0f0f0;
+    /* Cambia el color de fondo de la respuesta */
+    padding: 10px;
+    /* Añade un poco de espacio alrededor de la respuesta */
+}
