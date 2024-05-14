@@ -5,6 +5,8 @@ import 'animate.css';
 import logoImg from '../logo_1/logo_1_sinfondo.png';
 import { Link } from 'wouter';
 import { baseURL } from '../api/trueque.api';
+import { getAllPosts } from '../api/trueque.api';
+import { Redirect } from 'wouter';
 
 function SignIn() {
     const [menuOpen, setMenuOpen] = useState(false);
