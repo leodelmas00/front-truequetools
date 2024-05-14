@@ -1,101 +1,3 @@
-*{}
-
-.container-signup {
-    background: url("../logo_1/FONDO_LOGIN.png") no-repeat center;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    
-}
-
-.container-signup .titulo{
-    font-size: 6em;
-    text-align: center;
-    font-weight: bold;
-    
-}
-
-.container-signup .subtitulo{
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 2rem;
-    font-size: 1.5em;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    
-}
-
-.container-signup .cajaFormulario{ 
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    width: 40rem;
-    height: 36rem;
-    background-color: #f2ada7;
-    border-radius: 1rem;
-    border-color: black;
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-    
-}
-
-.container-signup form{ /* Formulario */
-    width: 36rem;
-    height: 32rem;
-    display: flex;
-    position: relative;
-    position: fixed;
-    font-size: 1.4rem;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    
-}
-
-.container-signup .formIzq, .formDer {
-    flex: 1;
-}
-
-.container-signup .fecha input {
-    width: 4rem;
-    margin-right: 0.4rem;
-}
-
-.container-signup input {
-    width: 16rem;
-    height: 2rem;
-    font-size: 1rem;
-}
-
-.container-signup select {
-    align-self: center;
-
-    font-size: 1rem;
-}
-
-.container-signup .botonRegistrar {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    margin-right: 35px;
-}
-
-.container-signup button {
-    height: 2rem;
-    font-size: 1rem;
-    border-radius: 15px;
-    background-color: #bf4c41;
-    color: #f2f0e4;
-}
-
-.container-signup button:hover{
-    background-color: #f2f0e4;
-    color: #bf4c41;
-}
-
-
-.container-signup form div {
-    margin-bottom: 1.5rem;
-}
-
 .container-signup .background-img {
     background: url("../logo_1/FONDO_LOGIN.png") no-repeat center;
     background-size: cover;
@@ -105,17 +7,85 @@
     max-height: 1080px;
 }
 
+.container-signup {
+    display: flex;
+    position: flex;
+}
+
+.container-signup .cajaFormulario{ 
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+    width: 46rem;
+    height: 42rem;
+    background-color: #f2ada7;
+    border-radius: 1rem;
+    border-color: black;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.container-signup .titulo{
+    font-size: 600%;
+    text-align: center;
+    font-weight: bold;
+    
+}
+
+.container-signup .subtitulo{
+    text-align: center;
+    font-weight: bold;
+    font-size: 150%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.container-signup form{ /* Formulario */
+    width: 50rem;
+    height: 16rem;
+    font-size: 1.4rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+}
+
+.container-signup input {
+    width: 16rem;
+    height: 2rem;
+    font-size: 1rem;
+}
+
+.container-signup select {
+    width: 16rem;
+    height: 2.5rem;
+    align-self: center;
+    font-size: 1rem;
+}
+
+.container-signup button {
+    height: 2rem;
+    font-size: 1rem;
+    border-radius: 15px;
+    background-color: #bf4c41;
+    color: #f2f0e4;
+    margin-top: 2%;
+}
+
+.container-signup button:hover{
+    background-color: #f2f0e4;
+    color: #bf4c41;
+}
+
 .input-user{
     border-radius: 15px;
     text-align: center;
     border: none;
-    padding: 10px;
+    padding: 4px;
     font-size:small;
-    
 }
 
 .input-select-sucursal{
     border-radius: 15px;
     width: 48%;
-    
+}
+
+.container-signup div{
+    margin-bottom: 6px;
 }

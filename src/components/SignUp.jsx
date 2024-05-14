@@ -63,29 +63,28 @@ function SignUp() {
     return (
         <div className="container background-img">
             <div className='container-signup'>
-                <div>
-                    <header className="titulo"> Trueque<span style={{ color: '#BF4C41' }}>Tools</span> </header>
-                    <p className="subtitulo"> Registrarse, ¡más fácil que nunca! </p>
-                    <div className='cajaFormulario' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem' }}>
-                                <div style={{ marginBottom: '0.5rem' }}>Nombre de usuario</div>
-                                <input className="input-user" name="username" placeholder="Ingrese su nombre de usuario" required onChange={handleChange} style={{ fontSize: '20px' }} />
+                    <div className='cajaFormulario'>
+                        <header className="titulo"> Trueque<span style={{ color: '#BF4C41' }}>Tools</span> </header>
+                        <div> <p className="subtitulo"> Registrarse, ¡más fácil que nunca! </p> </div>
+                        <form onSubmit={handleSubmit}>
+                            <div>
+                                <div>Nombre de usuario</div>
+                                <input className="input-user" name="username" placeholder="Ingrese su nombre de usuario" required onChange={handleChange} />
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem' }}>
-                                <div style={{ marginBottom: '0.5rem' }}>Correo electrónico</div>
-                                <input className="input-user" placeholder="Ingrese su correo" name="email" type="email" required onChange={handleChange} style={{ fontSize: '20px' }} />
+                            <div>
+                                <div>Correo electrónico</div>
+                                <input className="input-user" placeholder="Ingrese su correo" name="email" type="email" required onChange={handleChange} />
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem' }}>
-                                <div style={{ marginBottom: '0.5rem' }}>Contraseña</div>
+                            <div>
+                                <div>Contraseña</div>
                                 <input className="input-user" placeholder="Ingrese su contraseña" type="password" name="password" required onChange={handleChange} />
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1rem' }}>
-                                <div style={{ marginBottom: '0.5rem' }}>Fecha de nacimiento</div>
+                            <div>
+                                <div>Fecha de nacimiento</div>
                                 <input className='input-user' type="date" name="fecha_de_nacimiento" placeholder="Dia" required onChange={handleChange} />
                             </div>
 
-                            <div className="input-container" style={{ marginBottom: '1rem' }}>Sucursal favorita</div>
+                            <div className="input-container">Sucursal favorita</div>
                             <select
                                 name="sucursal_favorita"
                                 value={form.sucursal_favorita}
@@ -100,10 +99,9 @@ function SignUp() {
                                 ))}
                             </select>
                             {error && <h5 className="error-message">{error}</h5>}
-                            <div className="botonRegistrar" style={{ marginBottom: '1rem' }}><button>Registrarse</button></div>
+                            <div className="botonRegistrar"> <button>Registrarse</button></div>
                         </form>
                     </div>
-                </div>
             </div>
         </div>
     );
