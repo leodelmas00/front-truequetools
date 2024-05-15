@@ -11,6 +11,15 @@ export const getAllPosts = () => {
     });
 }
 
+export const getUserInfo = () => {
+    const token = localStorage.getItem('token');
+
+    return axios.get(`${baseURL}user-info/`, {
+        headers: {
+            Authorization: `Token ${token}`
+        }
+    });
+}
 
 export const getAllUsers = () => {
     const token = localStorage.getItem('token');

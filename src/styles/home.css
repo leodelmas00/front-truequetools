@@ -1,3 +1,53 @@
+.menu-button {
+    position: absolute;
+    top: 2vh;
+    left: 3vw;
+    z-index: 9999;
+    border-radius: 15px;
+    width: 6%;
+    height: 3%;
+    color: #f2f0e4;
+    background-color: #a67c63;
+    border-color: #a67c63;
+    font-size: large;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+
+.menu-button:hover {
+    background-color: #bf4c41;
+    color: #f2f0e4;
+    transition: color 0.2s;
+}
+
+.publicar-button {
+    position: absolute;
+    top: 2vh;
+    left: 80%;
+    z-index: 9999;
+    border-radius: 15px;
+    width: 6%;
+    height: 3%;
+    margin-bottom: 10%;
+    color: #f2f0e4;
+    background-color: #a67c63;
+    border-color: #a67c63;
+    font-size: large;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.publicar-button:hover {
+    background-color: #bf4c41;
+    color: #f2f0e4;
+    transition: color 0.2s;
+}
+
+
+
 .backgroundHome {
     position: relative;
     /* Asegura que el menú esté posicionado correctamente dentro de este contenedor */
@@ -25,8 +75,8 @@
 
 .menu.open {
     display: block;
-    width: 15%;
-    height: 86.9vh;
+    width: 10%;
+    height: 100%;
     background-color: #f2ada7;
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     font-size: large;
@@ -70,10 +120,6 @@
     cursor: pointer;
 }
 
-.menu-button:hover {
-    background-color: #a67c63;
-    transition: color 0.2s;
-}
 
 .buscar-button {
     position: absolute;
@@ -130,33 +176,6 @@
     text-overflow: ellipsis;
 }
 
-
-.publicar-button {
-    position: absolute;
-    top: 4vh;
-    left: 70%;
-    z-index: 9999;
-    border-radius: 15px;
-    width: 6%;
-    height: 36%;
-    color: #f2f0e4;
-    background-color: #a67c63;
-    border-color: #a67c63;
-    font-size: large;
-    overflow: hidden;
-    /* Oculta el texto que se desborde */
-    text-overflow: ellipsis;
-    cursor: pointer;
-}
-
-.publicar-button:hover {
-    background-color: #bf4c41;
-    color: #f2f0e4;
-    transition: color 0.2s;
-}
-
-
-
 .cerrar-sesion-button {
     position: absolute;
     top: 80vh;
@@ -164,7 +183,7 @@
     z-index: 9999;
     border-radius: 15px;
     width: 50%;
-    height: 6%;
+    height: 3%;
     color: #f2f0e4;
     background-color: #a67c63;
     border-color: #a67c63;
@@ -192,11 +211,11 @@
 }
 
 .title-most-searched {
-    position: absolute;
     left: 11.5%;
-    top:11%;
-    transition: transform 0.5s ease;
-    
+    top: 10%;
+    margin-bottom: 20px;
+    transition: transform 0.7s ease;
+
 }
 
 .slide-right {
@@ -382,35 +401,18 @@ a:hover {
     margin: 2% 2.5%;
     max-width: 20%;
     min-width: 20%;
+    min-height: 80%;
     border-radius: 15px;
     background-color: #f2ada7;
     text-align: center;
 }
 
-.signin-post-container:hover{
-    animation-name: animate__flipInY;
-    animation-duration: 0.5s;
-}
 
 .post-image {
     width: 100%;
     height: auto;
-    max-height: 200px; /* Ajusta este valor según tus necesidades */
+    max-height: 200px;
+    background-size: contain;
+    /* Ajusta este valor según tus necesidades */
     border-radius: 15px;
 }
-
-
-.author-signin{
-
-}
-
-.title-signin{
-
-}
-
-.backgroundHome{
-    margin-bottom: 1.4%;
-    overflow-x: hidden;
-    
-}
-

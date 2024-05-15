@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
 import '../styles/login.css';
 import '../styles/Post.css';
 import 'animate.css';
-import { getAllCategorias, getAllSucursales } from '../api/trueque.api';
+import { getAllCategorias, getAllSucursales, getUserInfo } from '../api/trueque.api';
 import axios from 'axios';
 import { baseURL } from '../api/trueque.api';
 
 function PostProduct() {
+    const [userInfo, setUserInfo] = useState(null)
+
     const [form, setForm] = useState({
         titulo: '',
         descripcion: '',
         categoria: '',
         sucursal_destino: '',
-        imagen: null, // Añade un estado para la imagen
+        imagen: null,
     });
     const [categorias, setCategorias] = useState([]);
     const [sucursales, setSucursales] = useState([]);
@@ -34,6 +36,21 @@ function PostProduct() {
         loadCategorias();
         loadSucursales();
     }, []);
+
+    useEffect(() => {
+        async function loadUserInfo() {
+            const res = await getUserInfo();
+            setUserInfo(res.data);
+            if (res.data && res.data.sucursal_favorita) {
+                setForm(prevState => ({
+                    ...prevState,
+                    sucursal_destino: res.data.sucursal_favorita.id
+                }));
+            }
+        }
+        loadUserInfo();
+    }, []);
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -59,12 +76,14 @@ function PostProduct() {
 
             if (response.status === 201 && response.data.id) {
                 setLocation(`/post/${response.data.id}`);
+                setError('')
             } else {
-                setError('Los datos ingresados no son válidos, por favor inténtelo nuevamente');
+                setError('Porfavor, verifica los datos ingresados');
+                console.log(error.data)
             }
         } catch (error) {
             console.error('Error:', error);
-            setError('Los datos ingresados no son válidos, por favor inténtelo nuevamente');
+            setError('Porfavor, verifica los datos ingresados');
         }
     };
 
@@ -75,6 +94,7 @@ function PostProduct() {
             [name]: value
         }));
     };
+
 
     const handleImagenSeleccionada = (event) => {
         const imagenSeleccionada = event.target.files[0];
@@ -95,7 +115,7 @@ function PostProduct() {
 
     return (
         <div className="container background-img">
-            <div className="form-post-container animate__animated animate__backInDown animate__slower" style={{ overflow: 'auto' }}>
+            <div className="form-post-container" style={{ overflow: 'auto' }}>
                 <h1 className="subtitle-post">Subir publicación</h1>
                 <form>
                     <div>
@@ -140,7 +160,7 @@ function PostProduct() {
                         <div className="input-container">
                             <select
                                 name="sucursal_destino"
-                                value={form.sucursal_destino.id}
+                                value={form.sucursal_destino}
                                 onChange={handleChange}
                                 className="input-field"
                                 required
@@ -183,10 +203,13 @@ function PostProduct() {
                         <button onClick={handleSubmit} type="submit" className="signin-post-link">
                             Publicar
                         </button>
+                        {error && <h4 style={{ color: 'red' }}>{error}</h4>}
                     </div>
                 </form>
             </div>
+            <Link to="/SignIn" className={"signin-link-from-postdetail"}>Volver al inicio</Link>
         </div>
+
     );
 }
 

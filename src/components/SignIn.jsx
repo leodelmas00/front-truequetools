@@ -82,8 +82,10 @@ function SignIn() {
             </a>
             <div className="rectangle"></div>
             <div className="backgroundHome">
-                <br /> {/* Salto de línea antes del título */}
-                <h1 className={`title-most-searched ${menuOpen ? 'slide-right' : ''}`}>Mas destacados</h1>
+                <br />
+                <div>
+                    <h1 className={`title-most-searched ${menuOpen ? 'slide-right' : ''}`}>Mas destacados</h1>
+                </div>
             </div>
             <div className='separate-div'></div>
             <div>
@@ -96,7 +98,8 @@ function SignIn() {
                             <h2 className="title-signin ">
                                 {post.titulo}
                             </h2>
-                            <img src={post.imagen} alt="Imagen del post" className="post-image" />
+                            {post.imagen && <img src={post.imagen} alt="Imagen del post" className="post-image" />}
+                            <p>{Object.keys(post.comentarios).length} comentario(s)</p>
                         </div>
                     </Link>
                 ))}
