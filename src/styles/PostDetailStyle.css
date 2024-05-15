@@ -166,7 +166,11 @@
     font-size: 14px;
 }
 
-.reply-button:hover {
+.reply-button:disabled {
+    background-color: grey;
+}
+
+.reply-button:enabled:hover {
     background-color: #45a049;
 }
 
