@@ -26,6 +26,7 @@ function SignUp() {
         loadSucursales();
     }, [])
 
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (form.password.length < 6) {
@@ -34,9 +35,9 @@ function SignUp() {
         }
         try {
             const response = await axios.post(baseURL + 'register/', form);
-            console.log(response.status);
             if (response.status === 201 && response.data.token) {
                 localStorage.setItem('token', response.data.token);
+                alert("Registro exitoso!")
                 setRedirect(true);
             }
         } catch (error) {
@@ -99,7 +100,7 @@ function SignUp() {
                         >
                             <option className="input-select-sucursal" value="" disabled>Selecciona una sucursal</option>
                             {sucursales.map((sucursal, index) => (
-                                <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{sucursal.direccion}</option>
+                                <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{'(' + sucursal.direccion + ')'}</option>
                             ))}
                         </select>
                         {error && <h5 className="error-message">{error}</h5>}

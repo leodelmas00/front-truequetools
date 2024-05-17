@@ -26,14 +26,14 @@
 
 
 .post-card {
-
     background-color: #f2f0e4;
     border-radius: 15px;
     padding: 10%;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border: none;
     margin-bottom: 4%;
-    overflow: auto;
+    /* Quita el scrollbar */
+    overflow: visible;
 }
 
 .post-title {
@@ -48,7 +48,11 @@
     color: #5C4B51;
     /* Marrón oscuro */
     margin-bottom: 20px;
-    max-width: 600px;
+    /* Ajusta el ancho máximo y el margen según sea necesario */
+    max-width: 100%;
+    /* Ajusta este valor según sea necesario */
+    word-wrap: break-word;
+    /* Permite que las palabras se rompan y se ajusten al contenedor */
 }
 
 .post-date {
@@ -74,12 +78,14 @@
 .comment {
     background-color: #FFFFFF;
     /* Blanco */
-    border-radius: 15px;
+    border-radius: 5px;
     padding: 0%;
     margin-bottom: 10px;
     /* Espacio entre comentarios */
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     overflow-y: auto;
+    word-wrap: break-word;
+
 }
 
 .comment-letter {
@@ -175,13 +181,13 @@
 }
 
 .respuesta-container {
-    margin-left: 20px;
+    margin-left: 10px;
     /* Añade una sangría a la respuesta */
 }
 
 .respuesta {
-    background-color: #f0f0f0;
+    background-color: rgb(189, 211, 216);
     /* Cambia el color de fondo de la respuesta */
-    padding: 10px;
+    padding: 5px;
     /* Añade un poco de espacio alrededor de la respuesta */
 }

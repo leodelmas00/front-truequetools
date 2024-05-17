@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import '../styles/home.css';
 import 'animate.css';
@@ -11,7 +11,7 @@ import { Redirect } from 'wouter';
 function SignIn() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(true); // Agregado el estado de isLoggedIn
-
+    const postsContainerRef = useRef(null);
     const [isStaff, setIsStaff] = useState(false);
     useEffect(() => {
         fetchUserInfo();
@@ -33,8 +33,13 @@ function SignIn() {
         }
     };
 
-    const toggleMenu = () => {
+    const handleMenuToggle = () => {
         setMenuOpen(!menuOpen);
+        if (menuOpen) {
+            postsContainerRef.current.classList.add('shifted'); // Use the ref to access the element
+        } else {
+            postsContainerRef.current.classList.remove('shifted');
+        }
     };
 
     const handleLogoClick = (event) => {
@@ -68,11 +73,8 @@ function SignIn() {
     if (redirect) {
         return <Redirect to={redirect} />;
     }
-
     return (
         <div className="backgroundHome">
-
-
             <Link to="/Post" className="post-link">
                 <button className="publicar-button">Publicar</button>
             </Link>
@@ -81,17 +83,18 @@ function SignIn() {
                 <img src={logoImg} alt="Logo" className="logo" />
             </a>
             <div className="rectangle"></div>
-            <div className="backgroundHome">
-                <br />
-                <div>
-                    <h1 className={`title-most-searched ${menuOpen ? 'slide-right' : ''}`}>Mas destacados</h1>
-                </div>
-            </div>
-            <div className='separate-div'></div>
+
+            <br />
             <div>
+                <h1 className={`title-most-searched ${menuOpen ? 'slide-right' : ''}`}>Mas destacados</h1>
+            </div>
+
+            <div className='separate-div'></div>
+
+            <div className={`posts-container ${menuOpen ? 'shifted' : ''}`}>
                 {posts.map(post => (
                     <Link key={post.id} to={`/post/${post.id}`} onClick={() => handlePostClick(post.id)}>
-                        <div className="signin-post-container animate__animated animate__flipInY">
+                        <div className="signin-post-container" ref={postsContainerRef}>
                             <h3 className="author-signin">
                                 Autor: {post.usuario_propietario.username}
                             </h3>
@@ -104,6 +107,7 @@ function SignIn() {
                     </Link>
                 ))}
             </div>
+
             <div className={`menu ${menuOpen ? 'open' : ''}`} style={{ overflow: 'auto' }}>
                 <button className="cerrar-sesion-button" onClick={handleLogout}>
                     Cerrar sesión
@@ -114,11 +118,12 @@ function SignIn() {
                     </Link>
                 )}
             </div>
-            <button className="menu-button" onClick={toggleMenu}>
+            <button className="menu-button" onClick={handleMenuToggle}>
                 Menú
             </button>
         </div>
     );
+
 
 }
 
