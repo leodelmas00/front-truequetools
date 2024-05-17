@@ -43,7 +43,7 @@ function LogIn() {
 
     return (
         <div className="container background-img">
-            <div className="form-container animate__animated animate__backInDown animate__slower" style={{ overflow: 'auto' }}>
+            <div className="form-container" style={{ overflow: 'auto' }}>
                 <h1 className="title-login">Trueque<span className='colorRojo'>Tools</span></h1>
                 <h2 className="subtitle">Iniciar Sesión</h2>
                 {error && <h3 className="error-message">{error}</h3>}

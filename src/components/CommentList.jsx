@@ -37,7 +37,9 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
         <div>
             {comments.map((comentario, index) => (
                 <div key={index} className="comment">
-                    <p className='comment-letter'><b>Por:</b> {comentario.usuario_propietario.username}</p>
+                    {comentario.fecha}
+                    <hr />
+                    <p className='comment-letter'><b>Por:</b> {comentario.usuario_propietario.username} </p>
                     <hr className='margenhr' />
                     <div className='comment-letter'>{comentario.contenido}</div>
                     {userInfo && userInfo.id === postOwnerId && (
