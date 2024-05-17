@@ -4,6 +4,7 @@ import { baseURL } from '../api/trueque.api';
 import { useParams } from "wouter";
 import { Link } from 'wouter';
 import { getUserInfo } from '../api/trueque.api';
+import CommentList from './CommentList';
 import '../styles/PostDetailStyle.css';
 
 function PostDetail() {
@@ -12,10 +13,8 @@ function PostDetail() {
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
     const [nuevoComentario, setNuevoComentario] = useState('');
-    const [reply, setReply] = useState(null);
-    const [comments, setComments] = useState(null);
-    const [userInfo, setUserInfo] = useState(null)
-
+    const [comments, setComments] = useState([]);
+    const [userInfo, setUserInfo] = useState(null);
 
     useEffect(() => {
         const fetchPostAndComments = async () => {
@@ -47,62 +46,9 @@ function PostDetail() {
         }
     }, [params.postId, loading]);
 
-    // useEffect(() => {
-    //     const fetchPost = async () => {
-    //         try {
-    //             const token = localStorage.getItem('token');
-    //             const response = await axios.get(`${baseURL}post/${params.postId}/`, {
-    //                 headers: {
-    //                     Authorization: `Token ${token}`,
-    //                 }
-    //             });
-    //             setPost(response.data);
-    //             console.log(response.data.imagen)
-    //         } catch (error) {
-    //             console.error('Error:', error);
-    //         }
-    //         finally {
-    //             setLoading(false);
-    //         }
-    //     };
-    //     if (loading) {
-    //         fetchPost();
-    //     }
-    // }, [params.postId, loading]);
-
     const handleInputChange = (event) => {
         setNuevoComentario(event.target.value);
     };
-
-    const handleReplyChange = (event) => {
-        setReply(event.target.value);
-    };
-
-
-    const handleSubmitReply = async (comentarioId, event) => {
-        event.preventDefault();
-        if (!reply || reply.trim() === '') {
-            setErrorMessage('No es posible publicar una respuesta vacía');
-            return;
-        }
-        try {
-            const token = localStorage.getItem('token');
-            const response = await axios.post(`${baseURL}post/${params.postId}/comments/${comentarioId}/`, {
-                contenido: reply
-            }, {
-                headers: {
-                    Authorization: `Token ${token}`,
-                }
-            });
-            if (response.status === 201 && response.data) {
-                setReply(response.data);
-            }
-        } catch (error) {
-            console.error(error);
-            setErrorMessage(error)
-        }
-    };
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -120,18 +66,23 @@ function PostDetail() {
                 }
             });
             if (response.status === 201 && response.data) {
-                setPost(prevPost => ({
-                    ...prevPost,
-                    comentarios: [...prevPost.comentarios, response.data]
-                }));
+                setComments(prevComments => [...prevComments, response.data]);
                 setNuevoComentario('');
-                setErrorMessage('')
+                setErrorMessage('');
             }
         } catch (error) {
             console.error(error);
+            setErrorMessage(error.message || 'Algo salió mal');
         }
     };
 
+    const updateComments = (comentarioId, respuesta) => {
+        setComments(prevComments =>
+            prevComments.map(comment =>
+                comment.id === comentarioId ? { ...comment, respuesta } : comment
+            )
+        );
+    };
 
     if (loading) {
         return <div>Cargando...</div>;
@@ -150,39 +101,14 @@ function PostDetail() {
                 </div>
                 <div className="post-comments">
                     <h2>Comentarios:</h2>
-                    {post.comentarios.map((comentario, index) => (
-                        <div key={index} className="comment">
-                            <p className='comment-letter'><b>Por:</b> {comentario.usuario_propietario.username}</p>
-                            <hr className='margenhr' />
-                            <div className='comment-letter'>{comentario.contenido}</div>
-                            {userInfo && userInfo.id === post.usuario_propietario.id && ( // Verifica si el usuario actual es el propietario del post
-                                <div className='reply-section'>
-                                    <input
-                                        type="text"
-                                        placeholder="Responder..."
-                                        className="input-field-reply"
-                                        maxLength={200}
-                                        onChange={handleReplyChange}
-                                        disabled={comentario.respuesta !== null} // Deshabilitar el input si ya hay una respuesta
-                                    />
-                                    <button
-                                        className="reply-button"
-                                        onClick={(event) => handleSubmitReply(comentario.id, event)}
-                                        disabled={comentario.respuesta !== null || !userInfo || userInfo.id !== post.usuario_propietario.id}
-                                    >
-                                        Enviar
-                                    </button>
-                                </div>
-                            )}
-                            {comentario.respuesta && (
-                                <div className="respuesta-container">
-                                    <div className="respuesta">
-                                        <p className='comment-letter respuesta-letter'><b>Respuesta:</b> {comentario.respuesta.contenido}</p>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    ))}
+                    <CommentList
+                        comments={comments}
+                        postId={params.postId}
+                        userInfo={userInfo}
+                        updateComments={updateComments}
+                        postOwnerId={post.usuario_propietario.id}
+
+                    />
                     <form onSubmit={handleSubmit}>
                         <div>
                             <input
@@ -203,7 +129,6 @@ function PostDetail() {
             <Link to="/SignIn" className={"signin-link-from-postdetail"}>Volver al inicio</Link>
         </div>
     );
-
 }
 
 export default PostDetail;
