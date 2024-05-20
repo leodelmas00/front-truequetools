@@ -150,7 +150,8 @@
 .reply-section {
     margin-top: 10px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    flex-direction: column;
 }
 
 .input-field-reply {
@@ -162,6 +163,13 @@
     font-size: 14px;
 }
 
+.input-button-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+
 .reply-button {
     background-color: #4CAF50;
     color: white;
@@ -170,6 +178,13 @@
     padding: 8px 20px;
     cursor: pointer;
     font-size: 14px;
+    white-space: nowrap;
+}
+
+.reply-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .reply-button:disabled {
