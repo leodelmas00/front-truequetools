@@ -32,13 +32,14 @@ function SignIn() {
             console.error('Error fetching user info:', error);
         }
     };
-
     const handleMenuToggle = () => {
         setMenuOpen(!menuOpen);
-        if (menuOpen) {
-            postsContainerRef.current.classList.add('shifted'); // Use the ref to access the element
-        } else {
-            postsContainerRef.current.classList.remove('shifted');
+        if (postsContainerRef.current) {
+            if (menuOpen) {
+                postsContainerRef.current.classList.add('shifted'); // Use the ref to access the element
+            } else {
+                postsContainerRef.current.classList.remove('shifted');
+            }
         }
     };
 
@@ -91,10 +92,10 @@ function SignIn() {
 
             <div className='separate-div'></div>
 
-            <div className={`posts-container ${menuOpen ? 'shifted' : ''}`}>
+            <div className={`posts-container ${menuOpen ? 'shifted' : ''}`} ref={postsContainerRef}>
                 {posts.map(post => (
                     <Link key={post.id} to={`/post/${post.id}`} onClick={() => handlePostClick(post.id)}>
-                        <div className="signin-post-container" ref={postsContainerRef}>
+                        <div className="signin-post-container" >
                             <h3 className="author-signin">
                                 Autor: {post.usuario_propietario.username}
                             </h3>

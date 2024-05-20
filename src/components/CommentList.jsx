@@ -5,6 +5,8 @@ import '../styles/PostDetailStyle.css';
 
 function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }) {
     const [reply, setReply] = useState('');
+    const [errorMessages, setErrorMessages] = useState({});
+
 
     const handleReplyChange = (event) => {
         setReply(event.target.value);
@@ -13,20 +15,30 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
     const handleSubmitReply = async (comentarioId, event) => {
         event.preventDefault();
         if (!reply || reply.trim() === '') {
+            setErrorMessages((prevErrors) => ({
+                ...prevErrors,
+                [comentarioId]: 'No es posible publicar una respuesta vacía',
+            }));
             return;
         }
+
         try {
             const token = localStorage.getItem('token');
             const response = await axios.post(`${baseURL}post/${postId}/comments/${comentarioId}/`, {
-                contenido: reply
+                contenido: reply,
             }, {
                 headers: {
                     Authorization: `Token ${token}`,
-                }
+                },
             });
+
             if (response.status === 201 && response.data) {
                 updateComments(comentarioId, response.data);
                 setReply(''); // Resetear el input de respuesta
+                setErrorMessages((prevErrors) => ({
+                    ...prevErrors,
+                    [comentarioId]: '', // Limpiar mensaje de error para este comentario
+                }));
             }
         } catch (error) {
             console.error(error);
@@ -44,21 +56,27 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
                     <div className='comment-letter'>{comentario.contenido}</div>
                     {userInfo && userInfo.id === postOwnerId && (
                         <div className='reply-section'>
-                            <input
-                                type="text"
-                                placeholder="Responder..."
-                                className="input-field-reply"
-                                maxLength={200}
-                                onChange={handleReplyChange}
-                                disabled={comentario.respuesta !== null} // Deshabilitar el input si ya hay una respuesta
-                            />
-                            <button
-                                className="reply-button"
-                                onClick={(event) => handleSubmitReply(comentario.id, event)}
-                                disabled={comentario.respuesta !== null}
-                            >
-                                Enviar
-                            </button>
+                            <div className="input-button-container">
+                                <input
+                                    type="text"
+                                    placeholder="Responder..."
+                                    className="input-field-reply"
+                                    maxLength={200}
+                                    onChange={handleReplyChange}
+                                    disabled={comentario.respuesta !== null} // Deshabilitar el input si ya hay una respuesta
+                                    value={reply}
+                                />
+                                <button
+                                    className="reply-button"
+                                    onClick={(event) => handleSubmitReply(comentario.id, event)}
+                                    disabled={comentario.respuesta !== null}
+                                >
+                                    Enviar
+                                </button>
+                            </div>
+                            {errorMessages[comentario.id] && (
+                                <p style={{ color: 'red', marginTop: '5px' }}>{errorMessages[comentario.id]}</p>
+                            )}
                         </div>
                     )}
                     {comentario.respuesta && (
