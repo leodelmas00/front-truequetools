@@ -27,20 +27,21 @@ export default function PostList() {
 
     return (
 
-            <div>
+        <div>
             {posts.map(post => (
                 <Link key={post.id} href={`/post/${post.id}`} onClick={() => handlePostClick(post.id)}>
-                <div className="list-post-container animate__animated animate__fadeIn">
-                    <h3 className="author">
-                    Autor: {post.usuario_propietario.username}
-                    </h3>
-                    <h2 className="title-list-post">
-                    {post.titulo}
-                    </h2>
-                </div>
+                    <div className="list-post-container animate__animated animate__fadeIn">
+                        <h2 className="title-list-post">
+                            Titulo: {post.titulo}
+                        </h2>
+                        <h3 className="author">
+                            Autor: {post.usuario_propietario.username}
+                        </h3>
+
+                    </div>
                 </Link>
             ))}
-            </div>
-      );
-      
+        </div>
+    );
+
 }

@@ -62,7 +62,7 @@ function SignUp() {
     };
 
     if (redirect) {
-        return <Redirect to="/signIn" />;
+        return <Redirect to="/Login" />;
     }
 
     return (

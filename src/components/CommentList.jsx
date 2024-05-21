@@ -4,28 +4,30 @@ import { baseURL } from '../api/trueque.api';
 import '../styles/PostDetailStyle.css';
 
 function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }) {
-    const [reply, setReply] = useState('');
+    const [replies, setReplies] = useState({});
     const [errorMessages, setErrorMessages] = useState({});
 
-
-    const handleReplyChange = (event) => {
-        setReply(event.target.value);
+    const handleReplyChange = (commentId, event) => {
+        setReplies({
+            ...replies,
+            [commentId]: event.target.value,
+        });
     };
 
-    const handleSubmitReply = async (comentarioId, event) => {
+    const handleSubmitReply = async (commentId, event) => {
         event.preventDefault();
-        if (!reply || reply.trim() === '') {
+        if (!replies[commentId] || replies[commentId].trim() === '') {
             setErrorMessages((prevErrors) => ({
                 ...prevErrors,
-                [comentarioId]: 'No es posible publicar una respuesta vacía',
+                [commentId]: 'No es posible publicar una respuesta vacía',
             }));
             return;
         }
 
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.post(`${baseURL}post/${postId}/comments/${comentarioId}/`, {
-                contenido: reply,
+            const response = await axios.post(`${baseURL}post/${postId}/comments/${commentId}/`, {
+                contenido: replies[commentId],
             }, {
                 headers: {
                     Authorization: `Token ${token}`,
@@ -33,11 +35,14 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
             });
 
             if (response.status === 201 && response.data) {
-                updateComments(comentarioId, response.data);
-                setReply(''); // Resetear el input de respuesta
+                updateComments(commentId, response.data);
+                setReplies((prevReplies) => ({
+                    ...prevReplies,
+                    [commentId]: '', // Resetear el input de respuesta para este comentario
+                }));
                 setErrorMessages((prevErrors) => ({
                     ...prevErrors,
-                    [comentarioId]: '', // Limpiar mensaje de error para este comentario
+                    [commentId]: '', // Limpiar mensaje de error para este comentario
                 }));
             }
         } catch (error) {
@@ -51,10 +56,10 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
                 <div key={index} className="comment">
                     {comentario.fecha}
                     <hr />
-                    <p className='comment-letter'><b>Por:</b> {comentario.usuario_propietario.username} </p>
+                    <p className='comment-letter'><b>Por:</b> {comentario.usuario_propietario.username}</p>
                     <hr className='margenhr' />
                     <div className='comment-letter'>{comentario.contenido}</div>
-                    {userInfo && userInfo.id === postOwnerId && (
+                    {userInfo && userInfo.id === postOwnerId && !comentario.respuesta && (
                         <div className='reply-section'>
                             <div className="input-button-container">
                                 <input
@@ -62,9 +67,9 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
                                     placeholder="Responder..."
                                     className="input-field-reply"
                                     maxLength={200}
-                                    onChange={handleReplyChange}
+                                    onChange={(event) => handleReplyChange(comentario.id, event)}
                                     disabled={comentario.respuesta !== null} // Deshabilitar el input si ya hay una respuesta
-                                    value={reply}
+                                    value={replies[comentario.id] || ''}
                                 />
                                 <button
                                     className="reply-button"
