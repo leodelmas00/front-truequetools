@@ -167,7 +167,7 @@ function PostProduct() {
                             >
                                 <option value="" disabled>Selecciona una sucursal</option>
                                 {sucursales.map((sucursal, index) => (
-                                    <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{sucursal.direccion}</option>
+                                    <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{' (' + sucursal.direccion + ')'}</option>
                                 ))}
                             </select>
                         </div>
