@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { baseURL } from '../api/trueque.api';
 import '../styles/PostDetailStyle.css';
+import { formatFecha } from '../utils';
+
 
 function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }) {
     const [replies, setReplies] = useState({});
@@ -54,9 +56,7 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
         <div>
             {comments.map((comentario, index) => (
                 <div key={index} className="comment">
-                    {comentario.fecha}
-                    <hr />
-                    <p className='comment-letter'><b>Por:</b> {comentario.usuario_propietario.username}</p>
+                    <p className='comment-letter'><b> {formatFecha(comentario.fecha)} por:</b> {comentario.usuario_propietario.username}</p>
                     <hr className='margenhr' />
                     <div className='comment-letter'>{comentario.contenido}</div>
                     {userInfo && userInfo.id === postOwnerId && !comentario.respuesta && (
@@ -95,6 +95,10 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
             ))}
         </div>
     );
+
+
 }
+
+
 
 export default CommentList;

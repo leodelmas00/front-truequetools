@@ -6,6 +6,8 @@ import logoImg from '../logo_1/logo_1_sinfondo.png';
 import { Link, Redirect } from 'wouter';
 import { baseURL, getAllPosts } from '../api/trueque.api';
 import * as FaIcons from "react-icons/fa";
+import { formatFecha } from '../utils';
+
 
 function SignIn() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -81,6 +83,7 @@ function SignIn() {
                 params: { q: query }
             });
             setSearchResults(response.data);
+            console.log("DATA:", searchResults)
         } catch (error) {
             console.error('Error during search:', error);
         }
@@ -120,12 +123,32 @@ function SignIn() {
             <div className='separate-div'></div>
 
             <div className={`posts-container ${menuOpen ? 'shifted' : ''}`} ref={postsContainerRef}>
-                {searchPerformed && searchResults.length === 0 ? (
-                    <h1 className='no-results'>No hay resultados para la búsqueda</h1>
+                {searchPerformed ? (
+                    searchResults.length === 0 ? (
+                        <h1 className='no-results'>No hay resultados para la búsqueda</h1>
+                    ) : (
+                        searchResults.map(post => (
+                            <Link key={post.id} to={`/post/${post.id}`} onClick={() => handlePostClick(post.id)}>
+                                <div className="signin-post-container">
+                                    <p>{formatFecha(post.fecha)}</p> {/* Formatea la fecha */}
+                                    <h3 className="author-signin">
+                                        Autor: {post.usuario_propietario.username}
+                                    </h3>
+                                    <h2 className="title-signin">
+                                        {post.titulo}
+                                    </h2>
+                                    {post.imagen && <img src={`http://127.0.0.1:8000/${post.imagen}`} alt="Imagen del post" className="post-image" />}
+                                    <p>{Object.keys(post.comentarios).length} comentario(s)</p>
+                                </div>
+                            </Link>
+                        ))
+                    )
                 ) : (
-                    (searchResults.length > 0 ? searchResults : posts).map(post => (
+                    posts.map(post => (
                         <Link key={post.id} to={`/post/${post.id}`} onClick={() => handlePostClick(post.id)}>
                             <div className="signin-post-container">
+                                <p>{formatFecha(post.fecha)}</p> {/* Formatea la fecha */}
+
                                 <h3 className="author-signin">
                                     Autor: {post.usuario_propietario.username}
                                 </h3>
@@ -139,6 +162,7 @@ function SignIn() {
                     ))
                 )}
             </div>
+
 
             <div className={`menu ${menuOpen ? 'open' : ''}`} style={{ overflow: 'auto' }}>
                 <div className='menuItems'>
@@ -159,5 +183,6 @@ function SignIn() {
         </div>
     );
 }
+
 
 export default SignIn;
