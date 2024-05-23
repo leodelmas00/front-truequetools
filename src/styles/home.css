@@ -1,23 +1,24 @@
 .publicar-button {
     position: absolute;
-    top: 2vh;
-    left: 80%;
+    top: 4vh;
+    left: 75%;
     z-index: 9999;
-    width: 120px;
-    height: 40px;
+    width: auto;
+    height: 2.2rem;
     border-radius: 15px;
     color: #f2f0e4;
-    background-color: #a67c63;
-    border-color: #a67c63;
+    background-color: #bf4c41;
+    border-color: #f2ada7;
     font-size: large;
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
+    border: none;
 }
 
 .publicar-button:hover {
-    background-color: #bf4c41;
-    color: #f2f0e4;
+    background-color: #f2f0e4;
+    color: #bf4c41;
     transition: color 0.2s;
 }
 
@@ -34,22 +35,52 @@
     width: 100%;
     height: 100px;
     background-color: #f2ada7;
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     z-index: 1;
+}
+
+.menuItems .cerrar-sesion-button{
+    width: 14rem;
+    height: 2.2rem;
+    border-radius: 15px;
+    color: #f2f0e4;
+    background-color: #bf4c41;
+    border-color: #f2ada7;
+    font-size: large;
+    text-align: center;
+}
+
+.menuItems .cerrar-sesion-button:hover {
+    background-color: #f2f0e4;
+    color: #bf4c41;
+    transition: color 0.2s;
+}
+
+.menuItems .historial-button{
+    width: 14rem;
+    height: 2.2rem;
+    border-radius: 15px;
+    color: #f2f0e4;
+    background-color: #bf4c41;
+    border-color: #f2ada7;
+    font-size: large;
+    text-align: center;
+}
+
+.menuItems .historial-button:hover {
+    background-color: #f2f0e4;
+    color: #bf4c41;
+    transition: color 0.2s;
 }
 
 .menu-button {
     position: absolute;
-    top: 2vh;
+    top: 3vh;
     left: 3vw;
     z-index: 9999;
-    border-radius: 15px;
-    width: 120px;
-    /* Ajusta el ancho según sea necesario */
-    height: 40px;
-    color: #f2f0e4;
-    background-color: #a67c63;
-    border-color: #a67c63;
+    border-radius: 5px;
+    width: 60px;
+    height: 50px;
+    color: #bf4c41;
     font-size: large;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -57,7 +88,6 @@
 }
 
 .menu-button:hover {
-    background-color: #bf4c41;
     color: #f2f0e4;
     transition: color 0.2s;
 }
@@ -75,19 +105,20 @@
     /* Ajusta el ancho del menú */
     height: calc(100vh - 100px);
     /* Altura del menú para ocupar toda la pantalla menos el rectángulo */
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     overflow-y: auto;
     /* Permite el desplazamiento si el contenido es demasiado grande */
 }
 
 .menu.open {
     display: block;
+    text-align: center;
 }
 
 
 .menu ul {
     list-style-type: none;
     padding: 0;
+    transition: 850ms;
 }
 
 .admin-button {
@@ -123,8 +154,9 @@
     cursor: pointer;
 }
 
+/* Para que sirve este buscar-boton?? -mapache */
 
-.buscar-button {
+.buscar-button { 
     position: absolute;
     top: 4vh;
     left: 58%;
@@ -145,60 +177,46 @@
 
 .search-box {
     position: absolute;
-    top: 4vh;
-    /* Ajusta la posición vertical */
-    left: 42%;
-    /* Centra horizontalmente */
-    transform: translateX(-50%);
-    /* Ajusta el centrado horizontal */
-    width: 28%;
-    /* Ancho de la casilla de búsqueda */
-    height: 28%;
-    /* Altura de la casilla de búsqueda */
-    border: 0px solid #f2f0e4;
-    /* Borde de la casilla de búsqueda */
-    border-radius: 15px;
-    /* Borde redondeado */
-    padding: 5px;
-    /* Espacio interno */
-    background-color: #a67c63;
-    color: #f2f0e4;
-    font-size: large;
-    overflow: hidden;
-    /* Oculta el texto que se desborde */
-    text-overflow: ellipsis;
+    top: 5vh;
+    left: 25vw;
+    z-index: 2;
+    border-radius: 0.5rem;
 }
 
-.search-box::placeholder {
-    color: #f2f0e4;
-    /* Cambia el color del texto del marcador de posición */
-    padding-left: 1em;
+.search-input { /* Hijito eterno del search-box (arriba)* -mapache */
+    border-radius: 0.5rem;
+    width: 30rem;
     font-size: large;
-    overflow: hidden;
-    /* Oculta el texto que se desborde */
-    text-overflow: ellipsis;
+    background-color: #D88479;
+    border: none;
+    color: #f2f0e4;
+    outline: none;
+    text-indent: 10px;
 }
 
-
-.cerrar-sesion-button {
-    width: 60%;
-    height: 30px;
-    /* Ajusta la altura según sea necesario */
+.search-input::placeholder {
     color: #f2f0e4;
-    background-color: #a67c63;
-    border-color: #a67c63;
+    text-indent: 10px;
+}
+
+.search-button { /* Hijito eterno del search-box (arriba)* -mapache */
+    width: 6rem;
+    z-index: 3;
+    position: relative;
+    left: -20px;
+    border-radius: 0.5rem;
+    color: #f2f0e4;
+    background-color: #bf4c41;
+    border: none;
     font-size: large;
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
-    border-radius: 15px;
-    margin-top: 20px;
-    /* Espacio superior para separarlo de otros elementos */
 }
 
-.cerrar-sesion-button:hover {
-    background-color: #bf4c41;
-    color: #f2f0e4;
+.search-button:hover {
+    background-color: #f2f0e4;
+    color: #bf4c41;
     transition: color 0.2s;
 }
 
@@ -430,8 +448,11 @@ a:hover {
     width: 100px;
     height: auto;
     z-index: 1000;
-    /* Ajusta este valor según sea necesario */
+    transition: transform 0.3s ease;
+}
 
+.logo:hover {
+    transform: scale(1.1); /* Escalar la imagen al 110% de su tamaño original */
 }
 
 .success-message {

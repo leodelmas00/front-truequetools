@@ -7,6 +7,7 @@ import { Link } from 'wouter';
 import { baseURL } from '../api/trueque.api';
 import { getAllPosts } from '../api/trueque.api';
 import { Redirect } from 'wouter';
+import * as FaIcons from "react-icons/fa";
 
 function SignIn() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -77,7 +78,7 @@ function SignIn() {
     return (
         <div className="backgroundHome">
             <Link to="/Post" className="post-link">
-                <button className="publicar-button">Publicar</button>
+                <button className="publicar-button">Publicar anuncio</button>
             </Link>
 
             <a href="/" onClick={handleLogoClick}>
@@ -88,6 +89,11 @@ function SignIn() {
             <br />
             <div>
                 <h1 className={`title-most-searched ${menuOpen ? 'slide-right' : ''}`}>Mas destacados</h1>
+            </div>
+
+            <div className='search-box'>
+                <input className='search-input' placeholder="¿Que estas buscando?" type="seat" name="search" />
+                <button className='search-button'> Buscar </button>
             </div>
 
             <div className='separate-div'></div>
@@ -110,18 +116,21 @@ function SignIn() {
             </div>
 
             <div className={`menu ${menuOpen ? 'open' : ''}`} style={{ overflow: 'auto' }}>
-                <button className="cerrar-sesion-button" onClick={handleLogout}>
-                    Cerrar sesión
-                </button>
+                <div className='menuItems'>
+                    <button className="historial-button" >
+                        <FaIcons.FaHistory /> Ver mi historial
+                    </button>
+                    <button className="cerrar-sesion-button" onClick={handleLogout}>
+                        <FaIcons.FaDoorOpen /> Cerrar sesión
+                    </button>
+                </div>
                 {isStaff && (
                     <Link to="/PostList" className="admin-link">
                         <button className="admin-button">Ver Listado de Publicaciones</button>
                     </Link>
                 )}
             </div>
-            <button className="menu-button" onClick={handleMenuToggle}>
-                Menú
-            </button>
+            <FaIcons.FaBars className="menu-button" onClick={handleMenuToggle}/>
         </div>
     );
 
