@@ -97,7 +97,7 @@ function SignIn() {
         <div className="backgroundHome">
 
             <div className="navigation-bar">
-                <FaIcons.FaBars className="menu-button" onClick={handleMenuToggle}/>
+                <FaIcons.FaBars className="menu-button" onClick={handleMenuToggle} />
                 <div className='search-box'>
                     <input
                         className='search-input'
@@ -106,11 +106,11 @@ function SignIn() {
                         value={query}
                         onChange={handleSearchChange}
                     />
-                    <button className='search-button'> Buscar </button>
+                    <button className='search-button' onClick={handleSearchSubmit}>Buscar</button>
                 </div>
                 <Link to="/Post" className="post-link"> <button className="publicar-button">Publicar anuncio</button> </Link>
                 <a href="/" onClick={handleLogoClick}> <img src={logoImg} alt="Logo" className="logo" />
-            </a>
+                </a>
             </div>
 
             <br />
