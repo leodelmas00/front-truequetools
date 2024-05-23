@@ -16,8 +16,8 @@
     align-items: center;
     flex-direction: column;
     display: flex;
-    width: 46rem;
-    height: 42rem;
+    width: 44rem;
+    height: 45rem;
     background-color: #f2ada7;
     border-radius: 1rem;
     border-color: black;
@@ -88,4 +88,8 @@
 
 .container-signup div{
     margin-bottom: 6px;
+}
+
+.container-signup .error-message{
+    margin-bottom: 0px;
 }

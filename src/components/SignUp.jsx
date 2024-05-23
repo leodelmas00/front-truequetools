@@ -44,7 +44,7 @@ function SignUp() {
             console.log(error);
             if (error.response && error.response.status === 409) {
                 setError('El correo electrónico ya está en uso');
-            } else if (error.response && error.response.status === 406) {
+            } else if (error.response && (error.response.status === 406 || error.response.status === 400)) {
                 setError('Para registrarse en TruequeTools debe ser mayor de edad');
             } else {
                 console.error('Error:', error);
@@ -103,7 +103,7 @@ function SignUp() {
                                 <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{'(' + sucursal.direccion + ')'}</option>
                             ))}
                         </select>
-                        {error && <h5 className="error-message">{error}</h5>}
+                        {error && <p className="error-message">{error}</p>}
                         <div className="botonRegistrar"> <button>Registrarse</button></div>
                     </form>
                 </div>
