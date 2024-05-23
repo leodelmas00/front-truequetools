@@ -9,12 +9,12 @@ import { baseURL } from '../api/trueque.api';
 
 function PostProduct() {
     const [userInfo, setUserInfo] = useState(null)
-
+    const [sucursalFavoritaId, setSucursalFavoritaId] = useState(null); // Estado para almacenar el ID de la sucursal favorita del usuario
     const [form, setForm] = useState({
         titulo: '',
         descripcion: '',
         categoria: '',
-        sucursal_destino: '',
+        sucursal_destino: '', // ID de la sucursal seleccionada por el usuario
         imagen: null,
     });
     const [categorias, setCategorias] = useState([]);
@@ -42,6 +42,7 @@ function PostProduct() {
             const res = await getUserInfo();
             setUserInfo(res.data);
             if (res.data && res.data.sucursal_favorita) {
+                setSucursalFavoritaId(res.data.sucursal_favorita.id); // Almacena el ID de la sucursal favorita del usuario
                 setForm(prevState => ({
                     ...prevState,
                     sucursal_destino: res.data.sucursal_favorita.id
@@ -75,6 +76,7 @@ function PostProduct() {
             });
 
             if (response.status === 201 && response.data.id) {
+                console.log("DATA", response.data)
                 setLocation(`/post/${response.data.id}`);
                 setError('')
             } else {
@@ -160,7 +162,7 @@ function PostProduct() {
                         <div className="input-container">
                             <select
                                 name="sucursal_destino"
-                                value={form.sucursal_destino}
+                                value={form.sucursal_destino || sucursalFavoritaId}
                                 onChange={handleChange}
                                 className="input-field"
                                 required

@@ -15,6 +15,8 @@ function PostDetail() {
     const [nuevoComentario, setNuevoComentario] = useState('');
     const [comments, setComments] = useState([]);
     const [userInfo, setUserInfo] = useState(null);
+    const [sucursal, setSucursal] = useState(null);
+
 
     useEffect(() => {
         const fetchPostAndComments = async () => {
@@ -25,15 +27,24 @@ function PostDetail() {
                         Authorization: `Token ${token}`,
                     }
                 });
+                const userInfoResponse = await getUserInfo();
+                setPost(postResponse.data);
+                setUserInfo(userInfoResponse.data);
+
+                console.log(postResponse.data)
+                const sucursalResponse = await axios.get(`${baseURL}sucursal/${postResponse.data.sucursal_destino.id}/`, {
+                    headers: {
+                        Authorization: `Token ${token}`,
+                    }
+                });
+                setSucursal(sucursalResponse.data);
+                console.log(sucursalResponse.data)
                 const commentsResponse = await axios.get(`${baseURL}post/${params.postId}/comments_list/`, {
                     headers: {
                         Authorization: `Token ${token}`,
                     }
                 });
-                const userInfoResponse = await getUserInfo();
-                setPost(postResponse.data);
                 setComments(commentsResponse.data);
-                setUserInfo(userInfoResponse.data);
             } catch (error) {
                 console.error('Error:', error);
             } finally {
@@ -41,10 +52,8 @@ function PostDetail() {
             }
         };
 
-        if (loading) {
-            fetchPostAndComments();
-        }
-    }, [params.postId, loading]);
+        fetchPostAndComments();
+    }, [params.postId]);
 
     const handleInputChange = (event) => {
         setNuevoComentario(event.target.value);
@@ -92,7 +101,8 @@ function PostDetail() {
         <div className="background-image-published">
             <div className="post-container-detail">
                 <div className="post-card">
-                    <p className="post-date">{post.fecha}</p>
+                    <p className="post-date">{post.fecha}</p> <h5>Sucursal destino: {sucursal ? `${sucursal.nombre} - ${sucursal.direccion}` : 'Cargando...'}</h5>
+
                     <hr />
                     <h3>Subido por: {post.usuario_propietario.username}</h3>
                     <h1 className="post-title">{post.titulo}</h1>
