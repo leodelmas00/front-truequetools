@@ -13,6 +13,7 @@ import AdminView from "./components/AdminView";
 import { Route, Switch } from "wouter";
 import Employees from './components/Employees'
 import LoginWorker from './components/LoginWorker'
+import Sucursales from './components/Sucursales'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
       <Route path="/Post/:postId" component={PostDetail} />
       <Route path="/PostList" component={PostList} />
       <Route path="/adminview/employees" component={Employees} />
+      <Route path="/adminview/sucursales" component={Sucursales} />
       <Route path="/login-worker" component={LoginWorker} />
 
 
