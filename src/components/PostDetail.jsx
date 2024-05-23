@@ -6,6 +6,7 @@ import { Link } from 'wouter';
 import { getUserInfo } from '../api/trueque.api';
 import CommentList from './CommentList';
 import '../styles/PostDetailStyle.css';
+import { formatFecha } from '../utils';
 
 function PostDetail() {
     const [post, setPost] = useState(null);
@@ -101,7 +102,7 @@ function PostDetail() {
         <div className="background-image-published">
             <div className="post-container-detail">
                 <div className="post-card">
-                    <p className="post-date">{post.fecha}</p> <h5>Sucursal destino: {sucursal ? `${sucursal.nombre} - ${sucursal.direccion}` : 'Cargando...'}</h5>
+                    <p className="post-date">{formatFecha(post.fecha)}</p> <h5>Sucursal destino: {sucursal ? `${sucursal.nombre} - ${sucursal.direccion}` : 'Cargando...'}</h5>
 
                     <hr />
                     <h3>Subido por: {post.usuario_propietario.username}</h3>
