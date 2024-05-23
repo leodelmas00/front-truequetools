@@ -3,6 +3,7 @@ import { Redirect } from 'wouter'; // Importa Redirect de wouter
 import axios from 'axios';
 import { baseURL } from '../api/trueque.api';
 import { Link } from 'wouter';
+import '../styles/login.css';
 
 
 function LogIn() {
