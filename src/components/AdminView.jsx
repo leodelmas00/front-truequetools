@@ -38,6 +38,9 @@ function AdminView() {
             <button>
                 <Link to="/PostList">Ver publicaciones</Link>
             </button>
+            <button>
+                <Link to="/adminview/employees">Ver empleados</Link>
+            </button>
             {/* <button>
                 <Link to="/FailedTrades">Ver trueques fallidos</Link>
             </button> */}

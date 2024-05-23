@@ -11,6 +11,7 @@ import PostDetail from "./components/PostDetail";
 import FailedTrades from "./datosBack/FailedTrades";
 import AdminView from "./components/AdminView";
 import { Route, Switch } from "wouter";
+import Employees from './components/Employees'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Route path="/CommentList" component={CommentList} />
       <Route path="/Post/:postId" component={PostDetail} />
       <Route path="/PostList" component={PostList} />
+      <Route path="/adminview/employees" component={Employees} />
 
     </Switch>
   );

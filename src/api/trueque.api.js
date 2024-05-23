@@ -11,6 +11,16 @@ export const getAllPosts = () => {
     });
 }
 
+export const getAllEmployees = () => {
+    const token = localStorage.getItem('token');
+
+    return axios.get(`${baseURL}adminview/employees`, {
+        headers: {
+            Authorization: `Token ${token}`
+        }
+    });
+}
+
 export const getUserInfo = () => {
     const token = localStorage.getItem('token');
 
