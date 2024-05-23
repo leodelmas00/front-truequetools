@@ -1,5 +1,5 @@
 .publicar-button {
-    position: absolute;
+    position: fixed;
     top: 4vh;
     left: 75%;
     z-index: 9999;
@@ -28,14 +28,14 @@
     /* Asegura que el menú esté posicionado correctamente dentro de este contenedor */
 }
 
-.rectangle {
-    position: absolute;
+.navigation-bar {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100px;
     background-color: #f2ada7;
-    z-index: 1;
+    z-index: 10;
 }
 
 .menuItems .cerrar-sesion-button {

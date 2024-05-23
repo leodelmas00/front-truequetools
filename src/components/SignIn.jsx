@@ -95,29 +95,27 @@ function SignIn() {
 
     return (
         <div className="backgroundHome">
-            <Link to="/Post" className="post-link">
-                <button className="publicar-button">Publicar anuncio</button>
-            </Link>
 
-            <a href="/" onClick={handleLogoClick}>
-                <img src={logoImg} alt="Logo" className="logo" />
+            <div className="navigation-bar">
+                <FaIcons.FaBars className="menu-button" onClick={handleMenuToggle}/>
+                <div className='search-box'>
+                    <input
+                        className='search-input'
+                        placeholder="¿Que estas buscando?"
+                        type="text"
+                        value={query}
+                        onChange={handleSearchChange}
+                    />
+                    <button className='search-button'> Buscar </button>
+                </div>
+                <Link to="/Post" className="post-link"> <button className="publicar-button">Publicar anuncio</button> </Link>
+                <a href="/" onClick={handleLogoClick}> <img src={logoImg} alt="Logo" className="logo" />
             </a>
-            <div className="rectangle"></div>
+            </div>
 
             <br />
             <div>
                 <h1 className={`title-most-searched ${menuOpen ? 'slide-right' : ''}`}>Mas destacados</h1>
-            </div>
-
-            <div className='search-box'>
-                <input
-                    className='search-input'
-                    placeholder="¿Que estas buscando?"
-                    type="text"
-                    value={query}
-                    onChange={handleSearchChange}
-                />
-                <button className='search-button' onClick={handleSearchSubmit}>Buscar</button>
             </div>
 
             <div className='separate-div'></div>
@@ -179,7 +177,6 @@ function SignIn() {
                     </Link>
                 )}
             </div>
-            <FaIcons.FaBars className="menu-button" onClick={handleMenuToggle} />
         </div>
     );
 }
