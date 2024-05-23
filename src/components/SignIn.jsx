@@ -3,41 +3,45 @@ import axios from 'axios';
 import '../styles/home.css';
 import 'animate.css';
 import logoImg from '../logo_1/logo_1_sinfondo.png';
-import { Link } from 'wouter';
-import { baseURL } from '../api/trueque.api';
-import { getAllPosts } from '../api/trueque.api';
-import { Redirect } from 'wouter';
+import { Link, Redirect } from 'wouter';
+import { baseURL, getAllPosts } from '../api/trueque.api';
 import * as FaIcons from "react-icons/fa";
 
 function SignIn() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(true); // Agregado el estado de isLoggedIn
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
     const postsContainerRef = useRef(null);
     const [isStaff, setIsStaff] = useState(false);
+    const [query, setQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [posts, setPosts] = useState([]);
+    const [redirect, setRedirect] = useState(null);
+    const [searchPerformed, setSearchPerformed] = useState(false);
+
     useEffect(() => {
         fetchUserInfo();
+        loadPosts();
     }, []);
 
     const fetchUserInfo = async () => {
         try {
             const token = localStorage.getItem('token');
-            console.log(token)
             const response = await axios.get(`${baseURL}user-info/`, {
                 headers: {
                     Authorization: `Token ${token}`,
                 }
             });
             setIsStaff(response.data.is_staff);
-            console.log(response);
         } catch (error) {
             console.error('Error fetching user info:', error);
         }
     };
+
     const handleMenuToggle = () => {
         setMenuOpen(!menuOpen);
         if (postsContainerRef.current) {
             if (menuOpen) {
-                postsContainerRef.current.classList.add('shifted'); // Use the ref to access the element
+                postsContainerRef.current.classList.add('shifted');
             } else {
                 postsContainerRef.current.classList.remove('shifted');
             }
@@ -56,25 +60,36 @@ function SignIn() {
         window.location.href = '/Login';
     };
 
-    const [posts, setPosts] = useState([]);
-    const [redirect, setRedirect] = useState(null); // Estado para redirección
-
-    useEffect(() => {
-        async function loadPosts() {
-            const res = await getAllPosts();
-            console.log(res.data);
-            setPosts(res.data);
-        }
-        loadPosts();
-    }, []);
+    const loadPosts = async () => {
+        const res = await getAllPosts();
+        setPosts(res.data);
+    };
 
     const handlePostClick = (id) => {
         setRedirect(`/post/${id}`);
     };
 
+    const handleSearchChange = (e) => {
+        setQuery(e.target.value);
+    };
+
+    const handleSearchSubmit = async (e) => {
+        e.preventDefault();
+        setSearchPerformed(true);
+        try {
+            const response = await axios.get(`${baseURL}search-posts/`, {
+                params: { q: query }
+            });
+            setSearchResults(response.data);
+        } catch (error) {
+            console.error('Error during search:', error);
+        }
+    };
+
     if (redirect) {
         return <Redirect to={redirect} />;
     }
+
     return (
         <div className="backgroundHome">
             <Link to="/Post" className="post-link">
@@ -92,32 +107,42 @@ function SignIn() {
             </div>
 
             <div className='search-box'>
-                <input className='search-input' placeholder="¿Que estas buscando?" type="seat" name="search" />
-                <button className='search-button'> Buscar </button>
+                <input
+                    className='search-input'
+                    placeholder="¿Que estas buscando?"
+                    type="text"
+                    value={query}
+                    onChange={handleSearchChange}
+                />
+                <button className='search-button' onClick={handleSearchSubmit}>Buscar</button>
             </div>
 
             <div className='separate-div'></div>
 
             <div className={`posts-container ${menuOpen ? 'shifted' : ''}`} ref={postsContainerRef}>
-                {posts.map(post => (
-                    <Link key={post.id} to={`/post/${post.id}`} onClick={() => handlePostClick(post.id)}>
-                        <div className="signin-post-container" >
-                            <h3 className="author-signin">
-                                Autor: {post.usuario_propietario.username}
-                            </h3>
-                            <h2 className="title-signin ">
-                                {post.titulo}
-                            </h2>
-                            {post.imagen && <img src={post.imagen} alt="Imagen del post" className="post-image" />}
-                            <p>{Object.keys(post.comentarios).length} comentario(s)</p>
-                        </div>
-                    </Link>
-                ))}
+                {searchPerformed && searchResults.length === 0 ? (
+                    <h1 className='no-results'>No hay resultados para la búsqueda</h1>
+                ) : (
+                    (searchResults.length > 0 ? searchResults : posts).map(post => (
+                        <Link key={post.id} to={`/post/${post.id}`} onClick={() => handlePostClick(post.id)}>
+                            <div className="signin-post-container">
+                                <h3 className="author-signin">
+                                    Autor: {post.usuario_propietario.username}
+                                </h3>
+                                <h2 className="title-signin">
+                                    {post.titulo}
+                                </h2>
+                                {post.imagen && <img src={post.imagen} alt="Imagen del post" className="post-image" />}
+                                <p>{Object.keys(post.comentarios).length} comentario(s)</p>
+                            </div>
+                        </Link>
+                    ))
+                )}
             </div>
 
             <div className={`menu ${menuOpen ? 'open' : ''}`} style={{ overflow: 'auto' }}>
                 <div className='menuItems'>
-                    <button className="historial-button" >
+                    <button className="historial-button">
                         <FaIcons.FaHistory /> Ver mi historial
                     </button>
                     <button className="cerrar-sesion-button" onClick={handleLogout}>
@@ -130,11 +155,9 @@ function SignIn() {
                     </Link>
                 )}
             </div>
-            <FaIcons.FaBars className="menu-button" onClick={handleMenuToggle}/>
+            <FaIcons.FaBars className="menu-button" onClick={handleMenuToggle} />
         </div>
     );
-
-
 }
 
 export default SignIn;

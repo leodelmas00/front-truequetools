@@ -38,7 +38,7 @@
     z-index: 1;
 }
 
-.menuItems .cerrar-sesion-button{
+.menuItems .cerrar-sesion-button {
     width: 14rem;
     height: 2.2rem;
     border-radius: 15px;
@@ -55,7 +55,7 @@
     transition: color 0.2s;
 }
 
-.menuItems .historial-button{
+.menuItems .historial-button {
     width: 14rem;
     height: 2.2rem;
     border-radius: 15px;
@@ -156,7 +156,7 @@
 
 /* Para que sirve este buscar-boton?? -mapache */
 
-.buscar-button { 
+.buscar-button {
     position: absolute;
     top: 4vh;
     left: 58%;
@@ -183,7 +183,8 @@
     border-radius: 0.5rem;
 }
 
-.search-input { /* Hijito eterno del search-box (arriba)* -mapache */
+.search-input {
+    /* Hijito eterno del search-box (arriba)* -mapache */
     border-radius: 0.5rem;
     width: 30rem;
     font-size: large;
@@ -199,7 +200,8 @@
     text-indent: 10px;
 }
 
-.search-button { /* Hijito eterno del search-box (arriba)* -mapache */
+.search-button {
+    /* Hijito eterno del search-box (arriba)* -mapache */
     width: 6rem;
     z-index: 3;
     position: relative;
@@ -452,7 +454,8 @@ a:hover {
 }
 
 .logo:hover {
-    transform: scale(1.1); /* Escalar la imagen al 110% de su tamaño original */
+    transform: scale(1.1);
+    /* Escalar la imagen al 110% de su tamaño original */
 }
 
 .success-message {
@@ -463,4 +466,30 @@ a:hover {
     padding: 10px 20px;
     border-radius: 5px;
     margin-bottom: 20px;
+}
+
+.no-results {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: #ff6b6b;
+    font-weight: bold;
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
