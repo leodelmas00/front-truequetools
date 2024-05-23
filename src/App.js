@@ -14,6 +14,7 @@ import { Route, Switch } from "wouter";
 import Employees from './components/Employees'
 import LoginWorker from './components/LoginWorker'
 import Sucursales from './components/Sucursales'
+import CreateSucursal from "./components/CreateSucursal";
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
       <Route path="/adminview/employees" component={Employees} />
       <Route path="/adminview/sucursales" component={Sucursales} />
       <Route path="/login-worker" component={LoginWorker} />
+      <Route path="/adminview/sucursales/add" component={CreateSucursal} />
+
 
 
     </Switch>

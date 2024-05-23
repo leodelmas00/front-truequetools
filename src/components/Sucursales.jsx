@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { getAllSucursales } from "../api/trueque.api";
+import { Link } from "wouter";
 
 export default function Employees() {
     const [sucursales, setSucursales] = useState([]);
@@ -25,6 +26,9 @@ export default function Employees() {
                     </li>
                 ))}
             </ul>
+            <Link to="/adminview/sucursales/add" >
+                <button>Agregar sucursal</button>
+            </Link>
         </div>
     );
 }
