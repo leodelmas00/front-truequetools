@@ -7,6 +7,9 @@ import { getUserInfo } from '../api/trueque.api';
 import CommentList from './CommentList';
 import '../styles/PostDetailStyle.css';
 import { formatFecha } from '../utils';
+import * as FaIcons from "react-icons/fa";
+import * as MDIcons from "react-icons/md";
+
 
 function PostDetail() {
     const [post, setPost] = useState(null);
@@ -110,6 +113,14 @@ function PostDetail() {
                     <p className="post-description">{post.descripcion}</p>
                     {post.imagen && <img src={`http://127.0.0.1:8000${post.imagen}`} alt="Imagen del post" className='imagen-preview-detail' />}
                 </div>
+                <div className='botones'>
+                    <Link to="/Signin">
+                        <button> <MDIcons.MdArrowCircleLeft size={15}/> Volver al inicio</button>
+                    </Link>
+                    <Link to="/SelectProduct">
+                        <button> Intercambiar <FaIcons.FaExchangeAlt size={15}/></button>
+                    </Link>
+                </div>
                 <div className="post-comments">
                     <h2>Comentarios:</h2>
                     <CommentList
@@ -137,7 +148,6 @@ function PostDetail() {
                     </form>
                 </div>
             </div>
-            <Link to="/SignIn" className={"signin-link-from-postdetail"}>Volver al inicio</Link>
         </div>
     );
 }

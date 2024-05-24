@@ -164,9 +164,11 @@ function SignIn() {
 
             <div className={`menu ${menuOpen ? 'open' : ''}`} style={{ overflow: 'auto' }}>
                 <div className='menuItems'>
-                    <button className="historial-button">
-                        <FaIcons.FaHistory /> Ver mi historial
-                    </button>
+                    <Link to="/Historial" className="historial-link">
+                        <button className="historial-button">
+                            <FaIcons.FaHistory /> Ver mi historial
+                        </button>
+                    </Link>
                     <button className="cerrar-sesion-button" onClick={handleLogout}>
                         <FaIcons.FaDoorOpen /> Cerrar sesión
                     </button>

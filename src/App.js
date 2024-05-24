@@ -15,6 +15,8 @@ import Employees from './components/Employees'
 import LoginWorker from './components/LoginWorker'
 import Sucursales from './components/Sucursales'
 import CreateSucursal from "./components/CreateSucursal";
+import Historial from './components//Historial';
+import SelectProduct from './components//SelectProduct';
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
       <Route path="/adminview/sucursales" component={Sucursales} />
       <Route path="/login-worker" component={LoginWorker} />
       <Route path="/adminview/sucursales/add" component={CreateSucursal} />
+      <Route path="/Historial" component={Historial} />
+      <Route path="/SelectProduct" component={SelectProduct} />
 
 
 

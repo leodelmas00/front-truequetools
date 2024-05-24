@@ -14,12 +14,15 @@
     text-overflow: ellipsis;
     cursor: pointer;
     border: none;
+    transition: transform 0.3s ease;
 }
 
 .publicar-button:hover {
     background-color: #f2f0e4;
     color: #bf4c41;
     transition: color 0.2s;
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
 }
 
 
@@ -47,12 +50,15 @@
     border-color: #f2ada7;
     font-size: large;
     text-align: center;
+    transition: transform 0.3s ease;
 }
 
 .menuItems .cerrar-sesion-button:hover {
     background-color: #f2f0e4;
     color: #bf4c41;
     transition: color 0.2s;
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
 }
 
 .menuItems .historial-button {
@@ -64,12 +70,15 @@
     border-color: #f2ada7;
     font-size: large;
     text-align: center;
+    transition: transform 0.3s ease;
 }
 
 .menuItems .historial-button:hover {
     background-color: #f2f0e4;
     color: #bf4c41;
     transition: color 0.2s;
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
 }
 
 .menu-button {
@@ -85,11 +94,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
 .menu-button:hover {
     color: #f2f0e4;
     transition: color 0.2s;
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
 }
 
 .menu {
@@ -214,12 +226,15 @@
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
 .search-button:hover {
     background-color: #f2f0e4;
     color: #bf4c41;
     transition: color 0.2s;
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
 }
 
 .posts-container.shifted {
