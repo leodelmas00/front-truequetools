@@ -71,6 +71,7 @@
     font-size: large;
     text-align: center;
     transition: transform 0.3s ease;
+    margin-bottom: 20px;
 }
 
 .menuItems .historial-button:hover {
@@ -164,6 +165,25 @@
     /* Oculta el texto que se desborde */
     text-overflow: ellipsis;
     cursor: pointer;
+}
+
+.usuario {
+    border-radius: 15px;
+    height: 10px;
+    font-size: large;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+.nombre-usuario {
+    background-color: #f2f0e4;
+    border-radius: 5px;
+    font-family: cursive;
+}
+
+.separador{
+    margin-top: 20px;
+    margin-bottom: 40px;
+    border-color: black;
 }
 
 /* Para que sirve este buscar-boton?? -mapache */
