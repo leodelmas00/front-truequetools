@@ -11,10 +11,13 @@ import PostDetail from "./components/PostDetail";
 import FailedTrades from "./datosBack/FailedTrades";
 import AdminView from "./components/AdminView";
 import { Route, Switch } from "wouter";
-import Employees from './components/Employees'
+import Employees from './components/admin-cruds/Employees'
 import LoginWorker from './components/LoginWorker'
-import Sucursales from './components/Sucursales'
-import CreateSucursal from "./components/CreateSucursal";
+import Sucursales from './components/admin-cruds/Sucursales'
+import CreateSucursal from "./components/admin-cruds/CreateSucursal";
+import CreateEmployee from "./components/admin-cruds/CreateEmployee";
+import Historial from './components//Historial';
+import SelectProduct from './components//SelectProduct';
 
 function App() {
   return (
@@ -35,6 +38,9 @@ function App() {
       <Route path="/adminview/sucursales" component={Sucursales} />
       <Route path="/login-worker" component={LoginWorker} />
       <Route path="/adminview/sucursales/add" component={CreateSucursal} />
+      <Route path="/adminview/employees/add" component={CreateEmployee} />
+      <Route path="/Historial" component={Historial} />
+      <Route path="/SelectProduct" component={SelectProduct} />
 
 
 

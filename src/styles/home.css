@@ -14,12 +14,15 @@
     text-overflow: ellipsis;
     cursor: pointer;
     border: none;
+    transition: transform 0.3s ease;
 }
 
 .publicar-button:hover {
     background-color: #f2f0e4;
     color: #bf4c41;
     transition: color 0.2s;
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
 }
 
 
@@ -47,12 +50,15 @@
     border-color: #f2ada7;
     font-size: large;
     text-align: center;
+    transition: transform 0.3s ease;
 }
 
 .menuItems .cerrar-sesion-button:hover {
     background-color: #f2f0e4;
     color: #bf4c41;
     transition: color 0.2s;
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
 }
 
 .menuItems .historial-button {
@@ -64,12 +70,16 @@
     border-color: #f2ada7;
     font-size: large;
     text-align: center;
+    transition: transform 0.3s ease;
+    margin-bottom: 20px;
 }
 
 .menuItems .historial-button:hover {
     background-color: #f2f0e4;
     color: #bf4c41;
     transition: color 0.2s;
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
 }
 
 .menu-button {
@@ -85,11 +95,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
 .menu-button:hover {
     color: #f2f0e4;
     transition: color 0.2s;
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
 }
 
 .menu {
@@ -154,6 +167,25 @@
     cursor: pointer;
 }
 
+.usuario {
+    border-radius: 15px;
+    height: 10px;
+    font-size: large;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+.nombre-usuario {
+    background-color: #f2f0e4;
+    border-radius: 5px;
+    font-family: cursive;
+}
+
+.separador{
+    margin-top: 20px;
+    margin-bottom: 40px;
+    border-color: black;
+}
+
 /* Para que sirve este buscar-boton?? -mapache */
 
 .buscar-button {
@@ -214,12 +246,15 @@
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
 .search-button:hover {
     background-color: #f2f0e4;
     color: #bf4c41;
     transition: color 0.2s;
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
 }
 
 .posts-container.shifted {

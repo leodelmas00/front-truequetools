@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { getAllSucursales } from "../api/trueque.api";
+import { getAllSucursales } from "../../api/trueque.api";
 import { Link } from "wouter";
 
 export default function Employees() {

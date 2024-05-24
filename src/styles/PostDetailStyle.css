@@ -31,7 +31,7 @@
     padding: 10%;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border: none;
-    margin-bottom: 4%;
+    margin-bottom: 2%;
     /* Quita el scrollbar */
     overflow: visible;
 }
@@ -123,18 +123,28 @@
 
 }
 
-.signin-link-from-postdetail {
-    text-decoration: none;
-    padding: 15px 30px;
+.botones{
+    display: flex;
+    margin-bottom: 2%;
+    align-content: center;
+}
+
+.botones button {
     font-size: 1.5em;
     background-color: #bf4c41;
-    border-color: #f2ada7;
-    border-radius: 5px;
+    border: none;
+    border-radius: 10px;
     color: black;
-    position: absolute;
-    top: 4.4%;
-    left: 15%;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    width: 21rem;
+    transition: transform 0.3s ease;
+}
+
+.botones button:hover {
+    background-color: #f2f0e4;
+    color: #bf4c41;
+    transition: color 0.2s;
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
 }
 
 .signin-link-from-postdetail:hover {
