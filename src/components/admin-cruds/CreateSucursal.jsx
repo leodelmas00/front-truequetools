@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { baseURL } from "../api/trueque.api";
+import { baseURL } from "../../api/trueque.api";
 import axios from "axios";
 
 

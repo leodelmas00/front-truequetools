@@ -115,11 +115,14 @@ function PostDetail() {
                 </div>
                 <div className='botones'>
                     <Link to="/Signin">
-                        <button> <MDIcons.MdArrowCircleLeft size={15}/> Volver al inicio</button>
+                        <button> <MDIcons.MdArrowCircleLeft size={15} /> Volver al inicio</button>
                     </Link>
-                    <Link to="/SelectProduct">
-                        <button> Intercambiar <FaIcons.FaExchangeAlt size={15}/></button>
-                    </Link>
+                    {userInfo && userInfo.id !== post.usuario_propietario.id && (
+                        <Link to="/SelectProduct">
+                            <button> Intercambiar <FaIcons.FaExchangeAlt size={15} /></button>
+                        </Link>
+                    )}
+
                 </div>
                 <div className="post-comments">
                     <h2>Comentarios:</h2>

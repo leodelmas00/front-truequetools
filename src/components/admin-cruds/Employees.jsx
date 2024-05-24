@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { getAllEmployees } from "../api/trueque.api";
+import { getAllEmployees } from "../../api/trueque.api";
+import { Link } from 'wouter'
+
 
 export default function Employees() {
     const [employees, setEmployees] = useState([]);
@@ -25,6 +27,9 @@ export default function Employees() {
                     </li>
                 ))}
             </ul>
+            <Link to="/adminview/employees/add" >
+                <button>Dar de alta empleado</button>
+            </Link>
         </div>
     );
 }
