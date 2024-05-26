@@ -18,6 +18,7 @@ import CreateSucursal from "./components/admin-cruds/CreateSucursal";
 import CreateEmployee from "./components/admin-cruds/CreateEmployee";
 import Historial from './components//Historial';
 import SelectProduct from './components//SelectProduct';
+import EmployeeDetail from "./components/admin-cruds/EmployeeDetail";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
       <Route path="/adminview/employees/add" component={CreateEmployee} />
       <Route path="/Historial" component={Historial} />
       <Route path="/SelectProduct" component={SelectProduct} />
+      <Route path="/adminview/EmployeeDetail" component={EmployeeDetail} />
 
 
 
