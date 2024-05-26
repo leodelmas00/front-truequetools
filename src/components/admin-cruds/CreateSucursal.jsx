@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { baseURL } from "../../api/trueque.api";
 import axios from "axios";
-
-
+import { Link } from "wouter";
 
 function CreateSucursal() {
     const [error, setError] = useState('')
@@ -49,28 +48,36 @@ function CreateSucursal() {
     }
 
     return (
-        <div>
+        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
+            <h1>Agregar sucursal</h1>
             <form>
-                <input
-                    type="text"
-                    name="nombre"
-                    placeholder="nombre"
-                    value={form.nombre}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    type="text"
-                    name="direccion"
-                    placeholder="Direccion"
-                    value={form.direccion}
-                    onChange={handleChange}
-                    required
-                />
+                <div>
+                    <input
+                        type="text"
+                        name="nombre"
+                        placeholder="Nombre"
+                        value={form.nombre}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div>
+                    <input
+                        type="text"
+                        name="direccion"
+                        placeholder="Direccion"
+                        value={form.direccion}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
             </form>
-            <button onClick={handleSubmit}>Agregar</button>
-
-
+            <div>
+                <Link to="/adminview/sucursales">
+                    <button>Volver</button>
+                </Link>
+                <button onClick={handleSubmit}>Agregar</button>
+            </div>
         </div>
 
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { baseURL } from "../../api/trueque.api";
 import axios from "axios";
 import { getAllSucursales } from "../../api/trueque.api";
+import { Link } from 'wouter'
 
 
 function CreateEmployee() {
@@ -62,45 +63,59 @@ function CreateEmployee() {
     }
 
     return (
-        <div>
+        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
+            <h1>Agregar un empleado</h1>
             <form>
-                <input
-                    type="text"
-                    name="dni"
-                    placeholder="Dni"
-                    value={form.dni}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    type="text"
-                    name="nombre"
-                    placeholder="Nombre"
-                    value={form.nombre}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Contraseña"
-                    value={form.password}
-                    onChange={handleChange}
-                    required
-                />
-                <select
-                    name="sucursal_de_trabajo"
-                    value={form.sucursal_de_trabajo}
-                    onChange={handleChange}
-                    required
-                >
-                    <option value="" disabled>Selecciona sucursal de trabajo</option>
-                    {sucursales.map((sucursal, index) => (
-                        <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{' (' + sucursal.direccion + ')'}</option>
-                    ))}
-                </select>
+                <div>
+                    <input
+                        type="text"
+                        name="dni"
+                        placeholder="Dni"
+                        value={form.dni}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div>
+                    <input
+                        type="text"
+                        name="nombre"
+                        placeholder="Nombre"
+                        value={form.nombre}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div>
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Contraseña"
+                        value={form.password}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div>
+                    <select
+                        name="sucursal_de_trabajo"
+                        value={form.sucursal_de_trabajo}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="" disabled>Sucursal de trabajo</option>
+                        {sucursales.map((sucursal, index) => (
+                            <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{' (' + sucursal.direccion + ')'}</option>
+                        ))}
+                    </select>
+                </div>
             </form>
-            <button onClick={handleSubmit}>Agregar</button>
+            <div>
+                <Link to="/adminview/employees" >
+                    <button>Volver</button>
+                </Link>
+                <button onClick={handleSubmit}>Agregar</button>
+            </div>
         </div>
     );
 }
