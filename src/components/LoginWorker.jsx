@@ -45,38 +45,38 @@ function LogIn() {
 
     return (
         <div className="login-container">
-            <div className="login-form">
-                <h2 className="login-subtitle">Inicio de sesión para empleados y administradores.</h2>
-                {error && <p className="login-error-message">{error}</p>}
-                <form onSubmit={handleSubmit} className="login-form">
-                    <div className="login-input-container">
-                        <input
-                            type="text"
-                            placeholder="DNI"
-                            name="dni"
-                            value={form.dni}
-                            onChange={handleChange}
-                            className="login-input-field"
-                            required
-                        />
-                    </div>
-                    <div className="login-input-container">
-                        <input
-                            type="password"
-                            placeholder="Contraseña"
-                            name="password"
-                            value={form.password}
-                            onChange={handleChange}
-                            className="login-input-field"
-                            required
-                        />
-                    </div>
-                    <div className="login-button-container">
-                        <button type="submit" className="login-signin-button">
-                            Iniciar sesión
-                        </button>
-                    </div>
-                </form>
+            <div>
+                <div className="container">
+                    <form className="cajaFormulario" onSubmit={handleSubmit}>
+                        <h2>Inicio de sesión para empleados/administradores.</h2>
+                        <div>
+                            <input
+                                type="text"
+                                placeholder="DNI"
+                                name="dni"
+                                value={form.dni}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <input
+                                type="password"
+                                placeholder="Contraseña"
+                                name="password"
+                                value={form.password}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        {error && <p className="error-message">{error}</p>}
+                        <div>
+                            <button type="submit">
+                                Iniciar sesión
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );

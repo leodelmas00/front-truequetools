@@ -1,56 +1,39 @@
-.login-container {
-    background-color: #f2f0e4;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
+.login-container .cajaFormulario{ 
     align-items: center;
-    position: relative;
+    flex-direction: column;
+    display: flex;
+    width: 44rem;
+    height: 17rem;
+    background-color: #f2ada7;
+    border-radius: 0.6rem;
+    border-color: black;
+    box-shadow: rgba(255, 151, 182, 0.63) 0px 20px 30px -10px;
 }
 
-.login-form {
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-    padding: 16px;
-    width: 500px;
-    height: 550px;
-    border-radius: 20px;
-    background-color: #ee9d95;
-    z-index: 1;
-}
-
-.login-subtitle {
-    text-align: center;
-
-}
-
-.login-input-container {
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-.login-input-field {
-    padding-left: 20px;
-    width: 400px;
-    height: 40px;
+.login-container input{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 20rem;
+    height: 2rem;
     font-size: 1.2em;
+    border-radius: 10px;
+    border-width: 1px;
 }
 
-.login-button-container {
-    text-align: center;
-    margin-top: 30px;
-    margin-bottom: 30px;
-}
-
-.login-signin-button {
-    text-decoration: none;
-    padding: 8px 145px;
+.login-container button{
     font-size: 1.5em;
     background-color: #bf4c41;
     border-color: #f2ada7;
     border-radius: 5px;
-    color: black
 }
 
+.login-container button:hover{
+    background-color: #f2f0e4;
+    color: #bf4c41;
+    transition: color 0.2s;
+}
 
-.login-error-message {
+.login-container .error-message{
+    margin-bottom: 5px;
     color: red;
 }
