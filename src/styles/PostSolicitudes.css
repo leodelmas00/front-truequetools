@@ -1,0 +1,128 @@
+.post-solicitudes-container {
+    text-align: center;
+    /* Para centrar el contenido */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    /* Espacio entre el contenedor y el contenido siguiente */
+}
+
+.solicitud {
+    background-color: #f2ada7;
+    /* Color pastel marrón */
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    /* Espacio entre las solicitudes */
+}
+
+.preview-img {
+    width: 100%;
+    /* Para que la imagen ocupe todo el ancho del contenedor */
+    height: auto;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    /* Espacio entre la imagen y el contenido siguiente */
+}
+
+.solicitudes-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
+    /* Asegura que el botón esté por encima de otros elementos */
+    background-color: #bf4c41;
+    /* Rosa pastel */
+    color: #fff;
+    /* Texto blanco */
+    border: none;
+    padding: 10px 20px;
+    /* Ajusta el tamaño del botón */
+    font-size: 16px;
+    /* Tamaño de fuente */
+    border-radius: 10px;
+    /* Bordes redondeados */
+    cursor: pointer;
+    /* Cambia el cursor al pasar por encima */
+    /* Agrega estilos adicionales según sea necesario */
+}
+
+.solicitudes-btn:hover {
+    background-color: #c56d65;
+    /* Cambia el color de fondo al pasar el mouse */
+}
+
+.enlace-clickeable {
+    color: #4b0082;
+    /* Color del enlace */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.enlace-clickeable:hover {
+    text-decoration: underline;
+    /* Subrayado al pasar el mouse */
+}
+
+.titulo-solicitudes {
+    color: #000000;
+    /* Color rosa pastel */
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.btn-aceptar,
+.btn-rechazar {
+    background-color: #ff6666;
+    /* Color rojo pastel para el botón de aceptar */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-right: 10px;
+    /* Espacio entre los botones */
+    cursor: pointer;
+}
+
+.btn-rechazar {
+    background-color: #6ad86a;
+    /* Color verde pastel para el botón de rechazar */
+}
+
+.btn-aceptar:hover,
+.btn-rechazar:hover {
+    opacity: 0.8;
+    /* Opacidad al pasar el mouse */
+}
+
+.no-solicitudes-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: #ff6b6b;
+    font-weight: bold;
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

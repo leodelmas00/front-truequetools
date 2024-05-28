@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { baseURL } from '../api/trueque.api';
-import { useParams } from "wouter";
-import { Link } from 'wouter';
+import { useParams, Link, useLocation } from "wouter";
 import { getUserInfo } from '../api/trueque.api';
 import CommentList from './CommentList';
 import '../styles/PostDetailStyle.css';
 import { formatFecha } from '../utils';
 import * as FaIcons from "react-icons/fa";
 import * as MDIcons from "react-icons/md";
+import { MdOutlineStarBorderPurple500 } from "react-icons/md";
+
 
 
 function PostDetail() {
@@ -20,6 +21,7 @@ function PostDetail() {
     const [comments, setComments] = useState([]);
     const [userInfo, setUserInfo] = useState(null);
     const [sucursal, setSucursal] = useState(null);
+    const [location, setLocation] = useLocation(); // Obtén la función setLocation para la navegación
 
 
     useEffect(() => {
@@ -97,6 +99,12 @@ function PostDetail() {
         );
     };
 
+    const handleIntercambiar = (postId) => {
+        // Realiza la acción deseada, como la navegación a la página de intercambio con el ID del post
+        setLocation(`/SelectProduct/${postId}`);
+    };
+
+
     if (loading) {
         return <div>Cargando...</div>;
     }
@@ -108,19 +116,18 @@ function PostDetail() {
                     <p className="post-date">{formatFecha(post.fecha)}</p> <h5>Sucursal destino: {sucursal ? `${sucursal.nombre} - ${sucursal.direccion}` : 'Cargando...'}</h5>
 
                     <hr />
-                    <h3>Subido por: {post.usuario_propietario.username}</h3>
+                    <h3>Subido por: {post.usuario_propietario.username} - <MdOutlineStarBorderPurple500 /> {post.usuario_propietario.reputacion} pts.</h3>
                     <h1 className="post-title">{post.titulo}</h1>
                     <p className="post-description">{post.descripcion}</p>
                     {post.imagen && <img src={`http://127.0.0.1:8000${post.imagen}`} alt="Imagen del post" className='imagen-preview-detail' />}
+                    <h5>Este producto pertenece a la categoria {post.categoria}</h5>
                 </div>
                 <div className='botones'>
                     <Link to="/Signin">
                         <button> <MDIcons.MdArrowCircleLeft size={15} /> Volver al inicio</button>
                     </Link>
                     {userInfo && userInfo.id !== post.usuario_propietario.id && (
-                        <Link to="/SelectProduct">
-                            <button> Intercambiar <FaIcons.FaExchangeAlt size={15} /></button>
-                        </Link>
+                        <button onClick={() => handleIntercambiar(post.id)}>Intercambiar <FaIcons.FaExchangeAlt size={15} /></button>
                     )}
 
                 </div>
@@ -149,6 +156,11 @@ function PostDetail() {
                         <p>Caracteres ingresados: {nuevoComentario.length}/200</p>
                         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                     </form>
+
+                    {userInfo && userInfo.id === post.usuario_propietario.id && (
+                        <Link to={`/Post/${params.postId}/solicitudes`}>
+                            <button className="solicitudes-btn">Ver solicitudes recibidas</button>
+                        </Link>)}
                 </div>
             </div>
         </div>
