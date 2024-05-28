@@ -7,6 +7,7 @@ import { Link, Redirect } from 'wouter';
 import { baseURL, getAllPosts } from '../api/trueque.api';
 import * as FaIcons from "react-icons/fa";
 import { formatFecha } from '../utils';
+import { MdOutlineStarBorderPurple500 } from "react-icons/md";
 
 
 function SignIn() {
@@ -110,7 +111,7 @@ function SignIn() {
                     />
                     <button className='search-button' onClick={handleSearchSubmit}>Buscar</button>
                 </div>
-                <Link to="/Post" className="post-link"> <button className="publicar-button">Publicar anuncio</button> </Link>
+                <Link to="/Post" className="post-link"> <button className="publicar-button">Publicar producto</button> </Link>
                 <a href="/" onClick={handleLogoClick}> <img src={logoImg} alt="Logo" className="logo" />
                 </a>
             </div>
@@ -130,9 +131,9 @@ function SignIn() {
                         searchResults.map(post => (
                             <Link key={post.id} to={`/post/${post.id}`} onClick={() => handlePostClick(post.id)}>
                                 <div className="signin-post-container">
-                                    <p>{formatFecha(post.fecha)}</p> {/* Formatea la fecha */}
+                                    <p>{formatFecha(post.fecha)}</p>
                                     <h3 className="author-signin">
-                                        Autor: {post.usuario_propietario.username}
+                                        <h3>Autor: {post.usuario_propietario.username} - <MdOutlineStarBorderPurple500 /> {post.usuario_propietario.reputacion} pts.</h3>
                                     </h3>
                                     <h2 className="title-signin">
                                         {post.titulo}
@@ -147,10 +148,10 @@ function SignIn() {
                     posts.map(post => (
                         <Link key={post.id} to={`/post/${post.id}`} onClick={() => handlePostClick(post.id)}>
                             <div className="signin-post-container">
-                                <p>{formatFecha(post.fecha)}</p> {/* Formatea la fecha */}
+                                <p>{formatFecha(post.fecha)}</p>
 
                                 <h3 className="author-signin">
-                                    Autor: {post.usuario_propietario.username}
+                                    <h5>Autor: {post.usuario_propietario.username} - <MdOutlineStarBorderPurple500 /> {post.usuario_propietario.reputacion} pts.</h5>
                                 </h3>
                                 <h2 className="title-signin">
                                     {post.titulo}
@@ -171,7 +172,12 @@ function SignIn() {
                     <hr className='separador'></hr>
                     <Link to="/Historial" className="historial-link">
                         <button className="historial-button">
-                            <FaIcons.FaHistory /> | Ver historial
+                            <FaIcons.FaHistory /> | Historial de trueques
+                        </button>
+                    </Link>
+                    <Link to="/my-posts" className="myposts-link">
+                        <button className="myposts-button">
+                            <FaIcons.FaHistory /> | Ver publicaciones activas
                         </button>
                     </Link>
                     <button className="cerrar-sesion-button" onClick={handleLogout}>

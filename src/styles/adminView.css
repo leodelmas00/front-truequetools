@@ -72,5 +72,8 @@ body {
 
 .add-remove-branch-container input,.add-remove-branch-container button{
     margin: 3% auto !important;
+}
 
+.admin-view-container button{
+    margin-left: 5px;
 }

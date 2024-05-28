@@ -17,7 +17,7 @@ export default function Employees() {
     }, []);
 
     return (
-        <div>
+        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
             <h1>Lista de Sucursales:</h1>
             <ul>
                 {sucursales.map(sucursal => (
@@ -26,9 +26,14 @@ export default function Employees() {
                     </li>
                 ))}
             </ul>
-            <Link to="/adminview/sucursales/add" >
-                <button>Agregar sucursal</button>
-            </Link>
+            <div>
+                <Link to="/adminview" >
+                        <button>Volver</button>
+                </Link>
+                <Link to="/adminview/sucursales/add" >
+                    <button>Agregar sucursal</button>
+                </Link>
+            </div>
         </div>
     );
 }

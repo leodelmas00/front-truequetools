@@ -18,6 +18,9 @@ import CreateSucursal from "./components/admin-cruds/CreateSucursal";
 import CreateEmployee from "./components/admin-cruds/CreateEmployee";
 import Historial from './components//Historial';
 import SelectProduct from './components//SelectProduct';
+import EmployeeDetail from "./components/admin-cruds/EmployeeDetail";
+import UserPosts from './components/UserPosts'
+import PostSolicitudes from "./components/PostSolicitudes";
 
 function App() {
   return (
@@ -33,6 +36,7 @@ function App() {
       <Route path="/UserList" component={UserList} />
       <Route path="/CommentList" component={CommentList} />
       <Route path="/Post/:postId" component={PostDetail} />
+      <Route path="/Post/:postId/solicitudes" component={PostSolicitudes} />
       <Route path="/PostList" component={PostList} />
       <Route path="/adminview/employees" component={Employees} />
       <Route path="/adminview/sucursales" component={Sucursales} />
@@ -40,8 +44,9 @@ function App() {
       <Route path="/adminview/sucursales/add" component={CreateSucursal} />
       <Route path="/adminview/employees/add" component={CreateEmployee} />
       <Route path="/Historial" component={Historial} />
-      <Route path="/SelectProduct" component={SelectProduct} />
-
+      <Route path="/SelectProduct/:id" component={SelectProduct} />
+      <Route path="/adminview/EmployeeDetail" component={EmployeeDetail} />
+      <Route path="/my-posts" component={UserPosts} />
 
 
     </Switch>

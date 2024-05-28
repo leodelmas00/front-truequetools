@@ -9,3 +9,13 @@ export function formatFecha(fecha) {
     });
     return `Publicado el ${fechaFormateada}hs`;
 }
+
+export function formatFechaHistorial(fecha) {
+    const fechaFormateada = new Date(fecha).toLocaleString('es-ES', {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+
+    });
+    return `${fechaFormateada}`;
+}

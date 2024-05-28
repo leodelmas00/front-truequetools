@@ -61,7 +61,6 @@ function PostProduct() {
                 descripcion: form.descripcion,
                 categoria: form.categoria,
                 sucursal_destino: form.sucursal_destino,
-                estado: 'PUBLICADA',
             };
 
             if (form.imagen) {

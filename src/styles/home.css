@@ -82,6 +82,27 @@
     transition: transform 0.3s ease;
 }
 
+.menuItems .myposts-button {
+    width: 14rem;
+    height: 3rem;
+    border-radius: 15px;
+    color: #f2f0e4;
+    background-color: #bf4c41;
+    border-color: #f2ada7;
+    font-size: large;
+    text-align: center;
+    transition: transform 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.menuItems .myposts-button:hover {
+    background-color: #f2f0e4;
+    color: #bf4c41;
+    transition: color 0.2s;
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
+}
+
 .menu-button {
     position: absolute;
     top: 3vh;
@@ -180,7 +201,7 @@
     font-family: cursive;
 }
 
-.separador{
+.separador {
     margin-top: 20px;
     margin-bottom: 40px;
     border-color: black;
@@ -472,10 +493,12 @@ a:hover {
 
 .post-image {
     width: 100%;
+    /* Para que la imagen ocupe todo el ancho del contenedor */
     height: auto;
     max-height: 200px;
-    background-size: contain;
+    object-fit: contain;
     border-radius: 15px;
+    margin-bottom: 10px;
 }
 
 .logo {
