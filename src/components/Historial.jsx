@@ -1,75 +1,73 @@
+// Historial.js
 import React, { useState, useEffect } from 'react';
 import '../styles/Historial.css';
-import { Link } from "wouter";
-import { baseURL, getAllPosts, getMyPosts } from '../api/trueque.api';
+import { baseURL } from '../api/trueque.api';
 import axios from 'axios';
-import { formatFechaHistorial } from '../utils';
+import { formatFechaSolicitud } from '../utils';
+import PostDetailHistory from './PostDetailHistory';
 
 function Historial() {
-    const [estado, setEstado] = useState(null);
-    const [posts, setPosts] = useState([]);
+    const [solicitudesConSucursal, setSolicitudesConSucursal] = useState([]);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        loadPosts();    /*loadIntercambios(); */
-        setEstado('pendiente')  /* Temporalmente lo seteo en pendiente para que aparezcan
-                                    los botones, despues esto deberia eliminarse*/
+        const fetchHistorial = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get(`${baseURL}historial/`, {
+                    headers: {
+                        Authorization: `Token ${token}`,
+                    },
+                });
+                setSolicitudesConSucursal(response.data);
+            } catch (error) {
+                setError('Error al obtener el historial de solicitudes');
+                console.error(error);
+            }
+        };
+
+        fetchHistorial();
     }, []);
 
-    const loadPosts = async () => {
-        const res = await getMyPosts();    /*getAllIntercambios(); */
-        setPosts(res.data);                 /*setIntercambios(res.data); */
-    };
 
-
-    const handleDelete = async (postid) => {
-        try {
-            const response = await axios.post(baseURL + 'deleteIntercambio/', { postid }, {
-                headers: {
-                    Authorization: `Token ${localStorage.getItem('token')}`,
-                    'Content-Type': 'multipart/form-data',
+    const handleSucursalLoaded = (sucursal, postId) => {
+        setSolicitudesConSucursal(prevSolicitudes => {
+            return prevSolicitudes.map(solicitud => {
+                if (solicitud.publicacion_a_intercambiar === postId || solicitud.publicacion_deseada === postId) {
+                    return { ...solicitud, sucursal };
                 }
+                return solicitud;
             });
-        } catch (error) {
-            console.error('Error:', error);
-        }
+        });
     };
-
-    /* ------------------------------------------
-     NOTA: Historial todavia no esta terminado,
-     falta Fetchear las cosas del Intercambio real,
-     lo que hice por ahora es Fetchear la informacion de TODAS las publicaciones,
-     como para ya tener el esqueleto.
-     ACLARACIONES:
-     - Muchas cosas de las que estan comentadas representan el
-       como DEBERIA ser cuando gero termine el back ;)
-     - <tr> = table_row
-     - <th> = table_header
-     ------------------------------------------*/
 
     return (
         <div className='Historial'>
             <h1 className='Titulo'> HISTORIAL </h1>
             <hr className='separador'></hr>
             <div className='Historial-box'>
-                <table>
+                <table className="tabla">
                     <thead>
                         <tr>
                             <th>Mi Articulo</th>
                             <th>Su Articulo</th>
-                            <th>Fecha</th>
+                            <th>Fecha del Intercambio</th>
+                            <th>Sucursal</th>
                             <th>Estado</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {posts.map(post => (
-                            <tr key={post.id}>
-                                <td ><Link className='link' to={`/post/${post.id}`}>{post.titulo}</Link></td>
-                                <td ><Link className='link' to={`/post/${post.id}`}>{post.titulo}</Link></td>
-                                <td>{formatFechaHistorial(post.fecha)}</td>
-                                <td>Estado</td>
-                                {estado === "pendiente" && (
-                                    <button className='boton-cancelar' onClick={() => handleDelete(post.id)}>Cancelar</button>
-                                )}
+                        {solicitudesConSucursal.map((solicitud) => (
+                            <tr key={solicitud.id}>
+                                <td>
+                                    <PostDetailHistory postId={solicitud.publicacion_a_intercambiar} onSucursalLoaded={(sucursal) => handleSucursalLoaded(sucursal, solicitud.publicacion_a_intercambiar)} />
+                                </td>
+                                <td>
+                                    <PostDetailHistory postId={solicitud.publicacion_deseada} onSucursalLoaded={(sucursal) => handleSucursalLoaded(sucursal, solicitud.publicacion_deseada)} />
+                                </td>
+                                <td>{formatFechaSolicitud(solicitud.fecha)}</td>
+                                <td>{solicitud.sucursal ? `${solicitud.sucursal.nombre} - ${solicitud.sucursal.direccion}` : ''}</td>
+                                <td>{solicitud.estado}</td>
                             </tr>
                         ))}
                     </tbody>

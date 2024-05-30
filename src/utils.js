@@ -5,9 +5,24 @@ export function formatFecha(fecha) {
         year: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
-
+        timeZone: 'America/Buenos_Aires',
     });
-    return `Publicado el ${fechaFormateada}hs`;
+    return `${fechaFormateada}hs`;
+}
+
+export function formatFechaSolicitud(fecha) {
+    const fechaFormateada = new Date(fecha);
+    fechaFormateada.setUTCHours(fechaFormateada.getUTCHours() + 3); // Ajustar a la zona horaria de Buenos Aires (UTC+3)
+    const options = {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        timeZone: 'America/Buenos_Aires',
+    };
+    const fechaFormateadaString = fechaFormateada.toLocaleString('es-ES', options);
+    return `${fechaFormateadaString}hs`;
 }
 
 export function formatFechaHistorial(fecha) {
@@ -15,7 +30,7 @@ export function formatFechaHistorial(fecha) {
         day: 'numeric',
         month: 'numeric',
         year: 'numeric',
-
+        timeZone: 'America/Buenos_Aires',
     });
     return `${fechaFormateada}`;
 }
