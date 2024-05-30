@@ -4,6 +4,8 @@ import axios from 'axios';
 import { baseURL } from '../api/trueque.api';
 import { getAllSucursales } from '../api/trueque.api';
 import { Redirect } from 'wouter';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 function SignUp() {
     const [form, setForm] = useState({
@@ -13,10 +15,10 @@ function SignUp() {
         sucursal_favorita: '',
         fecha_de_nacimiento: ''
     });
-
     const [error, setError] = useState('');
     const [redirect, setRedirect] = useState(false);
     const [sucursales, setSucursales] = useState([]);
+    const [openSuccess, setOpenSuccess] = useState(false);
 
     useEffect(() => {
         async function loadSucursales() {
@@ -25,7 +27,6 @@ function SignUp() {
         }
         loadSucursales();
     }, [])
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -37,8 +38,10 @@ function SignUp() {
             const response = await axios.post(baseURL + 'register/', form);
             if (response.status === 201 && response.data.token) {
                 localStorage.setItem('token', response.data.token);
-                alert("Registro exitoso!")
-                setRedirect(true);
+                setOpenSuccess(true);
+                setTimeout(() => {
+                    setRedirect(true);
+                }, 2000); // Espera 2 segundos antes de redirigir
             }
         } catch (error) {
             console.log(error);
@@ -59,6 +62,9 @@ function SignUp() {
             ...prevState,
             [name]: value
         }));
+    };
+    const handleSuccessClose = () => {
+        setOpenSuccess(false);
     };
 
     if (redirect) {
@@ -100,7 +106,7 @@ function SignUp() {
                         >
                             <option className="input-select-sucursal" value="" disabled>Selecciona una sucursal</option>
                             {sucursales.map((sucursal, index) => (
-                                <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{'(' + sucursal.direccion + ')'}</option>
+                                <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{' (' + sucursal.direccion + ')'}</option>
                             ))}
                         </select>
                         {error && <p className="error-message">{error}</p>}
@@ -108,6 +114,11 @@ function SignUp() {
                     </form>
                 </div>
             </div>
+            <Snackbar open={openSuccess} autoHideDuration={6000} onClose={handleSuccessClose}>
+                <MuiAlert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
+                    Registro exitoso!
+                </MuiAlert>
+            </Snackbar>
         </div>
     );
 }

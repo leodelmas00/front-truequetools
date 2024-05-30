@@ -20,8 +20,10 @@ function PostDetail() {
     const [nuevoComentario, setNuevoComentario] = useState('');
     const [comments, setComments] = useState([]);
     const [userInfo, setUserInfo] = useState(null);
+    const [location, setLocation] = useLocation();
+
     const [sucursal, setSucursal] = useState(null);
-    const [location, setLocation] = useLocation(); // Obtén la función setLocation para la navegación
+
 
 
     useEffect(() => {
