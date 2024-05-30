@@ -1,8 +1,8 @@
-.Historial{
+.Historial {
     text-align: center;
 }
 
-.Historial .Titulo{
+.Historial .Titulo {
     font-size: 4rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
@@ -10,34 +10,50 @@
 .Historial-box table {
     width: 75%;
     border-collapse: collapse;
-    margin-left: 12%; /* centrar la tabla con un margin esta CROTISIMO pero bueno che, solucion temporal */
+    margin-left: 12%;
+    /* centrar la tabla con un margin esta CROTISIMO pero bueno che, solucion temporal */
 }
-  
-.Historial-box th, .Historial-box td {
+
+.Historial-box th,
+.Historial-box td {
     text-align: center;
     padding: 8px;
     border: 1px solid #000000;
     font-size: 1.1rem;
 }
-  
+
+.imagen-preview-detail {
+
+    width: 100%;
+    /* Para que la imagen ocupe todo el ancho del contenedor */
+    height: auto;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    /* Espacio entre la imagen y el contenido siguiente */
+
+}
+
+
 .Historial-box th {
     background-color: #D88479;
     font-size: 1.2rem;
 }
 
-.Historial .link:hover{
+.Historial .link:hover {
     background-color: #D88479;
     color: #f2f0e4;
     border-radius: 6px;
 }
 
-.Historial .boton-cancelar{
+.Historial .boton-cancelar {
     background-color: #D88479;
     border-radius: 10px;
     margin: 10px;
 }
 
-.Historial .boton-cancelar:hover{
+.Historial .boton-cancelar:hover {
     background-color: #f2f0e4;
     color: #bf4c41;
     transition: color 0.2s;
@@ -45,7 +61,7 @@
     transition: transform 0.3s ease;
 }
 
-.separador{
+.separador {
     width: 50rem;
     margin-top: 20px;
     margin-bottom: 80px;

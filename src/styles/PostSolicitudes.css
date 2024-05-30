@@ -79,8 +79,7 @@
 
 .btn-aceptar,
 .btn-rechazar {
-    background-color: #ff6666;
-    /* Color rojo pastel para el botón de aceptar */
+    background-color: #53ce53;
     color: white;
     border: none;
     border-radius: 5px;
@@ -91,8 +90,7 @@
 }
 
 .btn-rechazar {
-    background-color: #6ad86a;
-    /* Color verde pastel para el botón de rechazar */
+    background-color: #f35252;
 }
 
 .btn-aceptar:hover,

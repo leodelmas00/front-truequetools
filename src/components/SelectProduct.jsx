@@ -4,16 +4,19 @@ import axios from 'axios';
 import UserPosts from './UserPosts';
 import '../styles/SelectProduct.css';
 import { baseURL } from '../api/trueque.api';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 function Intercambiar() {
     const { id: publicacionDeseadaId } = useParams();
     const [selectedPost, setSelectedPost] = useState(null);
     const [intercambioSuccess, setIntercambioSuccess] = useState(false);
-
-    console.log('ID de la publicación deseada:', publicacionDeseadaId); // Agrega el console.log aquí
-
+    const [horario, setHorario] = useState('');
+    const [openError, setOpenError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [openSuccess, setOpenSuccess] = useState(false);
 
     const handlePostSelect = (post) => {
         setSelectedPost(post);
@@ -21,15 +24,14 @@ function Intercambiar() {
 
     const handleIntercambioSubmit = async () => {
         if (!selectedPost) {
-            toast.warn('Selecciona una publicación para intercambiar.', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            setErrorMessage('Selecciona una publicación para intercambiar.');
+            setOpenError(true);
+            return;
+        }
+
+        if (!horario) {
+            setErrorMessage('Selecciona un horario para el intercambio.');
+            setOpenError(true);
             return;
         }
 
@@ -38,6 +40,7 @@ function Intercambiar() {
             const response = await axios.post(baseURL + 'create-solicitud/', {
                 publicacion_deseada: publicacionDeseadaId,
                 publicacion_a_intercambiar: selectedPost.id,
+                fecha_del_intercambio: horario,
             }, {
                 headers: {
                     Authorization: `Token ${token}`,
@@ -48,59 +51,30 @@ function Intercambiar() {
 
             if (response.status === 201 && response.data) {
                 setIntercambioSuccess(true);
-                toast.success('Intercambio solicitado con éxito.', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
+                console.log(response.data.fecha_del_intercambio)
+                setOpenSuccess(true);
             }
         } catch (error) {
-            console.log("ERROR", error.response.status)
-
             console.error('Error al crear la solicitud de intercambio:', error);
             if (error.response) {
-                console.log('Error response data:', error.response.data);
-                console.log('Error response status:', error.response.status);
-                console.log("ERROR", error.response.status)
-
-
                 if (error.response.status === 400) {
-                    toast.error('Debes elegir un producto de la misma categoría que el original.', {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
-                } else {
-                    toast.error('Hubo un error al intentar crear la solicitud de intercambio.', {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
+                    setErrorMessage('Debes elegir un producto de la misma categoría que el original.');
+                } else if (error.response.status === 404) {
+                    setErrorMessage('La fecha seleccionada es inválida.');
                 }
             } else {
-                toast.error('No se pudo conectar con el servidor.', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
+                setErrorMessage('No se pudo conectar con el servidor.');
             }
+            setOpenError(true);
         }
+    };
+
+    const handleCloseError = () => {
+        setOpenError(false);
+    };
+
+    const handleCloseSuccess = () => {
+        setOpenSuccess(false);
     };
 
     return (
@@ -109,10 +83,31 @@ function Intercambiar() {
             {selectedPost && (
                 <div>
                     <h2 className="selected-title">Has seleccionado: {selectedPost.titulo}</h2>
-                    <button onClick={handleIntercambioSubmit} className="intercambio-button">Solicitar Intercambio</button>
+                    <TextField
+                        label="Fecha y hora de intercambio"
+                        type="datetime-local"
+                        value={horario}
+                        onChange={(e) => setHorario(e.target.value)}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        className="input-horario"
+                    />
+                    <Button onClick={handleIntercambioSubmit} className='intercambio-button' variant="contained" color="primary" >
+                        Solicitar Intercambio
+                    </Button>
                 </div>
             )}
-            {intercambioSuccess && <p className="success-message">La solicitud de intercambio se envió correctamente.</p>}
+            <Snackbar open={openSuccess} autoHideDuration={6000} onClose={handleCloseSuccess}>
+                <MuiAlert elevation={6} variant="filled" onClose={handleCloseSuccess} severity="success">
+                    La solicitud de intercambio se envió correctamente.
+                </MuiAlert>
+            </Snackbar>
+            <Snackbar open={openError} autoHideDuration={6000} onClose={handleCloseError}>
+                <MuiAlert elevation={6} variant="filled" onClose={handleCloseError} severity="error">
+                    {errorMessage}
+                </MuiAlert>
+            </Snackbar>
         </div>
     );
 }

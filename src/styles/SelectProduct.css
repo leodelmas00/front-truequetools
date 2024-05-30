@@ -23,11 +23,15 @@
     background-color: #d49b96;
 }
 
+.input-horario {
+    margin: 10px 0;
+    display: block;
+}
+
 .success-message {
     margin-top: 20px;
     font-size: 1.2em;
     color: rgb(0, 0, 0);
-
 }
 
 .no-prods {

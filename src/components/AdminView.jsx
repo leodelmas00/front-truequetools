@@ -12,7 +12,7 @@ function AdminView() {
     const confirmLogoutAction = () => {
         localStorage.removeItem('token'); // Elimina el token de localStorage
         localStorage.removeItem('token-info');
-        window.location.href = "/Login"; // Redirecciona al usuario a la página de inicio de sesión
+        window.location.href = "/Login-worker"; // Redirecciona al usuario a la página de inicio de sesión
     };
 
     const cancelLogoutAction = () => {
