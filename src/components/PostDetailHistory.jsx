@@ -49,7 +49,6 @@ function PostDetail({ postId, onSucursalLoaded }) {
     return (
         <div className="post-detail">
             <h3>{post.titulo}</h3>
-            {post.imagen && <img src={`http://127.0.0.1:8000${post.imagen}`} alt="Imagen del post" className='imagen-preview-detail' />}
         </div>
     );
 }
