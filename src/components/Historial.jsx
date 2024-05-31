@@ -65,7 +65,7 @@ function Historial() {
                                 <td>
                                     <PostDetailHistory postId={solicitud.publicacion_deseada} onSucursalLoaded={(sucursal) => handleSucursalLoaded(sucursal, solicitud.publicacion_deseada)} />
                                 </td>
-                                <td>{formatFechaSolicitud(solicitud.fecha)}</td>
+                                <td>{formatFechaSolicitud(solicitud.fecha_del_intercambio)}</td>
                                 <td>{solicitud.sucursal ? `${solicitud.sucursal.nombre} - ${solicitud.sucursal.direccion}` : ''}</td>
                                 <td>{solicitud.estado}</td>
                             </tr>
