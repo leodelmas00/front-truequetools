@@ -143,6 +143,13 @@ function PostDetail() {
                         postOwnerId={post.usuario_propietario.id}
 
                     />
+
+                    {userInfo && userInfo.id === post.usuario_propietario.id && (
+                        <Link to={`/Post/${params.postId}/solicitudes`}>
+                            <button className="solicitudes-btn">Ver solicitudes recibidas</button>
+                        </Link>)}
+                </div>
+                <div className='comentar'>
                     <form onSubmit={handleSubmit}>
                         <div>
                             <input
@@ -158,11 +165,6 @@ function PostDetail() {
                         <p>Caracteres ingresados: {nuevoComentario.length}/200</p>
                         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                     </form>
-
-                    {userInfo && userInfo.id === post.usuario_propietario.id && (
-                        <Link to={`/Post/${params.postId}/solicitudes`}>
-                            <button className="solicitudes-btn">Ver solicitudes recibidas</button>
-                        </Link>)}
                 </div>
             </div>
         </div>
