@@ -138,7 +138,7 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
                             )}
                         </div>
                     )}
-                    {comentario.respuesta && (
+                    {comentario.respuesta && userInfo.id === postOwnerId && (
                         <div className="respuesta-container">
                             <hr/>
                             <div className="respuesta"> 
