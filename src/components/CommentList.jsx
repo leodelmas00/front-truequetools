@@ -52,13 +52,67 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
         }
     };
 
+    const handleDelete = async (comentarioid) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.delete(`${baseURL}comentarios/${comentarioid}/delete`, {
+                headers: {
+                    Authorization: `Token ${token}`,
+                }
+            });
+            console.log(response.status);
+            if (response.status === 204) {
+                console.log('exito');
+            }
+        } catch (error) {
+            console.log(error);
+            if (error.response && (error.response.status === 409 || error.response.status === 400)) {
+                console.error('Error:', error);
+            }
+        }
+    };
+
+    const handleDeleteRespuesta = async (comentarioid) => { /*Esto existe para que no tire error nada mas. despues se va a eliminar - mapache. */
+    }
+
+    /*  NOTA: Este es el handleDelete de respuesta, pero como es tarde y tengo sueño lo dejo asi alv - mapache.
+
+    const handleDeleteRespuesta = async (comentarioid) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.delete(`${baseURL}comentarios/${comentarioid}/delete`, {
+                headers: {
+                    Authorization: `Token ${token}`,
+                }
+            });
+            console.log(response.status);
+            if (response.status === 204) {
+                console.log('exito');
+            }
+        } catch (error) {
+            console.log(error);
+            if (error.response && (error.response.status === 409 || error.response.status === 400)) {
+                console.error('Error:', error);
+            }
+        }
+    };
+
+    */
+
     return (
         <div>
             {comments.map((comentario, index) => (
                 <div key={index} className="comment">
-                    <p className='comment-letter'><b> {formatFecha(comentario.fecha)} por:</b> {comentario.usuario_propietario.username}</p>
+                    <p className='comment-letter' style={{ display: 'flex', alignItems: 'center' }}>
+                        {formatFecha(comentario.fecha)} por {comentario.usuario_propietario.username}
+                        {userInfo && 
+                            (userInfo.id === comentario.usuario_propietario.id || userInfo.id === postOwnerId) && (
+                                <button style={{ marginLeft: 'auto' }} onClick={() => handleDelete(comentario.id)}> Eliminar comentario </button>
+                            )
+                        }
+                    </p>
                     <hr className='margenhr' />
-                    <div className='comment-letter'>{comentario.contenido}</div>
+                    <div className='comment-letter'>{comentario.contenido} </div>
                     {userInfo && userInfo.id === postOwnerId && !comentario.respuesta && (
                         <div className='reply-section'>
                             <div className="input-button-container">
@@ -84,9 +138,14 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
                             )}
                         </div>
                     )}
-                    {comentario.respuesta && (
+                    {comentario.respuesta && userInfo.id === postOwnerId && (
                         <div className="respuesta-container">
-                            <div className="respuesta">
+                            <hr/>
+                            <div className="respuesta"> 
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    {formatFecha(comentario.respuesta.fecha)} por el propietario del post
+                                    <button style={{ marginLeft: 'auto' }} onClick={() => handleDeleteRespuesta(comentario.respuesta.id)}> Eliminar respuesta</button>
+                                </div>
                                 <p className='comment-letter respuesta-letter'><b>Respuesta:</b> {comentario.respuesta.contenido}</p>
                             </div>
                         </div>

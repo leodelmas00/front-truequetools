@@ -39,3 +39,12 @@
     color: red;
     margin-top: 20px;
 }
+
+.intercambiar-container .signin-post-container:hover {
+    background-color: #f2f0e4;
+    color: #bf4c41;
+    transition: color 0.2s;
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}

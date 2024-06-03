@@ -39,6 +39,7 @@
     height: 100px;
     background-color: #f2ada7;
     z-index: 10;
+    background: linear-gradient(to right,#f2ada7, #f7c2bd);
 }
 
 .menuItems .cerrar-sesion-button {
@@ -84,7 +85,7 @@
 
 .menuItems .myposts-button {
     width: 14rem;
-    height: 3rem;
+    height: 2.2rem;
     border-radius: 15px;
     color: #f2f0e4;
     background-color: #bf4c41;
@@ -486,8 +487,6 @@ a:hover {
     position: relative;
     z-index: 2;
     transition: transform 0.5s ease;
-
-
 }
 
 

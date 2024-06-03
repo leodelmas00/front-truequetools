@@ -177,7 +177,7 @@ function SignIn() {
                     </Link>
                     <Link to="/my-posts" className="myposts-link">
                         <button className="myposts-button">
-                            <FaIcons.FaHistory /> | Ver publicaciones activas
+                            <FaIcons.FaFont /> | Publicaciones activas
                         </button>
                     </Link>
                     <button className="cerrar-sesion-button" onClick={handleLogout}>
