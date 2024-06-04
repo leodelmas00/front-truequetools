@@ -5,7 +5,7 @@ import '../styles/PostDetailStyle.css';
 import { formatFecha } from '../utils';
 
 
-function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }) {
+function CommentList({ comments, postId, userInfo, updateComments, postOwnerId, deleteComment }) {
     const [replies, setReplies] = useState({});
     const [errorMessages, setErrorMessages] = useState({});
 
@@ -52,17 +52,18 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
         }
     };
 
-    const handleDelete = async (comentarioid) => {
+    const handleDelete = async (publicacionId, comentarioId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.delete(`${baseURL}comentarios/${comentarioid}/delete`, {
+            const response = await axios.delete(`${baseURL}post/${publicacionId}/comments/${comentarioId}/delete/`, {
                 headers: {
                     Authorization: `Token ${token}`,
                 }
             });
             console.log(response.status);
             if (response.status === 204) {
-                console.log('exito');
+                deleteComment(comentarioId); // Pasamos el ID del comentario eliminado
+                console.log('Éxito');
             }
         } catch (error) {
             console.log(error);
@@ -72,32 +73,32 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
         }
     };
 
-    const handleDeleteRespuesta = async (comentarioid) => { /*Esto existe para que no tire error nada mas. despues se va a eliminar - mapache. */
-    }
 
-    /*  NOTA: Este es el handleDelete de respuesta, pero como es tarde y tengo sueño lo dejo asi alv - mapache.
 
-    const handleDeleteRespuesta = async (comentarioid) => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await axios.delete(`${baseURL}comentarios/${comentarioid}/delete`, {
-                headers: {
-                    Authorization: `Token ${token}`,
-                }
-            });
-            console.log(response.status);
-            if (response.status === 204) {
-                console.log('exito');
-            }
-        } catch (error) {
-            console.log(error);
-            if (error.response && (error.response.status === 409 || error.response.status === 400)) {
-                console.error('Error:', error);
-            }
-        }
-    };
+    //  NOTA: Este es el handleDelete de respuesta, pero como es tarde y tengo sueño lo dejo asi alv - mapache.
 
-    */
+    // const handleDeleteRespuesta = async (publicacionId, respuestaId) => {
+    //     try {
+    //         const token = localStorage.getItem('token');
+    //         const response = await axios.delete(`${baseURL}post/${publicacionId}/comments/${respuestaId}/delete/`, {
+    //             headers: {
+    //                 Authorization: `Token ${token}`,
+    //             }
+    //         });
+    //         console.log(response.status);
+    //         if (response.status === 204) {
+    //             deleteComment(respuestaId);
+    //             console.log('exito');
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //         if (error.response && (error.response.status === 409 || error.response.status === 400)) {
+    //             console.error('Error:', error);
+    //         }
+    //     }
+    // };
+
+
 
     return (
         <div>
@@ -105,9 +106,9 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
                 <div key={index} className="comment">
                     <p className='comment-letter' style={{ display: 'flex', alignItems: 'center' }}>
                         {formatFecha(comentario.fecha)} por {comentario.usuario_propietario.username}
-                        {userInfo && 
-                            (userInfo.id === comentario.usuario_propietario.id || userInfo.id === postOwnerId) && (
-                                <button style={{ marginLeft: 'auto' }} onClick={() => handleDelete(comentario.id)}> Eliminar comentario </button>
+                        {userInfo &&
+                            (userInfo.id === comentario.usuario_propietario.id && !comentario.respuesta) && (
+                                <button className="eliminar-comentario" onClick={() => handleDelete(postId, comentario.id)}>Eliminar</button>
                             )
                         }
                     </p>
@@ -140,11 +141,11 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
                     )}
                     {comentario.respuesta && userInfo.id === postOwnerId && (
                         <div className="respuesta-container">
-                            <hr/>
-                            <div className="respuesta"> 
+                            <hr />
+                            <div className="respuesta">
                                 <div style={{ display: 'flex', alignItems: 'center' }}>
                                     {formatFecha(comentario.respuesta.fecha)} por el propietario del post
-                                    <button style={{ marginLeft: 'auto' }} onClick={() => handleDeleteRespuesta(comentario.respuesta.id)}> Eliminar respuesta</button>
+                                    {/* <button style={{ marginLeft: 'auto' }} onClick={() => handleDeleteRespuesta(postId, comentario.respuesta.id)}> Eliminar respuesta</button> */}
                                 </div>
                                 <p className='comment-letter respuesta-letter'><b>Respuesta:</b> {comentario.respuesta.contenido}</p>
                             </div>
@@ -157,7 +158,6 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
 
 
 }
-
 
 
 export default CommentList;

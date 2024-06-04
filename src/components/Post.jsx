@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, Link } from "wouter";
+import { useLocation } from "wouter";
 import '../styles/login.css';
 import '../styles/Post.css';
 import 'animate.css';
 import { getAllCategorias, getAllSucursales, getUserInfo } from '../api/trueque.api';
 import axios from 'axios';
 import { baseURL } from '../api/trueque.api';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 function PostProduct() {
-    const [userInfo, setUserInfo] = useState(null)
-    const [sucursalFavoritaId, setSucursalFavoritaId] = useState(null); // Estado para almacenar el ID de la sucursal favorita del usuario
+    const [userInfo, setUserInfo] = useState(null);
+    const [sucursalFavoritaId, setSucursalFavoritaId] = useState(null);
     const [form, setForm] = useState({
         titulo: '',
         descripcion: '',
         categoria: '',
-        sucursal_destino: '', // ID de la sucursal seleccionada por el usuario
+        sucursal_destino: '',
         imagen: null,
     });
     const [categorias, setCategorias] = useState([]);
@@ -22,16 +24,17 @@ function PostProduct() {
     const [error, setError] = useState('');
     const [location, setLocation] = useLocation();
     const [descripcionLength, setDescripcionLength] = useState(0);
+    const [openSuccess, setOpenSuccess] = useState(false);
 
     useEffect(() => {
         async function loadCategorias() {
-            const res = await getAllCategorias()
-            setCategorias(res.data)
+            const res = await getAllCategorias();
+            setCategorias(res.data);
         }
 
         async function loadSucursales() {
-            const res = await getAllSucursales()
-            setSucursales(res.data)
+            const res = await getAllSucursales();
+            setSucursales(res.data);
         }
         loadCategorias();
         loadSucursales();
@@ -42,7 +45,7 @@ function PostProduct() {
             const res = await getUserInfo();
             setUserInfo(res.data);
             if (res.data && res.data.sucursal_favorita) {
-                setSucursalFavoritaId(res.data.sucursal_favorita.id); // Almacena el ID de la sucursal favorita del usuario
+                setSucursalFavoritaId(res.data.sucursal_favorita.id);
                 setForm(prevState => ({
                     ...prevState,
                     sucursal_destino: res.data.sucursal_favorita.id
@@ -51,7 +54,6 @@ function PostProduct() {
         }
         loadUserInfo();
     }, []);
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -75,16 +77,18 @@ function PostProduct() {
             });
 
             if (response.status === 201 && response.data.id) {
-                console.log("DATA", response.data)
-                setLocation(`/post/${response.data.id}`);
-                setError('')
+                setOpenSuccess(true); // Open the Snackbar
+                console.log("Producto publicado con éxito");
+                setTimeout(() => {
+                    setLocation(`/post/${response.data.id}`);
+                }, 1500);
+                setError('');
             } else {
-                setError('Porfavor, verifica los datos ingresados');
-                console.log(error.data)
+                setError('Por favor, verifica los datos ingresados');
             }
         } catch (error) {
             console.error('Error:', error);
-            setError('Porfavor, verifica los datos ingresados');
+            setError('Por favor, verifica los datos ingresados');
         }
     };
 
@@ -95,7 +99,6 @@ function PostProduct() {
             [name]: value
         }));
     };
-
 
     const handleImagenSeleccionada = (event) => {
         const imagenSeleccionada = event.target.files[0];
@@ -112,6 +115,13 @@ function PostProduct() {
             descripcion: descripcionValue
         }));
         setDescripcionLength(descripcionValue.length);
+    };
+
+    const handleSuccessClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenSuccess(false);
     };
 
     return (
@@ -139,10 +149,10 @@ function PostProduct() {
                                 onChange={handleDescripcionChange}
                                 className="input-field-descripcion"
                                 rows={4}
-                                maxLength={200} // Establece la longitud máxima
+                                maxLength={200}
                                 required
                             />
-                            <div className="character-counter">{descripcionLength}/200</div> {/* Contador de caracteres */}
+                            <div className="character-counter">{descripcionLength}/200</div>
                         </div>
                         <div className="input-container">
                             <select
@@ -153,7 +163,7 @@ function PostProduct() {
                                 required
                             >
                                 <option value="" disabled>Selecciona una categoría</option>
-                                {categorias.map((categoria, index) => (
+                                {categorias.map((categoria) => (
                                     <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
                                 ))}
                             </select>
@@ -167,7 +177,7 @@ function PostProduct() {
                                 required
                             >
                                 <option value="" disabled>Selecciona una sucursal</option>
-                                {sucursales.map((sucursal, index) => (
+                                {sucursales.map((sucursal) => (
                                     <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{' (' + sucursal.direccion + ')'}</option>
                                 ))}
                             </select>
@@ -208,9 +218,12 @@ function PostProduct() {
                     </div>
                 </form>
             </div>
-            {/* <Link to="/SignIn" className={"signin-link-from-postdetail"}>Volver al inicio</Link> */}
+            <Snackbar open={openSuccess} autoHideDuration={6000} onClose={handleSuccessClose}>
+                <MuiAlert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
+                    Producto publicado con éxito
+                </MuiAlert>
+            </Snackbar>
         </div>
-
     );
 }
 

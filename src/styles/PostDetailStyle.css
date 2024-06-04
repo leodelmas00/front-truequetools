@@ -90,6 +90,14 @@
     border-width: 1px;
 }
 
+.eliminar-comentario {
+    width: 5rem;
+    height: 1.3rem;
+    background-color: #D88479;
+    border-radius: 5px;
+    margin: 10px;
+}
+
 .comment-letter {
     margin-top: 1%;
     margin-left: 3%;
@@ -126,7 +134,7 @@
 
 }
 
-.botones{
+.botones {
     display: flex;
     margin-bottom: 2%;
     align-content: center;

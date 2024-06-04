@@ -12,7 +12,7 @@ export function formatFecha(fecha) {
 
 export function formatFechaSolicitud(fecha) {
     const fechaFormateada = new Date(fecha);
-    fechaFormateada.setUTCHours(fechaFormateada.getUTCHours() + 3); // Ajustar a la zona horaria de Buenos Aires (UTC+3)
+    fechaFormateada.setUTCHours(fechaFormateada.getUTCHours()); // Ajustar a la zona horaria de Buenos Aires (UTC+3)
     const options = {
         day: 'numeric',
         month: 'numeric',

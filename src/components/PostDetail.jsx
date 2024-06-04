@@ -101,6 +101,15 @@ function PostDetail() {
         );
     };
 
+    const deleteComment = (comentarioId) => {
+        setComments(prevComments =>
+            prevComments.filter(comment =>
+                comment.id !== comentarioId
+            )
+        );
+    };
+
+
     const handleIntercambiar = (postId) => {
         // Realiza la acción deseada, como la navegación a la página de intercambio con el ID del post
         setLocation(`/SelectProduct/${postId}`);
@@ -140,6 +149,7 @@ function PostDetail() {
                         postId={params.postId}
                         userInfo={userInfo}
                         updateComments={updateComments}
+                        deleteComment={deleteComment}
                         postOwnerId={post.usuario_propietario.id}
 
                     />
