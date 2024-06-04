@@ -27,8 +27,8 @@
 .form-container {
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
   padding: 16px;
-  width: 500px;
-  height: 550px;
+  width: 525px;
+  height: 575px;
   border-radius: 20px;
   background-color: #ee9d95;
   z-index: 1;
@@ -44,7 +44,7 @@
 }
 
 .input-container {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   text-align: center;
 
 }
@@ -58,8 +58,8 @@
 
 .button-container {
   text-align: center;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .signin-link {
@@ -113,4 +113,14 @@
 .animate__delay-3s {
   animation-delay: 2.8s;
   /* Delay de 3.5 segundos */
+}
+
+.empleado-redireccion{
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.empleado-link{
+  color: #3f4aaf;
 }

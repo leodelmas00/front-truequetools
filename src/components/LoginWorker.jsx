@@ -42,12 +42,10 @@ function LogIn() {
     };
 
     if (redirect && form.dni === 'admin' && form.password === 'admin') {
-        return <Redirect to="/adminview" />;
+        return <Redirect to="/AdminView" />;
     } else if (redirect) {
-        return <Redirect to="/employeeview" />
+        return <Redirect to="/EmployeeView" />
     }
-
-
 
     return (
         <div className="login-container">

@@ -81,6 +81,10 @@ function LogIn() {
                         <p>¿Aún no tenés una cuenta?</p>
                         <Link to="/SignUp" className="signup-link">Registrate acá </Link>
                     </div>
+                    <div className='empleado-redireccion' >
+                        <p>¿Sos empleado? <Link to="/login-worker" className='empleado-link'>Ingresá desde aqui</Link>
+                        </p>
+                    </div>
                 </form>
             </div>
         </div>
