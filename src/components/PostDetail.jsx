@@ -101,6 +101,15 @@ function PostDetail() {
         );
     };
 
+    const deleteComment = (comentarioId) => {
+        setComments(prevComments =>
+            prevComments.filter(comment =>
+                comment.id !== comentarioId
+            )
+        );
+    };
+
+
     const handleIntercambiar = (postId) => {
         // Realiza la acción deseada, como la navegación a la página de intercambio con el ID del post
         setLocation(`/SelectProduct/${postId}`);
@@ -140,9 +149,17 @@ function PostDetail() {
                         postId={params.postId}
                         userInfo={userInfo}
                         updateComments={updateComments}
+                        deleteComment={deleteComment}
                         postOwnerId={post.usuario_propietario.id}
 
                     />
+
+                    {userInfo && userInfo.id === post.usuario_propietario.id && (
+                        <Link to={`/Post/${params.postId}/solicitudes`}>
+                            <button className="solicitudes-btn">Ver solicitudes recibidas</button>
+                        </Link>)}
+                </div>
+                <div className='comentar'>
                     <form onSubmit={handleSubmit}>
                         <div>
                             <input
@@ -158,11 +175,6 @@ function PostDetail() {
                         <p>Caracteres ingresados: {nuevoComentario.length}/200</p>
                         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                     </form>
-
-                    {userInfo && userInfo.id === post.usuario_propietario.id && (
-                        <Link to={`/Post/${params.postId}/solicitudes`}>
-                            <button className="solicitudes-btn">Ver solicitudes recibidas</button>
-                        </Link>)}
                 </div>
             </div>
         </div>

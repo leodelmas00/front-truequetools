@@ -68,7 +68,7 @@
     border-radius: 10px;
     padding: 20px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     /* Espacio debajo de la sección de comentarios */
     overflow-y: auto;
     /* Añadir barra de desplazamiento vertical */
@@ -85,7 +85,17 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     overflow-y: auto;
     word-wrap: break-word;
+    border: solid black;
+    border-radius: 10px;
+    border-width: 1px;
+}
 
+.eliminar-comentario {
+    width: 5rem;
+    height: 1.3rem;
+    background-color: #D88479;
+    border-radius: 5px;
+    margin: 10px;
 }
 
 .comment-letter {
@@ -110,6 +120,7 @@
     border-radius: 15px;
     height: 4.5vh;
     width: 99.6%;
+    margin-top: 10px;
     border: none;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     background-color: #bf4c41;
@@ -123,7 +134,7 @@
 
 }
 
-.botones{
+.botones {
     display: flex;
     margin-bottom: 2%;
     align-content: center;
@@ -152,9 +163,8 @@
     color: #f2f0e4
 }
 
-
 .margenhr {
-    margin-top: -15px;
+    margin-top: -10px;
 }
 
 .reply-section {
@@ -206,13 +216,18 @@
 }
 
 .respuesta-container {
-    margin-left: 10px;
+    background-color: rgb(240, 240, 240);
     /* Añade una sangría a la respuesta */
 }
 
 .respuesta {
-    background-color: rgb(189, 211, 216);
-    /* Cambia el color de fondo de la respuesta */
-    padding: 5px;
-    /* Añade un poco de espacio alrededor de la respuesta */
+    margin-left: 14px;
+    padding: 1px;
+}
+
+.comentar {
+    background-color: #f2f0e4;
+    border-radius: 15px;
+    padding: 2%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }

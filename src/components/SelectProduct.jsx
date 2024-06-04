@@ -79,7 +79,7 @@ function Intercambiar() {
 
     return (
         <div className="intercambiar-container">
-            <UserPosts onPostSelect={handlePostSelect} isIntercambioMode={true} />
+            <UserPosts className="misProductos" onPostSelect={handlePostSelect} isIntercambioMode={true} />
             {selectedPost && (
                 <div>
                     <h2 className="selected-title">Has seleccionado: {selectedPost.titulo}</h2>

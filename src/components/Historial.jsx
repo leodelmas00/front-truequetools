@@ -1,14 +1,25 @@
-// Historial.js
 import React, { useState, useEffect } from 'react';
 import '../styles/Historial.css';
 import { baseURL } from '../api/trueque.api';
 import axios from 'axios';
 import { formatFechaSolicitud } from '../utils';
 import PostDetailHistory from './PostDetailHistory';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 
 function Historial() {
     const [solicitudesConSucursal, setSolicitudesConSucursal] = useState([]);
     const [error, setError] = useState(null);
+    const [openSuccess, setOpenSuccess] = useState(false);
+    const [openError, setOpenError] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false);
+    const [selectedSolicitudId, setSelectedSolicitudId] = useState(null);
 
     useEffect(() => {
         const fetchHistorial = async () => {
@@ -29,7 +40,6 @@ function Historial() {
         fetchHistorial();
     }, []);
 
-
     const handleSucursalLoaded = (sucursal, postId) => {
         setSolicitudesConSucursal(prevSolicitudes => {
             return prevSolicitudes.map(solicitud => {
@@ -39,6 +49,52 @@ function Historial() {
                 return solicitud;
             });
         });
+    };
+
+    const handleDelete = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.delete(`${baseURL}solicitudes/${selectedSolicitudId}/cancel`, {
+                headers: {
+                    Authorization: `Token ${token}`,
+                }
+            });
+            if (response.status === 204) {
+                setSolicitudesConSucursal(prevSolicitudes =>
+                    prevSolicitudes.filter(solicitud => solicitud.id !== selectedSolicitudId)
+                );
+                setOpenSuccess(true);
+            }
+        } catch (error) {
+            console.log(error);
+            if (error.response && (error.response.status === 409 || error.response.status === 400)) {
+                setError('No se puede cancelar un trueque con menos de un dia de anticipacion');
+                setOpenError(true);
+            } else {
+                console.error('Error:', error);
+                setError('Ha ocurrido un error. Por favor, inténtelo nuevamente.');
+                setOpenError(true);
+            }
+        } finally {
+            setOpenDialog(false);
+        }
+    };
+
+    const handleDialogOpen = (solicitudId) => {
+        setSelectedSolicitudId(solicitudId);
+        setOpenDialog(true);
+    };
+
+    const handleDialogClose = () => {
+        setOpenDialog(false);
+    };
+
+    const handleSuccessClose = () => {
+        setOpenSuccess(false);
+    };
+
+    const handleCloseError = () => {
+        setOpenError(false);
     };
 
     return (
@@ -68,11 +124,47 @@ function Historial() {
                                 <td>{formatFechaSolicitud(solicitud.fecha_del_intercambio)}</td>
                                 <td>{solicitud.sucursal ? `${solicitud.sucursal.nombre} - ${solicitud.sucursal.direccion}` : ''}</td>
                                 <td>{solicitud.estado}</td>
+                                {solicitud.estado === "PENDIENTE" && (
+
+                                    <button className='boton-cancelar' onClick={() => handleDialogOpen(solicitud.id)}>Cancelar</button>
+
+                                )}
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
+            <Dialog
+                open={openDialog}
+                onClose={handleDialogClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{"Confirmar Cancelación"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        ¿Estás seguro que quieres cancelar el trueque?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleDialogClose} color="primary">
+                        Cancelar
+                    </Button>
+                    <Button onClick={handleDelete} color="primary" autoFocus>
+                        Aceptar
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Snackbar open={openError} autoHideDuration={6000} onClose={handleCloseError}>
+                <MuiAlert elevation={6} variant="filled" onClose={handleCloseError} severity="error">
+                    {error}
+                </MuiAlert>
+            </Snackbar>
+            <Snackbar open={openSuccess} autoHideDuration={6000} onClose={handleSuccessClose}>
+                <MuiAlert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
+                    Se cancelo con exito!
+                </MuiAlert>
+            </Snackbar>
         </div>
     );
 }

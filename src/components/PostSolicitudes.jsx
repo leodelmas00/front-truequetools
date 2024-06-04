@@ -1,15 +1,25 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { useParams } from "wouter";
 import { baseURL } from "../api/trueque.api";
 import { formatFechaHistorial, formatFechaSolicitud } from "../utils";
-import '../styles/PostSolicitudes.css'
+import '../styles/PostSolicitudes.css';
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Button,
+} from '@mui/material';
 
 
 function PostSolicitudes() {
     const [solicitudes, setSolicitudes] = useState([]);
     const [detallesPublicaciones, setDetallesPublicaciones] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+    const [selectedSolicitudId, setSelectedSolicitudId] = useState(null);
     const params = useParams();
 
     useEffect(() => {
@@ -68,7 +78,10 @@ function PostSolicitudes() {
                 }
             });
             console.log('Solicitud PATCH enviada correctamente');
-            const nuevasSolicitudes = solicitudes.filter(solicitud => solicitud.id !== solicitudId);
+
+            // Filtra las solicitudes eliminadas
+            const publicacionDeseadaId = solicitudes.find(s => s.id === solicitudId).publicacion_deseada;
+            const nuevasSolicitudes = solicitudes.filter(solicitud => solicitud.publicacion_deseada !== publicacionDeseadaId);
             setSolicitudes(nuevasSolicitudes);
         } catch (error) {
             console.error('Error al aceptar la solicitud:', error);
@@ -76,18 +89,56 @@ function PostSolicitudes() {
     };
 
 
+    const handleRechazar = async (solicitudId) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.delete(`${baseURL}solicitudes/${solicitudId}/`, {
+                headers: {
+                    Authorization: `Token ${token}`,
+                }
+            });
+            console.log(response.status);
+            if (response.status === 204) {
+                const nuevasSolicitudes = solicitudes.filter(solicitud => solicitud.id !== solicitudId);
+                setSolicitudes(nuevasSolicitudes);
+                console.log('Solicitud eliminada con éxito');
+            }
+        } catch (error) {
+            console.log(error);
+            if (error.response && (error.response.status === 404)) {
+                console.error('Error:', error.response.data.error);
+            }
+        }
+    };
+
+    const confirmRechazar = (solicitudId) => {
+        setSelectedSolicitudId(solicitudId);
+        setOpenConfirmDialog(true);
+    };
+
+    const handleCloseConfirmDialog = () => {
+        setOpenConfirmDialog(false);
+        setSelectedSolicitudId(null);
+    };
+
+    const handleConfirmRechazar = () => {
+        if (selectedSolicitudId) {
+            handleRechazar(selectedSolicitudId);
+        }
+        handleCloseConfirmDialog();
+    };
 
     return (
-        <div className="post-solicitudes-container"> {/* Agrega la clase CSS al contenedor principal */}
+        <div className="post-solicitudes-container">
             {loading ? (
                 <p>Cargando...</p>
             ) : (
                 <div>
-                    {solicitudes.length === 0 ? ( /* Verifica si no hay solicitudes */
-                        <p className="no-solicitudes-message">No hay solicitudes de intercambio.</p> /* Muestra un mensaje si no hay solicitudes */
+                    {solicitudes.length === 0 ? (
+                        <p className="no-solicitudes-message">No hay solicitudes de intercambio.</p>
                     ) : (
                         solicitudes.map((solicitud, index) => (
-                            <div key={solicitud.id} className="solicitud"> {/* Cambia li a div y agrega la clase CSS */}
+                            <div key={solicitud.id} className="solicitud">
                                 <p>Recibida el {formatFechaHistorial(solicitud.fecha)}</p>
 
                                 {detallesPublicaciones[index] && (
@@ -112,8 +163,8 @@ function PostSolicitudes() {
                                         </p>
 
                                         <div>
-                                            <button className="btn-aceptar" onClick={() => handleAceptar(solicitud.id)}>Aceptar</button> {/* Agrega clases para botón de aceptar */}
-                                            <button className="btn-rechazar">Rechazar</button> {/* Agrega clases para botón de rechazar */}
+                                            <button className="btn-aceptar" onClick={() => handleAceptar(solicitud.id)}>Aceptar</button>
+                                            <button className="btn-rechazar" onClick={() => confirmRechazar(solicitud.id)}>Rechazar</button>
                                         </div>
                                     </div>
                                 )}
@@ -123,6 +174,27 @@ function PostSolicitudes() {
                     )}
                 </div>
             )}
+            <Dialog
+                open={openConfirmDialog}
+                onClose={handleCloseConfirmDialog}
+                aria-labelledby="confirm-dialog-title"
+                aria-describedby="confirm-dialog-description"
+            >
+                <DialogTitle id="confirm-dialog-title">Confirmar</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="confirm-dialog-description">
+                        ¿Estás seguro que quieres rechazar esta solicitud?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseConfirmDialog} color="primary">
+                        No
+                    </Button>
+                    <Button onClick={handleConfirmRechazar} color="primary" autoFocus>
+                        Sí
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 }

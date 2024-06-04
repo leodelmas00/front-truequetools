@@ -13,6 +13,8 @@ function LogIn() {
     });
     const [redirect, setRedirect] = useState(false);
     const [error, setError] = useState('');
+    const [loggedIn, setLoggedIn] = useState('');
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -39,9 +41,13 @@ function LogIn() {
         }));
     };
 
-    if (redirect) {
+    if (redirect && form.dni === 'admin' && form.password === 'admin') {
         return <Redirect to="/adminview" />;
+    } else if (redirect) {
+        return <Redirect to="/employeeview" />
     }
+
+
 
     return (
         <div className="login-container">

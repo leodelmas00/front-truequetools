@@ -5,7 +5,7 @@ import '../styles/PostDetailStyle.css';
 import { formatFecha } from '../utils';
 
 
-function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }) {
+function CommentList({ comments, postId, userInfo, updateComments, postOwnerId, deleteComment }) {
     const [replies, setReplies] = useState({});
     const [errorMessages, setErrorMessages] = useState({});
 
@@ -52,13 +52,68 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
         }
     };
 
+    const handleDelete = async (publicacionId, comentarioId) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.delete(`${baseURL}post/${publicacionId}/comments/${comentarioId}/delete/`, {
+                headers: {
+                    Authorization: `Token ${token}`,
+                }
+            });
+            console.log(response.status);
+            if (response.status === 204) {
+                deleteComment(comentarioId); // Pasamos el ID del comentario eliminado
+                console.log('Éxito');
+            }
+        } catch (error) {
+            console.log(error);
+            if (error.response && (error.response.status === 409 || error.response.status === 400)) {
+                console.error('Error:', error);
+            }
+        }
+    };
+
+
+
+    //  NOTA: Este es el handleDelete de respuesta, pero como es tarde y tengo sueño lo dejo asi alv - mapache.
+
+    // const handleDeleteRespuesta = async (publicacionId, respuestaId) => {
+    //     try {
+    //         const token = localStorage.getItem('token');
+    //         const response = await axios.delete(`${baseURL}post/${publicacionId}/comments/${respuestaId}/delete/`, {
+    //             headers: {
+    //                 Authorization: `Token ${token}`,
+    //             }
+    //         });
+    //         console.log(response.status);
+    //         if (response.status === 204) {
+    //             deleteComment(respuestaId);
+    //             console.log('exito');
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //         if (error.response && (error.response.status === 409 || error.response.status === 400)) {
+    //             console.error('Error:', error);
+    //         }
+    //     }
+    // };
+
+
+
     return (
         <div>
             {comments.map((comentario, index) => (
                 <div key={index} className="comment">
-                    <p className='comment-letter'><b> {formatFecha(comentario.fecha)} por:</b> {comentario.usuario_propietario.username}</p>
+                    <p className='comment-letter' style={{ display: 'flex', alignItems: 'center' }}>
+                        {formatFecha(comentario.fecha)} por {comentario.usuario_propietario.username}
+                        {userInfo &&
+                            (userInfo.id === comentario.usuario_propietario.id && !comentario.respuesta) && (
+                                <button className="eliminar-comentario" onClick={() => handleDelete(postId, comentario.id)}>Eliminar</button>
+                            )
+                        }
+                    </p>
                     <hr className='margenhr' />
-                    <div className='comment-letter'>{comentario.contenido}</div>
+                    <div className='comment-letter'>{comentario.contenido} </div>
                     {userInfo && userInfo.id === postOwnerId && !comentario.respuesta && (
                         <div className='reply-section'>
                             <div className="input-button-container">
@@ -84,9 +139,14 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
                             )}
                         </div>
                     )}
-                    {comentario.respuesta && (
+                    {comentario.respuesta && userInfo.id === postOwnerId && (
                         <div className="respuesta-container">
+                            <hr />
                             <div className="respuesta">
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    {formatFecha(comentario.respuesta.fecha)} por el propietario del post
+                                    {/* <button style={{ marginLeft: 'auto' }} onClick={() => handleDeleteRespuesta(postId, comentario.respuesta.id)}> Eliminar respuesta</button> */}
+                                </div>
                                 <p className='comment-letter respuesta-letter'><b>Respuesta:</b> {comentario.respuesta.contenido}</p>
                             </div>
                         </div>
@@ -98,7 +158,6 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId }
 
 
 }
-
 
 
 export default CommentList;

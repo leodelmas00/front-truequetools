@@ -48,9 +48,12 @@
 }
 
 .Historial .boton-cancelar {
+    width: 6rem;
+    height: 2rem;
     background-color: #D88479;
     border-radius: 10px;
     margin: 10px;
+
 }
 
 .Historial .boton-cancelar:hover {
