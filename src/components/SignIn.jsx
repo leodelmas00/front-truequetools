@@ -82,7 +82,11 @@ function SignIn() {
         e.preventDefault();
         setSearchPerformed(true);
         try {
+            const token = localStorage.getItem('token')
             const response = await axios.get(`${baseURL}search-posts/`, {
+                headers: {
+                    Authorization: `Token ${token}`
+                },
                 params: { q: query }
             });
             setSearchResults(response.data);

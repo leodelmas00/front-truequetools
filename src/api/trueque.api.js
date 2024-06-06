@@ -79,12 +79,3 @@ export const getAllSucursales = () => {
     });
 }
 
-export const getAllSolicitudes = () => {
-    const token = localStorage.getItem('token');
-
-    return axios.get(`${baseURL}solicitudes/`, {
-        headers: {
-            Authorization: `Token ${token}`
-        }
-    });
-}

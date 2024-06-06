@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { baseURL, getAllSolicitudes } from '../api/trueque.api';
+import axios from 'axios';
 import { formatFechaSolicitud } from '../utils';
-import { Link } from 'wouter';
 import '../styles/EmployeeView.css';
+import { baseURL } from '../api/trueque.api';
 
 function EmployeeView() {
     const [solicitudes, setSolicitudes] = useState([]);
@@ -10,29 +10,52 @@ function EmployeeView() {
     const [error, setError] = useState(null);
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('token-info');
+        localStorage.setItem('loggedIn', false)
+        localStorage.setItem('userEmail', '')
         window.location.href = '/Login-worker';
     };
 
     const loadSolicitudes = async () => {
         try {
-            setTrueques(true);
-            const res = await getAllSolicitudes();
-            setSolicitudes(res.data);
+            const loggedIn = localStorage.getItem('loggedIn');
+            const userEmail = localStorage.getItem('userEmail'); // Obtener el email del localStorage
+            if (loggedIn) {
+                try {
+                    console.log(`${baseURL}employee/solicitudes/`)
+                    const response = await axios.get(`${baseURL}employee/solicitudes/`, {
+                        headers: {
+                            'X-User-Email': userEmail
+                        }
+                    });
+                    console.log(response.data)
+                    setSolicitudes(response.data)
+                    return response.data;
+                } catch (error) {
+                    console.error('Error en la solicitud:', error);
+                    throw error;
+                }
+            } else {
+                alert('Debes iniciar sesión');
+                window.location.href = '/Login-worker';
+            }
         } catch (error) {
             if (error.response && (error.response.status === 400 || error.response.status === 406 || error.response.status === 401)) {
-                setError('Error al obtener el historial de solicitudes');
+                console.error('Error al obtener el historial de solicitudes:', error);
+                throw error;
+            } else {
+                console.error('Error desconocido:', error);
+                throw error;
             }
         }
     };
+
 
     return (
         <div className="employee-panel">
             <div className="employee-navigation-bar">
                 <div>
                     <h1 className="employee-nav-titulo"> Panel de empleado </h1>
-                    <hr className='employee-separador'/>
+                    <hr className='employee-separador' />
                     <button className="employee-nav-button" onClick={handleLogout}>Cerrar Sesión</button>
                     <button className="employee-nav-button" onClick={loadSolicitudes}>Ver Trueques activos</button>
                 </div>
