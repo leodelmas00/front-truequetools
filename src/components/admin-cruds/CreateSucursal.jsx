@@ -21,6 +21,13 @@ function CreateSucursal() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        // Validación de campos vacíos
+        if (!form.nombre || !form.direccion) {
+            setError('Debe rellenar todos los campos');
+            return;
+        }
+        
         try {
             const requestData = {
                 nombre: form.nombre,
@@ -35,15 +42,10 @@ function CreateSucursal() {
                 // }
             });
             if (response.status === 201) {
-                alert('Sucursal creada con éxito')
-                setError('')
-            } else {
-                setError('Porfavor, verifica los datos ingresados');
-                console.log(error.data)
+                setError('Sucursal creada con éxito')
             }
         } catch (error) {
-            console.error('Error:', error);
-            setError('Ha ocurrido un error');
+            setError('Hubo un problema al intentar dar de alta la sucursal');
         }
     }
 
@@ -77,6 +79,9 @@ function CreateSucursal() {
                     <button>Volver</button>
                 </Link>
                 <button onClick={handleSubmit}>Agregar</button>
+            </div>
+            <div>
+                <p style={{ color: error === 'Sucursal creada con éxito' ? 'green' : 'red' }}>{error}</p>
             </div>
         </div>
 
