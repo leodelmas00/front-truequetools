@@ -34,6 +34,13 @@ function CreateEmployee() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        // Validación de campos vacíos
+        if (!form.dni || !form.nombre || !form.password || !form.sucursal_de_trabajo) {
+            setError('Debe rellenar todos los campos');
+            return;
+        }
+    
         try {
             const requestData = {
                 dni: form.dni,
@@ -41,26 +48,26 @@ function CreateEmployee() {
                 password: form.password,
                 sucursal_de_trabajo: form.sucursal_de_trabajo,
             };
-
+    
             const response = await axios.post(baseURL + 'adminview/employees/add', requestData, {
                 // headers: {
                 //     Authorization: `Token ${localStorage.getItem('token')}`,
                 //     'Content-Type': 'multipart/form-data',
                 // }
             });
+    
             if (response.status === 201) {
-                alert('Empleado dado de alta con éxito')
-
-                setError('')
-            } else {
-                setError('Porfavor, verifica los datos ingresados');
-                console.log(error.data)
+                setError('Empleado dado de alta con éxito');
             }
         } catch (error) {
-            console.error('Error:', error);
-            setError('Ha ocurrido un error');
+            if (error.response && error.response.status === 400) {
+                setError('Ya existe un empleado con el mismo dni');
+            } else {
+                setError('Hubo un problema al intentar dar de alta al empleado');
+            }
         }
-    }
+    };
+    
 
     return (
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
@@ -115,6 +122,9 @@ function CreateEmployee() {
                     <button>Volver</button>
                 </Link>
                 <button onClick={handleSubmit}>Agregar</button>
+            </div>
+            <div>
+                <p style={{ color: error === 'Empleado dado de alta con éxito' ? 'green' : 'red' }}>{error}</p>
             </div>
         </div>
     );

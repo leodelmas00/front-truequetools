@@ -22,6 +22,7 @@ import EmployeeDetail from "./components/admin-cruds/EmployeeDetail";
 import UserPosts from './components/UserPosts'
 import PostSolicitudes from "./components/PostSolicitudes";
 import EmployeeView from "./components/EmployeeView";
+import TradeCheck from "./components/admin-cruds/TradeCheck";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
       <Route path="/adminview/EmployeeDetail" component={EmployeeDetail} />
       <Route path="/my-posts" component={UserPosts} />
       <Route path="/EmployeeView" component={EmployeeView} />
+      <Route path="/TradeCheck" component={TradeCheck} />
 
     </Switch>
   );
