@@ -35,6 +35,9 @@ function EmployeeView() {
                     <hr className='employee-separador'/>
                     <button className="employee-nav-button" onClick={handleLogout}>Cerrar Sesión</button>
                     <button className="employee-nav-button" onClick={loadSolicitudes}>Ver Trueques activos</button>
+                    <Link to="/tradeCheck">
+                        <button className="employee-nav-button" onClick={loadSolicitudes}>Revisar Trueque</button>
+                    </Link>
                 </div>
             </div>
             <div className="employee-elements">
