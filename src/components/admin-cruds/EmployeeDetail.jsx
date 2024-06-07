@@ -26,8 +26,8 @@ export default function EmployeeDetail() {
                 <div>
                     <h1>{employee.email === 'admin@truequetools.com' ? 'Administrador' : 'Empleado'}</h1>
                     <h2>{employee.email}</h2>
-                    {employee.sucursal_de_trabajo ? (
-                        <h2>Trabaja en: {employee.sucursal_de_trabajo.nombre} - {employee.sucursal_de_trabajo.direccion}</h2>
+                    {employee.sucursal ? (
+                        <h2>Trabaja en: {employee.sucursal.nombre} - {employee.sucursal.direccion}</h2>
                     ) : (
                         null
                     )}

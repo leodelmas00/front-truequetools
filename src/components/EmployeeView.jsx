@@ -4,7 +4,6 @@ import { Link } from 'wouter';
 import { formatFechaSolicitud } from '../utils';
 import '../styles/EmployeeView.css';
 import { baseURL } from '../api/trueque.api';
-import PostDetailHistory from './PostDetailHistory';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
@@ -103,9 +102,9 @@ function EmployeeView() {
                     <button className="employee-nav-button" onClick={handleLogout}>Cerrar Sesión</button>
                     <button className="employee-nav-button" onClick={loadSolicitudes}>Ver Trueques activos</button>
                     <button className="employee-nav-button" onClick={loadSolicitudesDelDia}>Ver Trueques del día</button>
-
                 </div>
             </div>
+
             <div className="employee-elements">
                 {trueques && (
                     <table className="employee-table">
@@ -114,19 +113,24 @@ function EmployeeView() {
                                 <th>1er Articulo</th>
                                 <th>2do Articulo</th>
                                 <th>Fecha del trueque</th>
+                                <th>Truequeros</th>
+
                             </tr>
                         </thead>
                         <tbody>
                             {solicitudes.map((solicitud) => (
                                 <tr key={solicitud.id}>
                                     <td>
-                                        <PostDetailHistory postId={solicitud.publicacion_deseada} includeSucursal={false} />
+                                        {solicitud.publicacion_a_intercambiar.titulo}
                                     </td>
                                     <td>
-                                        <PostDetailHistory postId={solicitud.publicacion_a_intercambiar} includeSucursal={false} />
+                                        {solicitud.publicacion_deseada.titulo}
                                     </td>
                                     <td>{formatFechaSolicitud(solicitud.fecha_del_intercambio)}</td>
+                                    <td>
+                                        {solicitud.publicacion_a_intercambiar.usuario_propietario.email} - {solicitud.publicacion_deseada.usuario_propietario.email}
 
+                                    </td>
                                     <Link href={`/tradeCheck/${solicitud.id}`}>
                                         <button className="employee-gestionar-button employee-gestionar-button-margin">Gestionar Trueque</button>
                                     </Link>

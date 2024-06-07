@@ -3,7 +3,6 @@ import '../styles/Historial.css';
 import { baseURL, getUserInfo } from '../api/trueque.api';
 import axios from 'axios';
 import { formatFechaSolicitud } from '../utils';
-import PostDetailHistory from './PostDetailHistory';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import Dialog from '@mui/material/Dialog';
