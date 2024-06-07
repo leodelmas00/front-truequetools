@@ -12,7 +12,6 @@ function LogIn() {
     });
     const [redirect, setRedirect] = useState(false);
     const [error, setError] = useState('');
-    const [loggedIn, setLoggedIn] = useState(false);
 
 
     const handleSubmit = async (event) => {
@@ -21,8 +20,15 @@ function LogIn() {
             const response = await axios.post(baseURL + 'login-worker/', form);
 
             if (response.status === 200 && response.data) {
+                console.log(response.data)
                 localStorage.setItem('loggedIn', true)
                 localStorage.setItem('userEmail', response.data.email)
+                if (response.data.email === 'admin@truequetools.com')
+                    localStorage.setItem('isAdmin', true)
+
+                else
+                    localStorage.setItem('isAdmin', false)
+
                 console.log(response.data)
                 setRedirect(true);
             } else {
@@ -43,7 +49,7 @@ function LogIn() {
         }));
     };
 
-    if (redirect && form.email === 'admin@truequetools.com' && form.password === 'admin') {
+    if (redirect && localStorage.getItem('isAdmin') === 'true') {
         return <Redirect to="/AdminView" />;
     } else if (redirect) {
         return <Redirect to="/EmployeeView" />

@@ -20,7 +20,7 @@ export const getMyPosts = () => {
 }
 
 export const getAllEmployees = () => {
-    return axios.get(`${baseURL}adminview/employees`);
+    return axios.get(`${baseURL}empleados/`);
 }
 
 export const getUserInfo = () => {

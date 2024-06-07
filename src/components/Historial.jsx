@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Historial.css';
-import { baseURL } from '../api/trueque.api';
+import { baseURL, getUserInfo } from '../api/trueque.api';
 import axios from 'axios';
 import { formatFechaSolicitud } from '../utils';
 import PostDetailHistory from './PostDetailHistory';
@@ -13,6 +13,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 
+
 function Historial() {
     const [solicitudesConSucursal, setSolicitudesConSucursal] = useState([]);
     const [error, setError] = useState(null);
@@ -20,16 +21,21 @@ function Historial() {
     const [openError, setOpenError] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedSolicitudId, setSelectedSolicitudId] = useState(null);
+    const [userInfo, setUserInfo] = useState(null);
+
 
     useEffect(() => {
         const fetchHistorial = async () => {
             try {
+                const userInfoResponse = await getUserInfo();
+                setUserInfo(userInfoResponse.data);
                 const token = localStorage.getItem('token');
                 const response = await axios.get(`${baseURL}historial/`, {
                     headers: {
                         Authorization: `Token ${token}`,
                     },
                 });
+                console.log(response.data)
                 setSolicitudesConSucursal(response.data);
             } catch (error) {
                 setError('Error al obtener el historial de solicitudes');
@@ -116,13 +122,17 @@ function Historial() {
                         {solicitudesConSucursal.map((solicitud) => (
                             <tr key={solicitud.id}>
                                 <td>
-                                    <PostDetailHistory postId={solicitud.publicacion_a_intercambiar} onSucursalLoaded={(sucursal) => handleSucursalLoaded(sucursal, solicitud.publicacion_a_intercambiar)} includeSucursal={true} />
+                                    {userInfo.id === solicitud.publicacion_a_intercambiar.usuario_propietario.id
+                                        ? solicitud.publicacion_a_intercambiar.titulo
+                                        : solicitud.publicacion_deseada.titulo}
                                 </td>
                                 <td>
-                                    <PostDetailHistory postId={solicitud.publicacion_deseada} onSucursalLoaded={(sucursal) => handleSucursalLoaded(sucursal, solicitud.publicacion_deseada)} includeSucursal={true} />
+                                    {userInfo.id === solicitud.publicacion_a_intercambiar.usuario_propietario.id
+                                        ? solicitud.publicacion_deseada.titulo
+                                        : solicitud.publicacion_a_intercambiar.titulo}
                                 </td>
                                 <td>{formatFechaSolicitud(solicitud.fecha_del_intercambio)}</td>
-                                <td>{solicitud.sucursal ? `${solicitud.sucursal.nombre} - ${solicitud.sucursal.direccion}` : ''}</td>
+                                <td>{solicitud.publicacion_deseada.sucursal_destino.nombre} - {solicitud.publicacion_deseada.sucursal_destino.direccion}</td>
                                 <td>{solicitud.estado}</td>
                                 {solicitud.estado === "PENDIENTE" && (
                                     <button className='boton-cancelar' onClick={() => handleDialogOpen(solicitud.id)}>Cancelar</button>
@@ -132,6 +142,7 @@ function Historial() {
                     </tbody>
                 </table>
             </div>
+
             <Dialog
                 open={openDialog}
                 onClose={handleDialogClose}

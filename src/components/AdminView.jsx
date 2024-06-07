@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import '../styles/adminView.css';
 
 function AdminView() {
     const [confirmLogout, setConfirmLogout] = useState(false); // Estado para mostrar el modal de confirmación de cerrar sesión
+    const [loggedIn, setLoggedIn] = useState(false); // Estado para verificar si el usuario está logueado
+
+    useEffect(() => {
+        const loggedInStatus = localStorage.getItem('loggedIn') === 'true';
+        setLoggedIn(loggedInStatus);
+    }, []);
 
     const handleLogout = () => {
         setConfirmLogout(true); // Muestra el modal de confirmación de cerrar sesión
     };
 
     const confirmLogoutAction = () => {
-        localStorage.removeItem('token'); // Elimina el token de localStorage
-        localStorage.removeItem('token-info');
-        window.location.href = "/Login-worker"; // Redirecciona al usuario a la página de inicio de sesión
+        localStorage.setItem("loggedIn", 'false');
+        localStorage.setItem("isAdmin", 'false');
+
+        window.location.href = "/Login-worker";
     };
 
     const cancelLogoutAction = () => {
@@ -34,20 +41,34 @@ function AdminView() {
                     </div>
                 </div>
             )}
-            <button onClick={handleLogout}>Cerrar Sesión</button>
-            <button>
-                <Link to="/PostList">Ver publicaciones</Link>
-            </button>
-            <button>
-                <Link to="/adminview/employees">Ver empleados</Link>
-            </button>
-            <button>
-                <Link to="/adminview/sucursales">Ver sucursales</Link>
-            </button>
-            {/* <button>
-                <Link to="/FailedTrades">Ver trueques fallidos</Link>
-            </button> */}
-        </div>
+
+
+            <div>
+                {loggedIn ? (
+                    <>
+                        <button onClick={handleLogout}>Cerrar Sesión</button>
+                        <button>
+                            <Link to="/PostList">Ver publicaciones</Link>
+                        </button>
+                        <button>
+                            <Link to="/adminview/employees">Ver empleados</Link>
+                        </button>
+                        <button>
+                            <Link to="/adminview/sucursales">Ver sucursales</Link>
+                        </button>
+                    </>
+                ) : (
+                    <div>
+                        <p>Debes iniciar sesión para ver estas opciones.</p>
+                        <button>
+                            <Link to="/login-worker">Iniciar sesión.</Link>
+                        </button>
+
+                    </div>
+
+                )}
+            </div>
+        </div >
     );
 }
 

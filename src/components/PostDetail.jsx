@@ -36,8 +36,8 @@ function PostDetail() {
                     }
                 });
                 const userInfoResponse = await getUserInfo();
-                setPost(postResponse.data);
                 setUserInfo(userInfoResponse.data);
+                setPost(postResponse.data);
 
                 console.log(postResponse.data)
                 const sucursalResponse = await axios.get(`${baseURL}sucursal/${postResponse.data.sucursal_destino.id}/`, {

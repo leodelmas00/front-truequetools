@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { useParams } from "wouter";
+import { useRoute, Link } from "wouter";
 import { baseURL } from "../api/trueque.api";
 import { formatFechaHistorial, formatFechaSolicitud } from "../utils";
 import '../styles/PostSolicitudes.css';
@@ -13,14 +13,12 @@ import {
     Button,
 } from '@mui/material';
 
-
 function PostSolicitudes() {
     const [solicitudes, setSolicitudes] = useState([]);
-    const [detallesPublicaciones, setDetallesPublicaciones] = useState([]);
     const [loading, setLoading] = useState(true);
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
     const [selectedSolicitudId, setSelectedSolicitudId] = useState(null);
-    const params = useParams();
+    const [match, params] = useRoute('/post/:postId/solicitudes');
 
     useEffect(() => {
         const fetchSolicitudes = async () => {
@@ -42,42 +40,14 @@ function PostSolicitudes() {
         fetchSolicitudes();
     }, [params.postId]);
 
-    useEffect(() => {
-        const obtenerDetallesPublicacion = async (publicacionId) => {
-            try {
-                const token = localStorage.getItem('token');
-                const response = await axios.get(`${baseURL}post/${publicacionId}`, {
-                    headers: {
-                        Authorization: `Token ${token}`,
-                    }
-                });
-                return response.data;
-            } catch (error) {
-                console.error('Error al obtener detalles de la publicación:', error);
-                return null;
-            }
-        };
-
-        const obtenerDetallesParaTodasLasSolicitudes = async () => {
-            const detalles = await Promise.all(solicitudes.map(async (solicitud) => {
-                return obtenerDetallesPublicacion(solicitud.publicacion_a_intercambiar);
-            }));
-            setDetallesPublicaciones(detalles);
-        };
-
-        obtenerDetallesParaTodasLasSolicitudes();
-    }, [solicitudes]);
-
     const handleAceptar = async (solicitudId) => {
         try {
             const token = localStorage.getItem('token');
-            console.log(`Enviando solicitud PATCH a ${baseURL}solicitudes/${solicitudId}/`);
             await axios.patch(`${baseURL}solicitudes/${solicitudId}/`, { estado: 'PENDIENTE' }, {
                 headers: {
                     Authorization: `Token ${token}`,
                 }
             });
-            console.log('Solicitud PATCH enviada correctamente');
 
             // Filtra las solicitudes eliminadas
             const publicacionDeseadaId = solicitudes.find(s => s.id === solicitudId).publicacion_deseada;
@@ -88,7 +58,6 @@ function PostSolicitudes() {
         }
     };
 
-
     const handleRechazar = async (solicitudId) => {
         try {
             const token = localStorage.getItem('token');
@@ -97,17 +66,13 @@ function PostSolicitudes() {
                     Authorization: `Token ${token}`,
                 }
             });
-            console.log(response.status);
+
             if (response.status === 204) {
                 const nuevasSolicitudes = solicitudes.filter(solicitud => solicitud.id !== solicitudId);
                 setSolicitudes(nuevasSolicitudes);
-                console.log('Solicitud eliminada con éxito');
             }
         } catch (error) {
-            console.log(error);
-            if (error.response && (error.response.status === 404)) {
-                console.error('Error:', error.response.data.error);
-            }
+            console.error('Error al rechazar la solicitud:', error);
         }
     };
 
@@ -130,6 +95,9 @@ function PostSolicitudes() {
 
     return (
         <div className="post-solicitudes-container">
+            <Link to={`/post/${params.postId}/`} className="btn-volver">
+                <button>Volver al inicio</button>
+            </Link>
             {loading ? (
                 <p>Cargando...</p>
             ) : (
@@ -137,38 +105,29 @@ function PostSolicitudes() {
                     {solicitudes.length === 0 ? (
                         <p className="no-solicitudes-message">No hay solicitudes de intercambio.</p>
                     ) : (
-                        solicitudes.map((solicitud, index) => (
+                        solicitudes.map((solicitud) => (
                             <div key={solicitud.id} className="solicitud">
                                 <p>Recibida el {formatFechaHistorial(solicitud.fecha)}</p>
-
-                                {detallesPublicaciones[index] && (
-                                    <div>
-                                        <p>
-                                            {detallesPublicaciones[index].imagen && (
-                                                <div>
-                                                    <p>Imagen del producto:</p>
-                                                    <img className="preview-img" src={`http://127.0.0.1:8000/${detallesPublicaciones[index].imagen}/`} alt="imagen del post" />
-                                                </div>
-                                            )}
-                                            {detallesPublicaciones[index].usuario_propietario.username} te ofreció intercambiar su{' '}
-                                            <a href={`http://localhost:3000/post/${detallesPublicaciones[index].id}/`} className="enlace-clickeable">
-                                                {detallesPublicaciones[index].titulo}
-                                            </a>
-                                            <h4>Fecha y horario: {formatFechaSolicitud(solicitud.fecha_del_intercambio)}</h4>
-
-                                            <h5>* Recuerda: si te interesa el producto pero no puedes asistir en el horario proporcionado, puedes
-                                                rechazar la solicitud y crear una nueva con otro horario en la publicación del producto deseado!
-                                            </h5>
-
-                                        </p>
-
+                                <p>
+                                    {solicitud.publicacion_a_intercambiar.usuario_propietario.username} te ofreció intercambiar su{' '}
+                                    <a href={`http://localhost:3000/post/${solicitud.publicacion_a_intercambiar.id}/`} className="enlace-clickeable">
+                                        {solicitud.publicacion_a_intercambiar.titulo}
+                                    </a>
+                                    <h4>Fecha y horario: {formatFechaSolicitud(solicitud.fecha_del_intercambio)}</h4>
+                                    {solicitud.publicacion_a_intercambiar.imagen && (
                                         <div>
-                                            <button className="btn-aceptar" onClick={() => handleAceptar(solicitud.id)}>Aceptar</button>
-                                            <button className="btn-rechazar" onClick={() => confirmRechazar(solicitud.id)}>Rechazar</button>
+                                            <p>Imagen del producto:</p>
+                                            <img className="preview-img" src={`http://127.0.0.1:8000/${solicitud.publicacion_a_intercambiar.imagen}/`} alt="imagen del post" />
                                         </div>
-                                    </div>
-                                )}
-
+                                    )}
+                                    <h5>* Recuerda: si te interesa el producto pero no puedes asistir en el horario proporcionado, puedes
+                                        rechazar la solicitud y crear una nueva con otro horario en la publicación del producto deseado!
+                                    </h5>
+                                </p>
+                                <div>
+                                    <button className="btn-aceptar" onClick={() => handleAceptar(solicitud.id)}>Aceptar</button>
+                                    <button className="btn-rechazar" onClick={() => confirmRechazar(solicitud.id)}>Rechazar</button>
+                                </div>
                             </div>
                         ))
                     )}
