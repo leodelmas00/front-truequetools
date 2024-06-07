@@ -2,27 +2,24 @@ import { useState, useEffect } from "react";
 import { baseURL } from "../../api/trueque.api";
 import axios from "axios";
 import { getAllSucursales } from "../../api/trueque.api";
-import { Link } from 'wouter'
-
+import { Link } from 'wouter';
 
 function CreateEmployee() {
-    const [error, setError] = useState('')
-    const [sucursales, setSucursales] = useState([])
+    const [error, setError] = useState('');
+    const [sucursales, setSucursales] = useState([]);
     const [form, setForm] = useState({
         email: '',
-        nombre: '',
         password: '',
         sucursal_de_trabajo: '',
     });
 
     useEffect(() => {
         async function loadSucursales() {
-            const res = await getAllSucursales()
-            setSucursales(res.data)
+            const res = await getAllSucursales();
+            setSucursales(res.data);
         }
         loadSucursales();
     }, []);
-
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -36,7 +33,7 @@ function CreateEmployee() {
         event.preventDefault();
 
         // Validación de campos vacíos
-        if (!form.email || !form.nombre || !form.password || !form.sucursal_de_trabajo) {
+        if (!form.email || !form.password || !form.sucursal_de_trabajo) {
             setError('Debe rellenar todos los campos');
             return;
         }
@@ -44,17 +41,13 @@ function CreateEmployee() {
         try {
             const requestData = {
                 email: form.email,
-                nombre: form.nombre,
                 password: form.password,
                 sucursal_de_trabajo: form.sucursal_de_trabajo,
             };
 
-            const response = await axios.post(baseURL + 'adminview/employees/add', requestData, {
-                // headers: {
-                //     Authorization: `Token ${localStorage.getItem('token')}`,
-                //     'Content-Type': 'multipart/form-data',
-                // }
-            });
+            console.log(requestData)
+
+            const response = await axios.post(baseURL + 'adminview/employees/add', requestData);
 
             if (response.status === 201) {
                 setError('Empleado dado de alta con éxito');
@@ -68,31 +61,21 @@ function CreateEmployee() {
         }
     };
 
-
     return (
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <h1>Agregar un empleado</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div>
                     <input
                         type="text"
                         name="email"
                         placeholder="Email"
-                        value={form.dni}
+                        value={form.email}
                         onChange={handleChange}
                         required
                     />
                 </div>
-                <div>
-                    <input
-                        type="text"
-                        name="nombre"
-                        placeholder="Nombre de usuario"
-                        value={form.nombre}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+
                 <div>
                     <input
                         type="password"
@@ -111,17 +94,21 @@ function CreateEmployee() {
                         required
                     >
                         <option value="" disabled>Sucursal de trabajo</option>
-                        {sucursales.map((sucursal, index) => (
-                            <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{' (' + sucursal.direccion + ')'}</option>
+                        {sucursales.map((sucursal) => (
+                            <option key={sucursal.id} value={sucursal.id}>
+                                {sucursal.nombre} ({sucursal.direccion})
+                            </option>
                         ))}
                     </select>
                 </div>
+                <div>
+                    <button type="submit">Agregar</button>
+                </div>
             </form>
             <div>
-                <Link to="/adminview/employees" >
+                <Link to="/adminview/employees">
                     <button>Volver</button>
                 </Link>
-                <button onClick={handleSubmit}>Agregar</button>
             </div>
             <div>
                 <p style={{ color: error === 'Empleado dado de alta con éxito' ? 'green' : 'red' }}>{error}</p>
