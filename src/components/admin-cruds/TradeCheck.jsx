@@ -41,6 +41,40 @@ function TradeCheck() {
         fetchProductos();
     }, []);
 
+    const handleRechazarTrueque = async () => {
+        // Aca chequearia si isEmployee = true?
+        try {
+            await axios.post(`${baseURL}solicitudes/${params.solicitud_id}/changeState/`, "FALLIDO");
+            alert('Intercambio rechazado con éxito');
+            setShowForm(false);
+        } catch (error) {
+            alert('Ocurrio un error inesperado');
+        }
+    };
+
+    const handleAceptarTrueque = async () => {
+        // Aca chequearia si isEmployee = true?
+        try {
+            await axios.post(`${baseURL}solicitudes/${params.solicitud_id}/changeState/`, "ACEPTADO");
+            alert('Intercambio aceptado con éxito');
+            setShowForm(false);
+        } catch (error) {
+            alert('Ocurrio un error inesperado');
+        }
+    };
+
+    const handleRegistrarVentas = async (event) => {
+        event.preventDefault();
+        try {
+            await axios.post(`${baseURL}employee/solicitudes/${params.solicitud_id}/ventas/`, { productos: ventaProductos });
+            alert('Ventas registrada con éxito');
+            setShowForm(false);
+        } catch (error) {
+            console.error('Error al registrar la ventas:', error);
+            alert('Error al registrar las ventas');
+        }
+    };
+
     const handleVentasChange = (index, field, value) => {
         const updatedVentaProductos = [...ventaProductos];
         updatedVentaProductos[index][field] = value;
@@ -82,50 +116,59 @@ function TradeCheck() {
         return <div>Cargando...</div>;
     }
 
+    const handleToggleForm = () => {
+        setShowForm(prevShowForm => !prevShowForm);
+    };
+
     return (
-        <div className="container">
-            <h2 className="title">Gestión de intercambio</h2>
-            <div className="button-group">
-                <Link to="/employeeview">
-                    <button type="button" className="volver">Volver</button>
-                </Link>
-                <button type="button" className="rechazar">Rechazar Trueque</button>
-                <button type="button" className="aceptar">Aceptar Trueque</button>
-                {!solicitud.venta && (
-                    <button type="button" className="registrar" onClick={() => setShowForm(true)}>Registrar Ventas</button>
+        <div className="trade-container">
+            <div className="trade-box">
+                <h2 className="trade-title"> Gestión de intercambio </h2>
+                <hr />
+                <div>
+                    <Link to="/employeeview">
+                        <button type="button" className="trade-button">Volver</button>
+                    </Link>
+                    <button type="button" className="trade-button" onClick={handleRechazarTrueque}>Rechazar Trueque</button>
+                    <button type="button" className="trade-button" onClick={handleAceptarTrueque}>Aceptar Trueque</button>
+                </div>
+                <hr />
+                {!solicitud.venta ? (
+                    <button type="button" className="trade-button" onClick={handleToggleForm}>Registrar Ventas</button>
+                ) : (
+                    <p> Ya se cargaron las ventas de este trueque! </p>
+                )}
+                {showForm && (
+                    <form onSubmit={handleRegistrarVentas} className="trade-form">
+                        {ventaProductos.map((ventaProducto, index) => (
+                            <div key={index} className="trade-form-group">
+                                <select
+                                    value={ventaProducto.producto}
+                                    onChange={(e) => handleVentasChange(index, 'producto', e.target.value)}
+                                >
+                                    <option value="" className='trade-select'>Seleccione un producto</option>
+                                    {productos.map((producto) => (
+                                        <option key={producto.id} value={producto.id}>
+                                            {producto.nombre}
+                                        </option>
+                                    ))}
+                                </select>
+                                <input className='trade-input'
+                                    type="number"
+                                    placeholder="Cantidad"
+                                    value={ventaProducto.cantidad}
+                                    onChange={(e) => handleVentasChange(index, 'cantidad', e.target.value)}
+                                />
+                                <button type="button" className="trade-remove" onClick={() => removeProducto(index)} disabled={index === 0}>-</button>
+                            </div>
+                        ))}
+                        <button type="button" className="trade-add" onClick={addProducto} disabled={!isValidForm()}>+</button>
+                        <div className="button-group">
+                            <button type="submit" className="registrar" disabled={!isValidForm()}>Confirmar venta</button>
+                        </div>
+                    </form>
                 )}
             </div>
-            {showForm && (
-                <form onSubmit={handleRegistrarVentas} className="form">
-                    {ventaProductos.map((ventaProducto, index) => (
-                        <div key={index} className="form-group">
-                            <select
-                                value={ventaProducto.id}
-                                onChange={(e) => handleVentasChange(index, 'id', e.target.value)}
-                            >
-                                <option value="">Seleccione un producto</option>
-                                {productos.map((producto) => (
-                                    <option key={producto.id} value={producto.id}>
-                                        {producto.nombre}
-                                    </option>
-                                ))}
-                            </select>
-                            <input
-                                type="number"
-                                placeholder="Cantidad vendida"
-                                value={ventaProducto.cantidad_vendida}
-                                onChange={(e) => handleVentasChange(index, 'cantidad_vendida', e.target.value)}
-                            />
-
-                            <button type="button" className="remove" onClick={() => removeProducto(index)} disabled={index === 0}>-</button>
-                        </div>
-                    ))}
-                    <button type="button" className="add" onClick={addProducto} disabled={!isValidForm()}>+</button>
-                    <div className="button-group">
-                        <button type="submit" className="registrar" disabled={!isValidForm()}>Confirmar venta</button>
-                    </div>
-                </form>
-            )}
         </div>
     );
 }
