@@ -116,18 +116,16 @@ function Historial() {
                         {solicitudesConSucursal.map((solicitud) => (
                             <tr key={solicitud.id}>
                                 <td>
-                                    <PostDetailHistory postId={solicitud.publicacion_a_intercambiar} onSucursalLoaded={(sucursal) => handleSucursalLoaded(sucursal, solicitud.publicacion_a_intercambiar)} />
+                                    <PostDetailHistory postId={solicitud.publicacion_a_intercambiar} onSucursalLoaded={(sucursal) => handleSucursalLoaded(sucursal, solicitud.publicacion_a_intercambiar)} includeSucursal={true} />
                                 </td>
                                 <td>
-                                    <PostDetailHistory postId={solicitud.publicacion_deseada} onSucursalLoaded={(sucursal) => handleSucursalLoaded(sucursal, solicitud.publicacion_deseada)} />
+                                    <PostDetailHistory postId={solicitud.publicacion_deseada} onSucursalLoaded={(sucursal) => handleSucursalLoaded(sucursal, solicitud.publicacion_deseada)} includeSucursal={true} />
                                 </td>
                                 <td>{formatFechaSolicitud(solicitud.fecha_del_intercambio)}</td>
                                 <td>{solicitud.sucursal ? `${solicitud.sucursal.nombre} - ${solicitud.sucursal.direccion}` : ''}</td>
                                 <td>{solicitud.estado}</td>
                                 {solicitud.estado === "PENDIENTE" && (
-
                                     <button className='boton-cancelar' onClick={() => handleDialogOpen(solicitud.id)}>Cancelar</button>
-
                                 )}
                             </tr>
                         ))}
@@ -162,7 +160,7 @@ function Historial() {
             </Snackbar>
             <Snackbar open={openSuccess} autoHideDuration={6000} onClose={handleSuccessClose}>
                 <MuiAlert elevation={6} variant="filled" onClose={handleSuccessClose} severity="success">
-                    Se cancelo con exito!
+                    ¡Se canceló con éxito!
                 </MuiAlert>
             </Snackbar>
         </div>

@@ -66,8 +66,13 @@ function SignIn() {
     };
 
     const loadPosts = async () => {
-        const res = await getAllPosts();
-        setPosts(res.data);
+        try {
+            const res = await getAllPosts();
+            setPosts(res.data);
+        } catch (error) {
+            window.location.href = '/Login';
+        }
+
     };
 
     const handlePostClick = (id) => {
@@ -82,7 +87,11 @@ function SignIn() {
         e.preventDefault();
         setSearchPerformed(true);
         try {
+            const token = localStorage.getItem('token')
             const response = await axios.get(`${baseURL}search-posts/`, {
+                headers: {
+                    Authorization: `Token ${token}`
+                },
                 params: { q: query }
             });
             setSearchResults(response.data);

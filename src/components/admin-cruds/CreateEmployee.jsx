@@ -9,7 +9,7 @@ function CreateEmployee() {
     const [error, setError] = useState('')
     const [sucursales, setSucursales] = useState([])
     const [form, setForm] = useState({
-        dni: '',
+        email: '',
         nombre: '',
         password: '',
         sucursal_de_trabajo: '',
@@ -34,9 +34,16 @@ function CreateEmployee() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        // Validación de campos vacíos
+        if (!form.email || !form.nombre || !form.password || !form.sucursal_de_trabajo) {
+            setError('Debe rellenar todos los campos');
+            return;
+        }
+
         try {
             const requestData = {
-                dni: form.dni,
+                email: form.email,
                 nombre: form.nombre,
                 password: form.password,
                 sucursal_de_trabajo: form.sucursal_de_trabajo,
@@ -48,29 +55,29 @@ function CreateEmployee() {
                 //     'Content-Type': 'multipart/form-data',
                 // }
             });
-            if (response.status === 201) {
-                alert('Empleado dado de alta con éxito')
 
-                setError('')
-            } else {
-                setError('Porfavor, verifica los datos ingresados');
-                console.log(error.data)
+            if (response.status === 201) {
+                setError('Empleado dado de alta con éxito');
             }
         } catch (error) {
-            console.error('Error:', error);
-            setError('Ha ocurrido un error');
+            if (error.response && error.response.status === 400) {
+                setError('Ya existe un empleado con el mismo email');
+            } else {
+                setError('Hubo un problema al intentar dar de alta al empleado');
+            }
         }
-    }
+    };
+
 
     return (
-        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <h1>Agregar un empleado</h1>
             <form>
                 <div>
                     <input
                         type="text"
-                        name="dni"
-                        placeholder="Dni"
+                        name="email"
+                        placeholder="Email"
                         value={form.dni}
                         onChange={handleChange}
                         required
@@ -80,7 +87,7 @@ function CreateEmployee() {
                     <input
                         type="text"
                         name="nombre"
-                        placeholder="Nombre"
+                        placeholder="Nombre de usuario"
                         value={form.nombre}
                         onChange={handleChange}
                         required
@@ -115,6 +122,9 @@ function CreateEmployee() {
                     <button>Volver</button>
                 </Link>
                 <button onClick={handleSubmit}>Agregar</button>
+            </div>
+            <div>
+                <p style={{ color: error === 'Empleado dado de alta con éxito' ? 'green' : 'red' }}>{error}</p>
             </div>
         </div>
     );

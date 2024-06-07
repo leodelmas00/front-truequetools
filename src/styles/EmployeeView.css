@@ -1,0 +1,84 @@
+.employee-navigation-bar {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    background-color: #757575;
+    padding: 10px;
+    margin-bottom: 50px;
+}
+
+.employee-nav-titulo {
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.employee-separador {
+    margin-top: -20px;
+    margin-bottom: 10px;
+}
+
+.employee-nav-button {
+    background-color: #f2ada7;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.employee-nav-button:hover {
+    background-color: #775552;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.employee-gestionar-button {
+    background-color: #f2ada7;
+    color: white;
+    border: none;
+    padding: 13px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.employee-gestionar-button:hover {
+    background-color: #775552;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.employee-gestionar-button-margin {
+    margin-left: 20px;
+    /* Ajusta este valor según el espacio que desees */
+
+}
+
+.employee-panel table {
+    width: 75%;
+    border-collapse: collapse;
+    margin: auto;
+    /* centrar la tabla con un margin esta CROTISIMO pero bueno che, solucion temporal */
+}
+
+.employee-table th,
+.employee-table td {
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #000000;
+    font-size: 1.1rem;
+}
+
+.employee-table th {
+    background-color: #dddddd;
+}

@@ -1,13 +1,11 @@
-// PostDetailHistory.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { baseURL } from '../api/trueque.api';
 
-function PostDetail({ postId, onSucursalLoaded }) {
+function PostDetailHistory({ postId, onSucursalLoaded, includeSucursal }) {
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [sucursal, setSucursal] = useState(null);
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -19,14 +17,17 @@ function PostDetail({ postId, onSucursalLoaded }) {
                     },
                 });
                 setPost(response.data);
-                const sucursalResponse = await axios.get(`${baseURL}sucursal/${response.data.sucursal_destino.id}/`, {
-                    headers: {
-                        Authorization: `Token ${token}`,
-                    }
-                });
-                setSucursal(sucursalResponse.data);
-                // Llamar a la función de callback con la información de la sucursal
-                onSucursalLoaded(sucursalResponse.data, postId);
+
+                if (includeSucursal && response.data.sucursal_destino) {
+                    const sucursalResponse = await axios.get(`${baseURL}sucursal/${response.data.sucursal_destino.id}/`, {
+                        headers: {
+                            Authorization: `Token ${token}`,
+                        }
+                    });
+                    const sucursalData = sucursalResponse.data;
+                    // Llamar a la función de callback con la información de la sucursal
+                    onSucursalLoaded && onSucursalLoaded(sucursalData, postId);
+                }
             } catch (error) {
                 setError('Error al obtener los detalles del post');
                 console.error(error);
@@ -53,4 +54,4 @@ function PostDetail({ postId, onSucursalLoaded }) {
     );
 }
 
-export default PostDetail;
+export default PostDetailHistory;

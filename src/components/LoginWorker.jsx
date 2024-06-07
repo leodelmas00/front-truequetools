@@ -1,4 +1,3 @@
-
 import { baseURL } from "../api/trueque.api";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -8,7 +7,7 @@ import '../styles/LoginWorker.css';
 
 function LogIn() {
     const [form, setForm] = useState({
-        dni: '',
+        email: '',
         password: ''
     });
     const [redirect, setRedirect] = useState(false);
@@ -21,8 +20,10 @@ function LogIn() {
         try {
             const response = await axios.post(baseURL + 'login-worker/', form);
 
-            if (response.status === 200) { //&& response.data.token
-                // localStorage.setItem('token', response.data.token);
+            if (response.status === 200 && response.data) {
+                localStorage.setItem('loggedIn', true)
+                localStorage.setItem('userEmail', response.data.email)
+                console.log(response.data)
                 setRedirect(true);
             } else {
                 setError('Correo electrónico o contraseña incorrectos');
@@ -33,6 +34,7 @@ function LogIn() {
         }
     };
 
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setForm(prevState => ({
@@ -41,13 +43,11 @@ function LogIn() {
         }));
     };
 
-    if (redirect && form.dni === 'admin' && form.password === 'admin') {
-        return <Redirect to="/adminview" />;
+    if (redirect && form.email === 'admin' && form.password === 'admin') {
+        return <Redirect to="/AdminView" />;
     } else if (redirect) {
-        return <Redirect to="/employeeview" />
+        return <Redirect to="/EmployeeView" />
     }
-
-
 
     return (
         <div className="login-container">
@@ -58,9 +58,9 @@ function LogIn() {
                         <div>
                             <input
                                 type="text"
-                                placeholder="DNI"
-                                name="dni"
-                                value={form.dni}
+                                placeholder="Email"
+                                name="email"
+                                value={form.email}
                                 onChange={handleChange}
                                 required
                             />
