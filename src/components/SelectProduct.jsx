@@ -81,7 +81,7 @@ function Intercambiar() {
         <div className="intercambiar-container">
             <UserPosts className="misProductos" onPostSelect={handlePostSelect} isIntercambioMode={true} />
             {selectedPost && (
-                <div>
+                <div className="selected-box">
                     <h2 className="selected-title">Has seleccionado: {selectedPost.titulo}</h2>
                     <TextField
                         label="Fecha y hora de intercambio"

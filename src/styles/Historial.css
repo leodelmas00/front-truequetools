@@ -1,10 +1,60 @@
 .Historial {
     text-align: center;
+    background: url("../logo_1/FONDO_LOGIN.png") no-repeat center;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    max-width: 1920px;
+    max-height: 1080px;
+    overflow: hidden;
+}
+
+.historial-navigation-bar {
+    display: relative;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 70px;
+    background-color: #f2ada7;
+    padding: 10px;
+    margin-bottom: 50px;
+    background: linear-gradient(to right,#f2ada7, #f5c8c4);
+    border-bottom: 1px solid #000000;
+}
+
+.historial-navigation-bar .historial-link-volver{
+    position: absolute;
+    top: 5.5%;
+    left: 60px;
+}
+
+.Historial .historial-button {
+    display: inline-block;
+    background-color: #D88479;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transform: translateY(-50%);
+}
+
+.Historial .historial-button:hover {
+    background-color: #f2f0e4;
+    color: #bf4c41;
+    transition: color 0.2s;
+    transition: transform 0.3s ease;
 }
 
 .Historial .Titulo {
-    font-size: 4rem;
+    position: absolute;
+    font-size: 3rem;
+    left: 50%;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    transform: translate(-50%, -50%);
 }
 
 .Historial-box table {
@@ -37,7 +87,7 @@
 
 
 .Historial-box th {
-    background-color: #D88479;
+    background-color: #f2ada7;
     font-size: 1.2rem;
 }
 
@@ -62,11 +112,4 @@
     transition: color 0.2s;
     transform: scale(1.04);
     transition: transform 0.3s ease;
-}
-
-.separador {
-    width: 50rem;
-    margin-top: 20px;
-    margin-bottom: 80px;
-    border-color: black;
 }

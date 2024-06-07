@@ -57,39 +57,38 @@ function LogIn() {
 
     return (
         <div className="login-container">
-            <div>
-                <div className="container">
-                    <form className="cajaFormulario" onSubmit={handleSubmit}>
-                        <h2>Inicio de sesión para empleados/administradores.</h2>
-                        <div>
-                            <input
-                                type="text"
-                                placeholder="Email"
-                                name="email"
-                                value={form.email}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        <div>
-                            <input
-                                type="password"
-                                placeholder="Contraseña"
-                                name="password"
-                                value={form.password}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        {error && <p className="error-message">{error}</p>}
-                        <div>
-                            <button type="submit">
-                                Iniciar sesión
-                            </button>
-                        </div>
-                    </form>
+            <form className="cajaFormulario" onSubmit={handleSubmit}>
+                <h2>Inicio de sesión para empleados/administradores.</h2>
+                <div>
+                    <input
+                        type="text"
+                        placeholder="Email"
+                        name="email"
+                        value={form.email}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
-            </div>
+                <div>
+                    <input
+                        type="password"
+                        placeholder="Contraseña"
+                        name="password"
+                        value={form.password}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                {error && <p className="error-message">{error}</p>}
+                <div>
+                    <Link to="/login" className="admin-link">
+                        <button>Volver</button>
+                    </Link>
+                    <button type="submit">
+                        Iniciar sesión
+                    </button>
+                </div>
+            </form>
         </div>
     );
 }

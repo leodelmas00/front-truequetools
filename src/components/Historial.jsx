@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../styles/Historial.css';
 import { baseURL, getUserInfo } from '../api/trueque.api';
 import axios from 'axios';
+import { Link } from 'wouter';
 import { formatFechaSolicitud } from '../utils';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
@@ -104,8 +105,12 @@ function Historial() {
 
     return (
         <div className='Historial'>
-            <h1 className='Titulo'> HISTORIAL </h1>
-            <hr className='separador'></hr>
+            <div className='historial-navigation-bar'>
+                <Link to="/signin" className="historial-link-volver">
+                     <button className="historial-button">Volver</button>
+                </Link>
+                <h1 className='Titulo'> HISTORIAL </h1>
+            </div>
             <div className='Historial-box'>
                 <table className="tabla">
                     <thead>
