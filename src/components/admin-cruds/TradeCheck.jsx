@@ -146,7 +146,7 @@ function TradeCheck() {
                                     value={ventaProducto.cantidad_vendida}
                                     onChange={(e) => handleVentasChange(index, 'cantidad_vendida', e.target.value)}
                                 />
-                                <button type="button" className="trade-remove" onClick={() => removeProducto(index)} disabled={index === 0}>-</button>
+                                <button type="button" className="trade-remove" onClick={() => removeProducto(index)} disabled={ventaProductos.length === 1}>-</button>
                             </div>
                         ))}
                         <button type="button" className="trade-add" onClick={addProducto} disabled={!isValidForm()}>+</button>
