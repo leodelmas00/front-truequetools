@@ -32,7 +32,7 @@ function TradeCheck() {
             try {
                 const response = await axios.get(`${baseURL}productos/`);
                 setProductos(response.data);
-                console.log(response.data)
+                console.log(response.data);
             } catch (error) {
                 console.error('Error al obtener productos:', error);
             }
@@ -70,7 +70,7 @@ function TradeCheck() {
             alert('Ventas registrada con éxito');
             setShowForm(false);
         } catch (error) {
-            console.error('Error al registrar la ventas:', error);
+            console.error('Error al registrar las ventas:', error);
             alert('Error al registrar las ventas');
         }
     };
@@ -82,26 +82,13 @@ function TradeCheck() {
     };
 
     const addProducto = () => {
-        setVentaProductos([...ventaProductos, { id: '', cantidad_vendida: '', producto: '' }]);
+        setVentaProductos([...ventaProductos, { id: '', cantidad_vendida: '' }]);
     };
-
 
     const removeProducto = (index) => {
         const updatedVentaProductos = [...ventaProductos];
         updatedVentaProductos.splice(index, 1);
         setVentaProductos(updatedVentaProductos);
-    };
-
-    const handleRegistrarVentas = async (event) => {
-        event.preventDefault();
-        try {
-            await axios.post(`${baseURL}employee/solicitudes/${params.solicitud_id}/ventas/`, { productos: ventaProductos });
-            alert('Ventas registrada con éxito');
-            setShowForm(false);
-        } catch (error) {
-            console.error('Error al registrar la ventas:', error);
-            alert('Error al registrar las ventas');
-        }
     };
 
     const isValidForm = () => {
@@ -143,8 +130,8 @@ function TradeCheck() {
                         {ventaProductos.map((ventaProducto, index) => (
                             <div key={index} className="trade-form-group">
                                 <select
-                                    value={ventaProducto.producto}
-                                    onChange={(e) => handleVentasChange(index, 'producto', e.target.value)}
+                                    value={ventaProducto.id}
+                                    onChange={(e) => handleVentasChange(index, 'id', e.target.value)}
                                 >
                                     <option value="" className='trade-select'>Seleccione un producto</option>
                                     {productos.map((producto) => (
@@ -156,8 +143,8 @@ function TradeCheck() {
                                 <input className='trade-input'
                                     type="number"
                                     placeholder="Cantidad"
-                                    value={ventaProducto.cantidad}
-                                    onChange={(e) => handleVentasChange(index, 'cantidad', e.target.value)}
+                                    value={ventaProducto.cantidad_vendida}
+                                    onChange={(e) => handleVentasChange(index, 'cantidad_vendida', e.target.value)}
                                 />
                                 <button type="button" className="trade-remove" onClick={() => removeProducto(index)} disabled={index === 0}>-</button>
                             </div>
