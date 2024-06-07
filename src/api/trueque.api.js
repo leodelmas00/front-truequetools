@@ -20,13 +20,7 @@ export const getMyPosts = () => {
 }
 
 export const getAllEmployees = () => {
-    const token = localStorage.getItem('token');
-
-    return axios.get(`${baseURL}adminview/employees`, {
-        headers: {
-            Authorization: `Token ${token}`
-        }
-    });
+    return axios.get(`${baseURL}adminview/employees`);
 }
 
 export const getUserInfo = () => {

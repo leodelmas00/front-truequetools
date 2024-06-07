@@ -12,7 +12,7 @@ function LogIn() {
     });
     const [redirect, setRedirect] = useState(false);
     const [error, setError] = useState('');
-    const [loggedIn, setLoggedIn] = useState('');
+    const [loggedIn, setLoggedIn] = useState(false);
 
 
     const handleSubmit = async (event) => {
@@ -43,7 +43,7 @@ function LogIn() {
         }));
     };
 
-    if (redirect && form.email === 'admin' && form.password === 'admin') {
+    if (redirect && form.email === 'admin@truequetools.com' && form.password === 'admin') {
         return <Redirect to="/AdminView" />;
     } else if (redirect) {
         return <Redirect to="/EmployeeView" />

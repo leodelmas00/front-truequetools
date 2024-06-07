@@ -4,12 +4,13 @@ import { useRoute, Link } from 'wouter';
 import { baseURL } from "../../api/trueque.api";
 import '../../styles/TradeCheck.css'
 
+
 function TradeCheck() {
     const [match, params] = useRoute('/tradeCheck/:solicitud_id');
     const [solicitud, setSolicitud] = useState(null);
     const [error, setError] = useState(null);
     const [productos, setProductos] = useState([]);
-    const [ventaProductos, setVentaProductos] = useState([{ producto: '', cantidad: '' }]);
+    const [ventaProductos, setVentaProductos] = useState([{ id: '', cantidad_vendida: '' }]);
     const [showForm, setShowForm] = useState(false);
 
     useEffect(() => {
@@ -17,7 +18,7 @@ function TradeCheck() {
             try {
                 const response = await axios.get(`${baseURL}employee/solicitudes/${params.solicitud_id}/`);
                 setSolicitud(response.data);
-                console.log(response.data)
+                console.log(response.data);
             } catch (error) {
                 setError('Error al obtener la solicitud.');
             }
@@ -31,6 +32,7 @@ function TradeCheck() {
             try {
                 const response = await axios.get(`${baseURL}productos/`);
                 setProductos(response.data);
+                console.log(response.data)
             } catch (error) {
                 console.error('Error al obtener productos:', error);
             }
@@ -46,8 +48,9 @@ function TradeCheck() {
     };
 
     const addProducto = () => {
-        setVentaProductos([...ventaProductos, { producto: '', cantidad: '' }]);
+        setVentaProductos([...ventaProductos, { id: '', cantidad_vendida: '', producto: '' }]);
     };
+
 
     const removeProducto = (index) => {
         const updatedVentaProductos = [...ventaProductos];
@@ -68,7 +71,7 @@ function TradeCheck() {
     };
 
     const isValidForm = () => {
-        return ventaProductos.every(producto => producto.producto && producto.cantidad);
+        return ventaProductos.every(producto => producto.id && producto.cantidad_vendida);
     };
 
     if (error) {
@@ -97,8 +100,8 @@ function TradeCheck() {
                     {ventaProductos.map((ventaProducto, index) => (
                         <div key={index} className="form-group">
                             <select
-                                value={ventaProducto.producto}
-                                onChange={(e) => handleVentasChange(index, 'producto', e.target.value)}
+                                value={ventaProducto.id}
+                                onChange={(e) => handleVentasChange(index, 'id', e.target.value)}
                             >
                                 <option value="">Seleccione un producto</option>
                                 {productos.map((producto) => (
@@ -109,10 +112,11 @@ function TradeCheck() {
                             </select>
                             <input
                                 type="number"
-                                placeholder="Cantidad"
-                                value={ventaProducto.cantidad}
-                                onChange={(e) => handleVentasChange(index, 'cantidad', e.target.value)}
+                                placeholder="Cantidad vendida"
+                                value={ventaProducto.cantidad_vendida}
+                                onChange={(e) => handleVentasChange(index, 'cantidad_vendida', e.target.value)}
                             />
+
                             <button type="button" className="remove" onClick={() => removeProducto(index)} disabled={index === 0}>-</button>
                         </div>
                     ))}
