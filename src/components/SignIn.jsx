@@ -66,8 +66,13 @@ function SignIn() {
     };
 
     const loadPosts = async () => {
-        const res = await getAllPosts();
-        setPosts(res.data);
+        try {
+            const res = await getAllPosts();
+            setPosts(res.data);
+        } catch (error) {
+            window.location.href = '/Login';
+        }
+
     };
 
     const handlePostClick = (id) => {

@@ -50,7 +50,7 @@ function App() {
       <Route path="/adminview/EmployeeDetail" component={EmployeeDetail} />
       <Route path="/my-posts" component={UserPosts} />
       <Route path="/EmployeeView" component={EmployeeView} />
-      <Route path="/TradeCheck" component={TradeCheck} />
+      <Route path="/TradeCheck/:id" component={TradeCheck} />
 
     </Switch>
   );

@@ -1,4 +1,4 @@
-.employee-navigation-bar{
+.employee-navigation-bar {
     display: flex;
     align-items: center;
     text-align: center;
@@ -8,7 +8,7 @@
     margin-bottom: 50px;
 }
 
-.employee-nav-titulo{
+.employee-nav-titulo {
     color: white;
     font-family: 'Courier New', Courier, monospace;
 }
@@ -18,7 +18,7 @@
     margin-bottom: 10px;
 }
 
-.employee-nav-button{
+.employee-nav-button {
     background-color: #f2ada7;
     color: white;
     border: none;
@@ -38,6 +38,32 @@
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
+.employee-gestionar-button {
+    background-color: #f2ada7;
+    color: white;
+    border: none;
+    padding: 13px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.employee-gestionar-button:hover {
+    background-color: #775552;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.employee-gestionar-button-margin {
+    margin-left: 20px;
+    /* Ajusta este valor según el espacio que desees */
+
+}
+
 .employee-panel table {
     width: 75%;
     border-collapse: collapse;
@@ -53,6 +79,6 @@
     font-size: 1.1rem;
 }
 
-.employee-table th{
+.employee-table th {
     background-color: #dddddd;
 }
