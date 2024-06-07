@@ -3,7 +3,6 @@ import axios from "axios";
 import { getAllEmployees } from "../../api/trueque.api";
 import { Link } from 'wouter'
 
-
 export default function Employees() {
     const [employees, setEmployees] = useState([]);
     const [redirect, setRedirect] = useState(null);
@@ -17,13 +16,14 @@ export default function Employees() {
         loadEmployees();
     }, []);
 
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <h1>Lista de Empleados</h1>
             <ul>
                 {employees.map(employee => (
                     <li key={employee.id} style={{ marginTop: '5px' }}>
-                        <Link to="/adminview/EmployeeDetail" style={{ backgroundColor: '#f2ada7', borderRadius: '6px' }}> {employee.email} </Link>
+                        <Link key={employee.id} to={`/adminview/EmployeeDetail/${employee.id}`} style={{ backgroundColor: '#f2ada7', borderRadius: '6px' }}> {employee.email} </Link>
                     </li>
                 ))}
             </ul>

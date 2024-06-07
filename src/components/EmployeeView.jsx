@@ -20,7 +20,6 @@ function EmployeeView() {
         localStorage.setItem('userEmail', '');
         window.location.href = '/Login-worker';
     };
-
     const loadSolicitudes = async () => {
         try {
             const loggedIn = localStorage.getItem('loggedIn');
@@ -29,6 +28,41 @@ function EmployeeView() {
                 try {
                     console.log(`${baseURL}employee/solicitudes/`);
                     const response = await axios.get(`${baseURL}employee/solicitudes/`, {
+                        headers: {
+                            'X-User-Email': userEmail
+                        }
+                    });
+                    console.log(response.data);
+                    setSolicitudes(response.data);
+                    setTrueques(true); // Asegúrate de activar la visualización de trueques
+                    return response.data;
+                } catch (error) {
+                    console.error('Error en la solicitud:', error);
+                    setErrorMessage('Error al obtener las solicitudes.');
+                    setOpenError(true);
+                }
+            } else {
+                setErrorMessage('Debes iniciar sesión para ver las solicitudes.');
+                setOpenError(true);
+                setTimeout(() => {
+                    window.location.href = '/Login-worker';
+                }, 1500);
+            }
+        } catch (error) {
+            console.error('Error desconocido:', error);
+            setErrorMessage('Error desconocido al obtener las solicitudes.');
+            setOpenError(true);
+        }
+    };
+
+    const loadSolicitudesDelDia = async () => {
+        try {
+            const loggedIn = localStorage.getItem('loggedIn');
+            const userEmail = localStorage.getItem('userEmail');
+            if (loggedIn === 'true') {
+                try {
+                    console.log(`${baseURL}employee/solicitudes/today/`);
+                    const response = await axios.get(`${baseURL}employee/solicitudes/today/`, {
                         headers: {
                             'X-User-Email': userEmail
                         }
@@ -68,6 +102,8 @@ function EmployeeView() {
                     <hr className='employee-separador' />
                     <button className="employee-nav-button" onClick={handleLogout}>Cerrar Sesión</button>
                     <button className="employee-nav-button" onClick={loadSolicitudes}>Ver Trueques activos</button>
+                    <button className="employee-nav-button" onClick={loadSolicitudesDelDia}>Ver Trueques del día</button>
+
                 </div>
             </div>
             <div className="employee-elements">

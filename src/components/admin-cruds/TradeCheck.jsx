@@ -4,12 +4,13 @@ import { useRoute, Link } from 'wouter';
 import { baseURL } from "../../api/trueque.api";
 import '../../styles/TradeCheck.css'
 
+
 function TradeCheck() {
     const [match, params] = useRoute('/tradeCheck/:solicitud_id');
     const [solicitud, setSolicitud] = useState(null);
     const [error, setError] = useState(null);
     const [productos, setProductos] = useState([]);
-    const [ventaProductos, setVentaProductos] = useState([{ producto: '', cantidad: '' }]);
+    const [ventaProductos, setVentaProductos] = useState([{ id: '', cantidad_vendida: '' }]);
     const [showForm, setShowForm] = useState(false);
 
     useEffect(() => {
@@ -17,7 +18,7 @@ function TradeCheck() {
             try {
                 const response = await axios.get(`${baseURL}employee/solicitudes/${params.solicitud_id}/`);
                 setSolicitud(response.data);
-                console.log(response.data)
+                console.log(response.data);
             } catch (error) {
                 setError('Error al obtener la solicitud.');
             }
@@ -31,6 +32,7 @@ function TradeCheck() {
             try {
                 const response = await axios.get(`${baseURL}productos/`);
                 setProductos(response.data);
+                console.log(response.data);
             } catch (error) {
                 console.error('Error al obtener productos:', error);
             }
@@ -49,7 +51,7 @@ function TradeCheck() {
             alert('Ocurrio un error inesperado');
         }
     };
-    
+
     const handleAceptarTrueque = async () => {
         // Aca chequearia si isEmployee = true?
         try {
@@ -68,7 +70,7 @@ function TradeCheck() {
             alert('Ventas registrada con éxito');
             setShowForm(false);
         } catch (error) {
-            console.error('Error al registrar la ventas:', error);
+            console.error('Error al registrar las ventas:', error);
             alert('Error al registrar las ventas');
         }
     };
@@ -80,7 +82,7 @@ function TradeCheck() {
     };
 
     const addProducto = () => {
-        setVentaProductos([...ventaProductos, { producto: '', cantidad: '' }]);
+        setVentaProductos([...ventaProductos, { id: '', cantidad_vendida: '' }]);
     };
 
     const removeProducto = (index) => {
@@ -90,7 +92,7 @@ function TradeCheck() {
     };
 
     const isValidForm = () => {
-        return ventaProductos.every(producto => producto.producto && producto.cantidad);
+        return ventaProductos.every(producto => producto.id && producto.cantidad_vendida);
     };
 
     if (error) {
@@ -103,13 +105,13 @@ function TradeCheck() {
 
     const handleToggleForm = () => {
         setShowForm(prevShowForm => !prevShowForm);
-      };
+    };
 
     return (
         <div className="trade-container">
             <div className="trade-box">
                 <h2 className="trade-title"> Gestión de intercambio </h2>
-                <hr/>
+                <hr />
                 <div>
                     <Link to="/employeeview">
                         <button type="button" className="trade-button">Volver</button>
@@ -117,9 +119,9 @@ function TradeCheck() {
                     <button type="button" className="trade-button" onClick={handleRechazarTrueque}>Rechazar Trueque</button>
                     <button type="button" className="trade-button" onClick={handleAceptarTrueque}>Aceptar Trueque</button>
                 </div>
-                <hr/>
+                <hr />
                 {!solicitud.venta ? (
-                        <button type="button" className="trade-button" onClick={handleToggleForm}>Registrar Ventas</button>
+                    <button type="button" className="trade-button" onClick={handleToggleForm}>Registrar Ventas</button>
                 ) : (
                     <p> Ya se cargaron las ventas de este trueque! </p>
                 )}
@@ -128,8 +130,8 @@ function TradeCheck() {
                         {ventaProductos.map((ventaProducto, index) => (
                             <div key={index} className="trade-form-group">
                                 <select
-                                    value={ventaProducto.producto}
-                                    onChange={(e) => handleVentasChange(index, 'producto', e.target.value)}
+                                    value={ventaProducto.id}
+                                    onChange={(e) => handleVentasChange(index, 'id', e.target.value)}
                                 >
                                     <option value="" className='trade-select'>Seleccione un producto</option>
                                     {productos.map((producto) => (
@@ -141,8 +143,8 @@ function TradeCheck() {
                                 <input className='trade-input'
                                     type="number"
                                     placeholder="Cantidad"
-                                    value={ventaProducto.cantidad}
-                                    onChange={(e) => handleVentasChange(index, 'cantidad', e.target.value)}
+                                    value={ventaProducto.cantidad_vendida}
+                                    onChange={(e) => handleVentasChange(index, 'cantidad_vendida', e.target.value)}
                                 />
                                 <button type="button" className="trade-remove" onClick={() => removeProducto(index)} disabled={index === 0}>-</button>
                             </div>
