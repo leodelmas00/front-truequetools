@@ -40,7 +40,7 @@ function ActivePosts({ onPostSelect, isIntercambioMode }) {
                     {isIntercambioMode ? (
                         <div>
                             <Link to={`/post/${postID}`} className="misPost-link-volver">
-                                <button className="misPost-button">Cancelar</button>
+                                <button className="misPost-button">Volver</button>
                             </Link>
                             <div className="misPost-titulo">
                                 <h1>Elige el producto a intercambiar</h1>

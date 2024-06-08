@@ -20,7 +20,7 @@ function SignIn() {
     const [posts, setPosts] = useState([]);
     const [redirect, setRedirect] = useState(null);
     const [searchPerformed, setSearchPerformed] = useState(false);
-    const [nombre, setNombre] = useState(null);
+    const [user, setUser] = useState({});
 
     useEffect(() => {
         fetchUserInfo();
@@ -36,7 +36,8 @@ function SignIn() {
                 }
             });
             setIsStaff(response.data.is_staff);
-            setNombre(response.data.username)   /* Aca saco el nombre para mostrarlo en el menu, no se si estara bien sacarlo de aca pero bueno, cualquier cosa lo cambian jeje -mapache*/
+            setUser(response.data)
+            console.log(response.data)
         } catch (error) {
             console.error('Error fetching user info:', error);
         }
@@ -177,7 +178,7 @@ function SignIn() {
             <div className={`menu ${menuOpen ? 'open' : ''}`} style={{ overflow: 'auto' }}>
                 <div className='menuItems'>
                     <p className='usuario'> Usuario </p>
-                    <p className='nombre-usuario'> {nombre} </p>
+                    <p className='nombre-usuario'> {user.username} - <MdOutlineStarBorderPurple500 /> {user.reputacion} pts</p>
                     <hr className='separador'></hr>
                     <Link to="/Historial" className="historial-link">
                         <button className="historial-button">

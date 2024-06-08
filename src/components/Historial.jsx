@@ -107,7 +107,7 @@ function Historial() {
         <div className='Historial'>
             <div className='historial-navigation-bar'>
                 <Link to="/signin" className="historial-link-volver">
-                     <button className="historial-button">Volver</button>
+                    <button className="historial-button">Volver</button>
                 </Link>
                 <h1 className='Titulo'> HISTORIAL </h1>
             </div>
@@ -125,19 +125,19 @@ function Historial() {
                     <tbody>
                         {solicitudesConSucursal.map((solicitud) => (
                             <tr key={solicitud.id}>
-                                <td>
+                                <td><h4>
                                     {userInfo.id === solicitud.publicacion_a_intercambiar.usuario_propietario.id
                                         ? solicitud.publicacion_a_intercambiar.titulo
-                                        : solicitud.publicacion_deseada.titulo}
+                                        : solicitud.publicacion_deseada.titulo}</h4>
                                 </td>
-                                <td>
+                                <td><h4>
                                     {userInfo.id === solicitud.publicacion_a_intercambiar.usuario_propietario.id
                                         ? solicitud.publicacion_deseada.titulo
-                                        : solicitud.publicacion_a_intercambiar.titulo}
+                                        : solicitud.publicacion_a_intercambiar.titulo}</h4>
                                 </td>
-                                <td>{formatFechaSolicitud(solicitud.fecha_del_intercambio)}</td>
-                                <td>{solicitud.publicacion_deseada.sucursal_destino.nombre} - {solicitud.publicacion_deseada.sucursal_destino.direccion}</td>
-                                <td>{solicitud.estado}</td>
+                                <td><h4> {formatFechaSolicitud(solicitud.fecha_del_intercambio)}</h4></td>
+                                <td><h4> {solicitud.publicacion_deseada.sucursal_destino.nombre} - {solicitud.publicacion_deseada.sucursal_destino.direccion}</h4></td>
+                                <td><h4>{solicitud.estado} {solicitud.estado === "EXITOSA" && (<h5 style={{ color: 'green' }} > +100 pts! </h5>)}</h4></td>
                                 {solicitud.estado === "PENDIENTE" && (
                                     <button className='boton-cancelar' onClick={() => handleDialogOpen(solicitud.id)}>Cancelar</button>
                                 )}
@@ -178,7 +178,7 @@ function Historial() {
                     ¡Se canceló con éxito!
                 </MuiAlert>
             </Snackbar>
-        </div>
+        </div >
     );
 }
 
