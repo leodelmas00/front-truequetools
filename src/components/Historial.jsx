@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Historial.css';
-import { baseURL } from '../api/trueque.api';
+import { baseURL, getUserInfo } from '../api/trueque.api';
 import axios from 'axios';
+import { Link } from 'wouter';
 import { formatFechaSolicitud } from '../utils';
-import PostDetailHistory from './PostDetailHistory';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import Dialog from '@mui/material/Dialog';
@@ -13,6 +13,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 
+
 function Historial() {
     const [solicitudesConSucursal, setSolicitudesConSucursal] = useState([]);
     const [error, setError] = useState(null);
@@ -20,16 +21,21 @@ function Historial() {
     const [openError, setOpenError] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedSolicitudId, setSelectedSolicitudId] = useState(null);
+    const [userInfo, setUserInfo] = useState(null);
+
 
     useEffect(() => {
         const fetchHistorial = async () => {
             try {
+                const userInfoResponse = await getUserInfo();
+                setUserInfo(userInfoResponse.data);
                 const token = localStorage.getItem('token');
                 const response = await axios.get(`${baseURL}historial/`, {
                     headers: {
                         Authorization: `Token ${token}`,
                     },
                 });
+                console.log(response.data)
                 setSolicitudesConSucursal(response.data);
             } catch (error) {
                 setError('Error al obtener el historial de solicitudes');
@@ -99,8 +105,12 @@ function Historial() {
 
     return (
         <div className='Historial'>
-            <h1 className='Titulo'> HISTORIAL </h1>
-            <hr className='separador'></hr>
+            <div className='historial-navigation-bar'>
+                <Link to="/signin" className="historial-link-volver">
+                    <button className="historial-button">Volver</button>
+                </Link>
+                <h1 className='Titulo'> HISTORIAL </h1>
+            </div>
             <div className='Historial-box'>
                 <table className="tabla">
                     <thead>
@@ -115,15 +125,19 @@ function Historial() {
                     <tbody>
                         {solicitudesConSucursal.map((solicitud) => (
                             <tr key={solicitud.id}>
-                                <td>
-                                    <PostDetailHistory postId={solicitud.publicacion_a_intercambiar} onSucursalLoaded={(sucursal) => handleSucursalLoaded(sucursal, solicitud.publicacion_a_intercambiar)} includeSucursal={true} />
+                                <td><h4>
+                                    {userInfo.id === solicitud.publicacion_a_intercambiar.usuario_propietario.id
+                                        ? solicitud.publicacion_a_intercambiar.titulo
+                                        : solicitud.publicacion_deseada.titulo}</h4>
                                 </td>
-                                <td>
-                                    <PostDetailHistory postId={solicitud.publicacion_deseada} onSucursalLoaded={(sucursal) => handleSucursalLoaded(sucursal, solicitud.publicacion_deseada)} includeSucursal={true} />
+                                <td><h4>
+                                    {userInfo.id === solicitud.publicacion_a_intercambiar.usuario_propietario.id
+                                        ? solicitud.publicacion_deseada.titulo
+                                        : solicitud.publicacion_a_intercambiar.titulo}</h4>
                                 </td>
-                                <td>{formatFechaSolicitud(solicitud.fecha_del_intercambio)}</td>
-                                <td>{solicitud.sucursal ? `${solicitud.sucursal.nombre} - ${solicitud.sucursal.direccion}` : ''}</td>
-                                <td>{solicitud.estado}</td>
+                                <td><h4> {formatFechaSolicitud(solicitud.fecha_del_intercambio)}</h4></td>
+                                <td><h4> {solicitud.publicacion_deseada.sucursal_destino.nombre} - {solicitud.publicacion_deseada.sucursal_destino.direccion}</h4></td>
+                                <td><h4>{solicitud.estado} {solicitud.estado === "EXITOSA" && (<h5 style={{ color: 'green' }} > +100 pts! </h5>)}</h4></td>
                                 {solicitud.estado === "PENDIENTE" && (
                                     <button className='boton-cancelar' onClick={() => handleDialogOpen(solicitud.id)}>Cancelar</button>
                                 )}
@@ -132,6 +146,7 @@ function Historial() {
                     </tbody>
                 </table>
             </div>
+
             <Dialog
                 open={openDialog}
                 onClose={handleDialogClose}
@@ -163,7 +178,7 @@ function Historial() {
                     ¡Se canceló con éxito!
                 </MuiAlert>
             </Snackbar>
-        </div>
+        </div >
     );
 }
 

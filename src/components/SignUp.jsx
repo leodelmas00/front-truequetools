@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { baseURL } from '../api/trueque.api';
 import { getAllSucursales } from '../api/trueque.api';
-import { Redirect } from 'wouter';
+import { Link, Redirect } from 'wouter';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
@@ -77,25 +77,16 @@ function SignUp() {
                 <div className='cajaFormulario'>
                     <header className="titulo"> Trueque<span style={{ color: '#BF4C41' }}>Tools</span> </header>
                     <div> <p className="subtitulo"> Registrarse, ¡más fácil que nunca! </p> </div>
-                    <form onSubmit={handleSubmit}>
-                        <div>
-                            <div>Nombre de usuario</div>
-                            <input className="input-user" name="username" placeholder="Ingrese su nombre de usuario" required onChange={handleChange} />
-                        </div>
-                        <div>
-                            <div>Correo electrónico</div>
-                            <input className="input-user" placeholder="Ingrese su correo" name="email" type="email" required onChange={handleChange} />
-                        </div>
-                        <div>
-                            <div>Contraseña</div>
-                            <input className="input-user" placeholder="Ingrese su contraseña" type="password" name="password" required onChange={handleChange} />
-                        </div>
-                        <div>
-                            <div>Fecha de nacimiento</div>
-                            <input className='input-user' type="date" name="fecha_de_nacimiento" placeholder="Dia" required onChange={handleChange} />
-                        </div>
-
-                        <div className="input-container">Sucursal favorita</div>
+                    <form onSubmit={handleSubmit} className="signup-form">
+                        <p>Nombre de usuario</p>
+                        <input className="input-user" name="username" placeholder="Ingrese su nombre de usuario" required onChange={handleChange} />
+                        <p>Correo electrónico</p>
+                        <input className="input-user" placeholder="Ingrese su correo" name="email" type="email" required onChange={handleChange} />
+                        <p>Contraseña</p>
+                        <input className="input-user" placeholder="Ingrese su contraseña" type="password" name="password" required onChange={handleChange} />
+                        <p>Fecha de nacimiento</p>
+                        <input className='input-user' type="date" name="fecha_de_nacimiento" placeholder="Dia" required onChange={handleChange} />
+                        <p>Sucursal favorita</p>
                         <select
                             name="sucursal_favorita"
                             value={form.sucursal_favorita}
@@ -110,7 +101,12 @@ function SignUp() {
                             ))}
                         </select>
                         {error && <p className="error-message">{error}</p>}
-                        <div className="botonRegistrar"> <button>Registrarse</button></div>
+                        <div className='signup-botones'>
+                            <Link to="/login" className="botonRegistrar">
+                                <button>Volver</button>
+                            </Link>
+                            <div className="botonRegistrar"> <button>Registrarse</button></div>
+                        </div>
                     </form>
                 </div>
             </div>

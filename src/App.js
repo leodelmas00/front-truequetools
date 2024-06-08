@@ -47,7 +47,7 @@ function App() {
       <Route path="/adminview/employees/add" component={CreateEmployee} />
       <Route path="/Historial" component={Historial} />
       <Route path="/SelectProduct/:id" component={SelectProduct} />
-      <Route path="/adminview/EmployeeDetail" component={EmployeeDetail} />
+      <Route path="/adminview/EmployeeDetail/:id" component={EmployeeDetail} />
       <Route path="/my-posts" component={UserPosts} />
       <Route path="/EmployeeView" component={EmployeeView} />
       <Route path="/TradeCheck/:id" component={TradeCheck} />

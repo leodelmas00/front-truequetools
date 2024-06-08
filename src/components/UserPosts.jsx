@@ -5,7 +5,6 @@ import { getMyPosts } from '../api/trueque.api';
 import axios from 'axios';
 import { formatFecha } from '../utils';
 
-
 function ActivePosts({ onPostSelect, isIntercambioMode }) {
     const [estado, setEstado] = useState(null);
     const [posts, setPosts] = useState([]);
@@ -30,17 +29,31 @@ function ActivePosts({ onPostSelect, isIntercambioMode }) {
     if (redirect) {
         return <Redirect to={redirect} />;
     }
+
+    const path = window.location.pathname;
+    const postID = path.split('/').pop();
+
     return (
         <div>
             {posts.length > 0 ? (
-                <>
+                <div className='misPost-navigation-bar'>
                     {isIntercambioMode ? (
                         <div>
-                            <h1 className="titulo">Elige el producto a intercambiar</h1>
-                            <p>* Recuerda que el producto que desees ofrecer debe ser de la misma categoria que el producto que tú quieres.</p>
+                            <Link to={`/post/${postID}`} className="misPost-link-volver">
+                                <button className="misPost-button">Volver</button>
+                            </Link>
+                            <div className="misPost-titulo">
+                                <h1>Elige el producto a intercambiar</h1>
+                                <p>Recuerda que el producto que desees ofrecer debe ser de la misma categoria que el producto que tú quieres.</p>
+                            </div>
                         </div>
                     ) : (
-                        <h1 className="titulo">Mis publicaciones activas</h1>
+                        <div>
+                            <Link to="/signin" className="misPost-link-volver">
+                                <button className="misPost-button">Volver</button>
+                            </Link>
+                            <h1>Mis publicaciones activas</h1>
+                        </div>
                     )}
                     {posts.map(post => (
                         <div
@@ -67,7 +80,7 @@ function ActivePosts({ onPostSelect, isIntercambioMode }) {
                             )}
                         </div>
                     ))}
-                </>
+                </div>
             ) : (
                 <p className="no-prods">No tienes ningún producto publicado.</p>
             )}

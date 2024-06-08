@@ -12,7 +12,6 @@ function LogIn() {
     });
     const [redirect, setRedirect] = useState(false);
     const [error, setError] = useState('');
-    const [loggedIn, setLoggedIn] = useState('');
 
 
     const handleSubmit = async (event) => {
@@ -21,8 +20,15 @@ function LogIn() {
             const response = await axios.post(baseURL + 'login-worker/', form);
 
             if (response.status === 200 && response.data) {
+                console.log(response.data)
                 localStorage.setItem('loggedIn', true)
                 localStorage.setItem('userEmail', response.data.email)
+                if (response.data.email === 'admin@truequetools.com')
+                    localStorage.setItem('isAdmin', true)
+
+                else
+                    localStorage.setItem('isAdmin', false)
+
                 console.log(response.data)
                 setRedirect(true);
             } else {
@@ -43,7 +49,7 @@ function LogIn() {
         }));
     };
 
-    if (redirect && form.email === 'admin' && form.password === 'admin') {
+    if (redirect && localStorage.getItem('isAdmin') === 'true') {
         return <Redirect to="/AdminView" />;
     } else if (redirect) {
         return <Redirect to="/EmployeeView" />
@@ -51,39 +57,38 @@ function LogIn() {
 
     return (
         <div className="login-container">
-            <div>
-                <div className="container">
-                    <form className="cajaFormulario" onSubmit={handleSubmit}>
-                        <h2>Inicio de sesión para empleados/administradores.</h2>
-                        <div>
-                            <input
-                                type="text"
-                                placeholder="Email"
-                                name="email"
-                                value={form.email}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        <div>
-                            <input
-                                type="password"
-                                placeholder="Contraseña"
-                                name="password"
-                                value={form.password}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        {error && <p className="error-message">{error}</p>}
-                        <div>
-                            <button type="submit">
-                                Iniciar sesión
-                            </button>
-                        </div>
-                    </form>
+            <form className="cajaFormulario" onSubmit={handleSubmit}>
+                <h2>Inicio de sesión para empleados/administradores.</h2>
+                <div>
+                    <input
+                        type="text"
+                        placeholder="Email"
+                        name="email"
+                        value={form.email}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
-            </div>
+                <div>
+                    <input
+                        type="password"
+                        placeholder="Contraseña"
+                        name="password"
+                        value={form.password}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                {error && <p className="error-message">{error}</p>}
+                <div>
+                    <Link to="/login" className="admin-link">
+                        <button>Volver</button>
+                    </Link>
+                    <button type="submit">
+                        Iniciar sesión
+                    </button>
+                </div>
+            </form>
         </div>
     );
 }

@@ -124,3 +124,27 @@
         opacity: 1;
     }
 }
+
+.btn-volver button {
+    background-color: #bf4c41;
+    /* Rosa pastel */
+    color: #fff;
+    /* Texto blanco */
+    border: none;
+    padding: 10px 20px;
+    /* Ajusta el tamaño del botón */
+    font-size: 16px;
+    /* Tamaño de fuente */
+    border-radius: 10px;
+    /* Bordes redondeados */
+    cursor: pointer;
+    /* Cambia el cursor al pasar por encima */
+    position: fixed;
+    top: 20px;
+    left: 20px;
+}
+
+.btn-volver button:hover {
+    background-color: #c56d65;
+    /* Cambia el color de fondo al pasar el mouse */
+}

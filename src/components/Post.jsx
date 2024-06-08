@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 import '../styles/login.css';
 import '../styles/Post.css';
 import 'animate.css';
@@ -211,9 +211,14 @@ function PostProduct() {
                         </div>
                     </div>
                     <div className="button-container">
-                        <button onClick={handleSubmit} type="submit" className="signin-post-link">
-                            Publicar
-                        </button>
+                        <div className="button-wrapper">
+                            <Link to="/SignIn" >
+                                <button className="signin-post-link">Volver</button>
+                            </Link>
+                            <button onClick={handleSubmit} type="submit" className="signin-post-link">
+                                Publicar
+                            </button>
+                        </div>
                         {error && <h4 style={{ color: 'red' }}>{error}</h4>}
                     </div>
                 </form>

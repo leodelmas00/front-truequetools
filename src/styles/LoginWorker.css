@@ -1,3 +1,15 @@
+.login-container {
+    background: url("../logo_1/FONDO_LOGIN.png") no-repeat center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
 .login-container .cajaFormulario{ 
     align-items: center;
     flex-direction: column;
@@ -7,7 +19,7 @@
     background-color: #f2ada7;
     border-radius: 0.6rem;
     border-color: black;
-    box-shadow: rgba(255, 151, 182, 0.63) 0px 20px 30px -10px;
+    box-shadow: rgba(0, 0, 0, 0.150) 0px 20px 30px -10px;
 }
 
 .login-container input{
