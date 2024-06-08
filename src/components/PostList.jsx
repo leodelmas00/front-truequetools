@@ -1,24 +1,63 @@
 import { useEffect, useState } from "react";
-import { getAllPosts } from '../api/trueque.api';
+import { baseURL } from '../api/trueque.api';
+import axios from "axios";
 import { Redirect, Link } from 'wouter'; // Importa Redirect y Link desde wouter
 import '../styles/PostList.css'
-
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
 
 export default function PostList() {
     const [posts, setPosts] = useState([]);
     const [redirect, setRedirect] = useState(null); // Estado para redirección
+    const [errorMessage, setErrorMessage] = useState('');
+    const [openError, setOpenError] = useState(false);
 
     useEffect(() => {
         async function loadPosts() {
-            const res = await getAllPosts();
-            console.log(res.data);
-            setPosts(res.data);
+            try {
+                const loggedIn = localStorage.getItem('loggedIn');
+                const userEmail = localStorage.getItem('userEmail'); // Obtener el email del localStorage
+                const isAdmin = localStorage.getItem('isAdmin')
+                if (loggedIn === 'true' && isAdmin === 'true') {
+                    try {
+                        console.log(`${baseURL}admin/publicaciones/`);
+                        const response = await axios.get(`${baseURL}admin/publicaciones/`, {
+                            headers: {
+                                'X-User-Email': userEmail
+                            }
+                        });
+                        console.log(response.data);
+                        setPosts(response.data);
+                        return response.data;
+                    } catch (error) {
+                        console.error('Error en la publicacion:', error);
+                        setErrorMessage('Error al obtener las publicaciones.');
+                        setOpenError(true);
+                    }
+                } else {
+                    setErrorMessage('Debes iniciar sesión para ver las publicaciones.');
+                    setOpenError(true);
+                    setTimeout(() => {
+                        window.location.href = '/Login-worker';
+                    }, 1500);
+                }
+            } catch (error) {
+                console.error('Error desconocido:', error);
+                setErrorMessage('Error desconocido al obtener las publicaciones.');
+                setOpenError(true);
+            }
+
         }
         loadPosts();
     }, []);
 
     const handlePostClick = (id) => {
-        setRedirect(`/post/${id}`);
+        setRedirect(`/post-admin/${id}`);
+    };
+
+    const handleCloseError = () => {
+        setOpenError(false);
     };
 
     if (redirect) {
@@ -26,10 +65,16 @@ export default function PostList() {
     }
 
     return (
-
         <div>
+            <div>
+                <Link href="/EmployeeView">
+                    <Button variant="contained" color="primary">
+                        Volver
+                    </Button>
+                </Link>
+            </div>
             {posts.map(post => (
-                <Link key={post.id} href={`/post/${post.id}`} onClick={() => handlePostClick(post.id)}>
+                <Link key={post.id} href={`/post-admin/${post.id}`} onClick={() => handlePostClick(post.id)}>
                     <div className="list-post-container animate__animated animate__fadeIn">
                         <h2 className="title-list-post">
                             Titulo: {post.titulo}
@@ -37,11 +82,15 @@ export default function PostList() {
                         <h3 className="author">
                             Autor: {post.usuario_propietario.username}
                         </h3>
-
                     </div>
                 </Link>
             ))}
+            <Snackbar open={openError} autoHideDuration={6000} onClose={handleCloseError}>
+                <MuiAlert elevation={6} variant="filled" onClose={handleCloseError} severity="error">
+                    {errorMessage}
+                </MuiAlert>
+            </Snackbar>
+
         </div>
     );
-
 }

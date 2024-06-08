@@ -8,6 +8,7 @@ import PostList from "./components/PostList";
 import UserList from "./components/UserList";
 import CommentList from "./components/CommentList";
 import PostDetail from "./components/PostDetail";
+import PostDetailAdmin from "./components/PostDetailAdmin"
 import FailedTrades from "./datosBack/FailedTrades";
 import AdminView from "./components/AdminView";
 import { Route, Switch } from "wouter";
@@ -38,6 +39,8 @@ function App() {
       <Route path="/UserList" component={UserList} />
       <Route path="/CommentList" component={CommentList} />
       <Route path="/Post/:postId" component={PostDetail} />
+      <Route path="/Post-admin/:postId" component={PostDetailAdmin} />
+
       <Route path="/Post/:postId/solicitudes" component={PostSolicitudes} />
       <Route path="/PostList" component={PostList} />
       <Route path="/adminview/employees" component={Employees} />
