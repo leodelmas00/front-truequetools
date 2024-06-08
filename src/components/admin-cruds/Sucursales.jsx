@@ -27,7 +27,7 @@ export default function Employees() {
                 ))}
             </ul>
             <div>
-                <Link to="/adminview" >
+                <Link to="/EmployeeView" >
                         <button>Volver</button>
                 </Link>
                 <Link to="/adminview/sucursales/add" >

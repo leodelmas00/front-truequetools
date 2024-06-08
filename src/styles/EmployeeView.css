@@ -9,13 +9,23 @@
 }
 
 .employee-nav-titulo {
-    color: white;
+    color: #C8FF96;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.employee-nav-titulo-admin {
+    color: #9696FF;
     font-family: 'Courier New', Courier, monospace;
 }
 
 .employee-separador {
     margin-top: -20px;
     margin-bottom: 10px;
+}
+
+.employee-botones {
+    display: flex;
+    flex-direction: row;
 }
 
 .employee-nav-button {
