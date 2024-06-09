@@ -178,7 +178,7 @@ function SignIn() {
             <div className={`menu ${menuOpen ? 'open' : ''}`} style={{ overflow: 'auto' }}>
                 <div className='menuItems'>
                     <p className='usuario'> Usuario </p>
-                    <p className='nombre-usuario'> {user.username} - <MdOutlineStarBorderPurple500 /> {user.reputacion} pts</p>
+                    <p className='nombre-usuario'> <MdOutlineStarBorderPurple500 /> {user.reputacion} pts - {user.username}</p>
                     <hr className='separador'></hr>
                     <Link to="/Historial" className="historial-link">
                         <button className="historial-button">

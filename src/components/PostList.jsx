@@ -80,7 +80,7 @@ export default function PostList() {
                         <h3 className="author">
                             Autor: {post.usuario_propietario.username}
                         </h3>
-                        <img src={post.imagen} alt="Imagen del post" className="post-image" />
+                        {post.imagen && <img src={`http://127.0.0.1:8000/${post.imagen}`} alt="Imagen del post" className="post-image" />}
                     </div>
                 </Link>
             ))}
