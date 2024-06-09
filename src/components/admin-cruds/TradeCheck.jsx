@@ -166,6 +166,7 @@ function TradeCheck() {
                         {ventasVisibles && (
                             <div>
                                 <h3>Productos vendidos en el intercambio:</h3>
+                                <hr />
                                 {detalleVenta.map((detalle, index) => (
                                     <div key={index}>
                                         {detalle.productos_vendidos.map((producto, idx) => (
@@ -175,6 +176,7 @@ function TradeCheck() {
                                         ))}
                                     </div>
                                 ))}
+                                <hr />
                                 <h4>Total = ${calcularTotalVentas()}</h4>
                             </div>
                         )}

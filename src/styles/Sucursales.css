@@ -1,0 +1,90 @@
+.sucursales-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.sucursales-box {
+    border: 1px solid black;
+    background-color: #d3d3d3;
+    border-radius: 6px;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 20px 30px -10px;
+    width: 400px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+
+.sucursales-title {
+    margin: auto;
+}
+
+.sucursales-container hr{
+    width: 100%;
+}
+
+.sucursales-search{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.sucursales-search-input{
+    flex: 1;
+    width: 100%;
+    margin-right: 10px;
+}
+
+.sucursales-box-content {
+    border: 1px solid black;
+    border-radius: 4px;
+    height: 60%;
+    overflow-y: auto;
+    flex-grow: 1;
+    padding: 6px;
+}
+
+.sucursales-select-box{
+    position: relative;
+    padding: 2px;
+    background-color: #dfdfdf;
+    border: 1px solid black;
+    margin-top: 2px;
+}
+
+.sucursales-edit {
+    display: none;
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.sucursales-select-box:hover .sucursales-edit {
+    display: block;
+}
+
+
+.sucursales-link{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.sucursales-link:hover{
+    background-color: #b7c8ff;
+    transition: transform 0.1s ease;
+}
+
+.sucursales-buttons {
+    display: flex;
+    align-self: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 15px;
+    gap: 4px;
+}

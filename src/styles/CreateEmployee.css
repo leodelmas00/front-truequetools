@@ -1,0 +1,34 @@
+.employeeAdd-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.employeeAdd-box {
+    border: 1px solid black;
+    background-color: #d3d3d3;
+    border-radius: 6px;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 20px 30px -10px;
+}
+
+.employeeAdd-container form{
+    text-align: center;
+}
+
+.employeeAdd-container input{
+    width: 80%;
+}
+
+.employeeAdd-container select{
+    width: 82%;
+}
+
+.employeeAdd-buttons {
+    display: flex;
+    align-self: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    gap: 4px;
+}

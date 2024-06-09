@@ -185,7 +185,7 @@ function EmployeeView() {
                         <button className="employee-nav-button" onClick={loadSolicitudesDelDia}>Ver Trueques del día</button>
                         {isAdmin && (
                             <div className='employee-botones-admin'>
-                                <button className="employee-nav-button" onClick={handlePublicaciones}>Ver publicaciones <span style={{ color: 'red' }}>(arreglar)</span> </button>
+                                <button className="employee-nav-button" onClick={handlePublicaciones}>Ver publicaciones</button>
                                 <button className="employee-nav-button" onClick={handleEmpleados}>Ver empleados</button>
                                 <button className="employee-nav-button" onClick={handleSucursales}>Ver sucursales</button>
                             </div>

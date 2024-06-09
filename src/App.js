@@ -24,6 +24,8 @@ import UserPosts from './components/UserPosts'
 import PostSolicitudes from "./components/PostSolicitudes";
 import EmployeeView from "./components/EmployeeView";
 import TradeCheck from "./components/admin-cruds/TradeCheck";
+import SucursalEdit from "./components/admin-cruds/SucursalEdit";
+
 
 function App() {
   return (
@@ -54,6 +56,7 @@ function App() {
       <Route path="/my-posts" component={UserPosts} />
       <Route path="/EmployeeView" component={EmployeeView} />
       <Route path="/TradeCheck/:id" component={TradeCheck} />
+      <Route path="/SucursalEdit/:id" component={SucursalEdit} />
 
     </Switch>
   );

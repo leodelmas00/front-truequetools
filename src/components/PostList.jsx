@@ -5,7 +5,6 @@ import { Redirect, Link } from 'wouter'; // Importa Redirect y Link desde wouter
 import '../styles/PostList.css'
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import Button from '@mui/material/Button';
 
 export default function PostList() {
     const [posts, setPosts] = useState([]);
@@ -66,22 +65,22 @@ export default function PostList() {
 
     return (
         <div>
-            <div>
-                <Link href="/EmployeeView">
-                    <Button variant="contained" color="primary">
-                        Volver
-                    </Button>
+            <div className="postList-navigation-bar">
+                <Link href="/EmployeeView" className="postList-link-volver">
+                    <button className="postList-button"> Volver </button>
                 </Link>
+                <h1 className="postList-nav-titulo"> Lista de publicaciones </h1>
             </div>
             {posts.map(post => (
                 <Link key={post.id} href={`/post-admin/${post.id}`} onClick={() => handlePostClick(post.id)}>
-                    <div className="list-post-container animate__animated animate__fadeIn">
+                    <div className="list-post-container">
                         <h2 className="title-list-post">
                             Titulo: {post.titulo}
                         </h2>
                         <h3 className="author">
                             Autor: {post.usuario_propietario.username}
                         </h3>
+                        <img src={post.imagen} alt="Imagen del post" className="post-image" />
                     </div>
                 </Link>
             ))}
