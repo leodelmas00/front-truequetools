@@ -170,6 +170,10 @@ function TradeCheck() {
         }, 0);
     };
 
+    const handleRefresh = () => {
+        window.location.reload();
+    };
+
     return (
         <div className="trade-container">
             <div className="trade-box">
@@ -236,7 +240,7 @@ function TradeCheck() {
                         ))}
                         <button type="button" className="trade-add" onClick={addProducto} disabled={!isValidForm()}>+</button>
                         <div className="button-group">
-                            <button type="submit" className="registrar" disabled={!isValidForm()}>Confirmar venta</button>
+                            <button type="submit" className="registrar" disabled={!isValidForm()} onClick={handleRefresh}>Confirmar venta</button>
                         </div>
                     </form>
                 )}
