@@ -1,4 +1,53 @@
 /* styles.css */
+
+.postList-navigation-bar {
+    display: relative;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 70px;
+    background-color: #f2ada7;
+    padding: 10px;
+    margin-bottom: 50px;
+    background: linear-gradient(to right,#f2ada7, #f5c8c4);
+    border-bottom: 1px solid #000000;
+}
+
+.postList-link-volver{
+    position: absolute;
+    top: 5.5%;
+    left: 60px;
+}
+
+.postList-button{
+    display: inline-block;
+    background-color: #D88479;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transform: translateY(-50%);
+}
+
+.postList-button:hover {
+    background-color: #f2f0e4;
+    color: #bf4c41;
+    transition: color 0.2s;
+    transition: transform 0.3s ease;
+}
+
+.postList-nav-titulo {
+    position: absolute;
+    font-size: 3rem;
+    left: 50%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    transform: translate(-50%, -50%);
+}
+
 .list-post-container {
     background-color: #f2ada7;
     margin-top: 2%;
@@ -12,7 +61,7 @@
     max-width: 25%;
     min-width: 25%;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    
+    text-align: center;
 }
 
 .list-post-container:hover{

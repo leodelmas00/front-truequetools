@@ -3,11 +3,13 @@ import axios from 'axios';
 import { baseURL } from '../api/trueque.api';
 import '../styles/PostDetailStyle.css';
 import { formatFecha } from '../utils';
-
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 function CommentList({ comments, postId, userInfo, updateComments, postOwnerId, deleteComment }) {
     const [replies, setReplies] = useState({});
     const [errorMessages, setErrorMessages] = useState({});
+    const [confirmationOpen, setConfirmationOpen] = useState(false);
+    const [commentToDelete, setCommentToDelete] = useState(null);
 
     const handleReplyChange = (commentId, event) => {
         setReplies({
@@ -52,53 +54,44 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId, 
         }
     };
 
-    const handleDelete = async (publicacionId, comentarioId) => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await axios.delete(`${baseURL}post/${publicacionId}/comments/${comentarioId}/delete/`, {
-                headers: {
-                    Authorization: `Token ${token}`,
+    const handleDelete = async (publicacionId, comentarioId, email) => {
+        setCommentToDelete({ publicacionId, comentarioId, email });
+        setConfirmationOpen(true);
+    };
+
+    const handleConfirmationClose = async (confirmed) => {
+        setConfirmationOpen(false);
+        if (confirmed && commentToDelete) {
+            const { publicacionId, comentarioId, email } = commentToDelete;
+            if (email === 'admin@truequetools.com') {
+                try {
+                    await axios.delete(`${baseURL}post-admin/${publicacionId}/comments/${comentarioId}/delete/`, {
+                        headers: {
+                            'X-User-Email': email
+                        }
+                    });
+                    deleteComment(comentarioId);
+                } catch (error) {
+                    console.log(error);
                 }
-            });
-            console.log(response.status);
-            if (response.status === 204) {
-                deleteComment(comentarioId); // Pasamos el ID del comentario eliminado
-                console.log('Éxito');
-            }
-        } catch (error) {
-            console.log(error);
-            if (error.response && (error.response.status === 409 || error.response.status === 400)) {
-                console.error('Error:', error);
+            } else {
+                try {
+                    const token = localStorage.getItem('token');
+                    await axios.delete(`${baseURL}post/${publicacionId}/comments/${comentarioId}/delete/`, {
+                        headers: {
+                            Authorization: `Token ${token}`,
+                        }
+                    });
+                    deleteComment(comentarioId); // Pasamos el ID del comentario eliminado
+                } catch (error) {
+                    console.log(error);
+                    if (error.response && (error.response.status === 409 || error.response.status === 400)) {
+                        console.error('Error:', error);
+                    }
+                }
             }
         }
     };
-
-
-
-    //  NOTA: Este es el handleDelete de respuesta, pero como es tarde y tengo sueño lo dejo asi alv - mapache.
-
-    // const handleDeleteRespuesta = async (publicacionId, respuestaId) => {
-    //     try {
-    //         const token = localStorage.getItem('token');
-    //         const response = await axios.delete(`${baseURL}post/${publicacionId}/comments/${respuestaId}/delete/`, {
-    //             headers: {
-    //                 Authorization: `Token ${token}`,
-    //             }
-    //         });
-    //         console.log(response.status);
-    //         if (response.status === 204) {
-    //             deleteComment(respuestaId);
-    //             console.log('exito');
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //         if (error.response && (error.response.status === 409 || error.response.status === 400)) {
-    //             console.error('Error:', error);
-    //         }
-    //     }
-    // };
-
-
 
     return (
         <div>
@@ -107,14 +100,14 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId, 
                     <p className='comment-letter' style={{ display: 'flex', alignItems: 'center' }}>
                         {formatFecha(comentario.fecha)} por {comentario.usuario_propietario.username}
                         {userInfo &&
-                            (userInfo.id === comentario.usuario_propietario.id && !comentario.respuesta) && (
-                                <button className="eliminar-comentario" onClick={() => handleDelete(postId, comentario.id)}>Eliminar</button>
+                            (userInfo.id === comentario.usuario_propietario.id && !comentario.respuesta || userInfo.email === 'admin@truequetools.com') && (
+                                <button className="eliminar-comentario" onClick={() => handleDelete(postId, comentario.id, userInfo.email)}>Eliminar</button>
                             )
                         }
                     </p>
                     <hr className='margenhr' />
-                    <div className='comment-letter'>{comentario.contenido} </div>
-                    {userInfo && userInfo.id === postOwnerId && !comentario.respuesta && (
+                    <div className='comment-letter'>{comentario.contenido}</div>
+                    {(userInfo && (userInfo.id === postOwnerId) && !comentario.respuesta) && (
                         <div className='reply-section'>
                             <div className="input-button-container">
                                 <input
@@ -139,13 +132,12 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId, 
                             )}
                         </div>
                     )}
-                    {comentario.respuesta && userInfo.id === postOwnerId && (
+                    {comentario.respuesta && (
                         <div className="respuesta-container">
                             <hr />
                             <div className="respuesta">
                                 <div style={{ display: 'flex', alignItems: 'center' }}>
                                     {formatFecha(comentario.respuesta.fecha)} por el propietario del post
-                                    {/* <button style={{ marginLeft: 'auto' }} onClick={() => handleDeleteRespuesta(postId, comentario.respuesta.id)}> Eliminar respuesta</button> */}
                                 </div>
                                 <p className='comment-letter respuesta-letter'><b>Respuesta:</b> {comentario.respuesta.contenido}</p>
                             </div>
@@ -153,11 +145,29 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId, 
                     )}
                 </div>
             ))}
+            <Dialog
+                open={confirmationOpen}
+                onClose={() => handleConfirmationClose(false)}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">Confirmar eliminación</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        ¿Está seguro que quiere eliminar este comentario?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => handleConfirmationClose(false)} color="primary">
+                        Cancelar
+                    </Button>
+                    <Button onClick={() => handleConfirmationClose(true)} color="primary" autoFocus>
+                        Confirmar
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
-
-
 }
-
 
 export default CommentList;

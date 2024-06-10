@@ -16,14 +16,22 @@ function TradeCheck() {
     const [detalleVenta, setDetalleVenta] = useState([]);
     const [ventasVisibles, setVentasVisibles] = useState(false);
 
+
     useEffect(() => {
         const fetchSolicitud = async () => {
-            try {
-                const response = await axios.get(`${baseURL}employee/solicitudes/${params.solicitud_id}/`);
-                setSolicitud(response.data);
-                console.log(response.data);
-            } catch (error) {
-                setError('Error al obtener la solicitud.');
+            const loggedIn = localStorage.getItem('loggedIn')
+            if (loggedIn) {
+                try {
+                    const response = await axios.get(`${baseURL}employee/solicitudes/${params.solicitud_id}/`);
+                    setSolicitud(response.data);
+                    console.log(response.data);
+                } catch (error) {
+                    setError('Error al obtener la solicitud.');
+                }
+            }
+            else {
+                alert('debes iniciar sesion para realizar esta acción')
+                window.location.href = '/Login-worker';
             }
         };
 
@@ -45,37 +53,57 @@ function TradeCheck() {
     }, []);
 
     const handleRechazarTrueque = async () => {
-        try {
-            await axios.patch(`${baseURL}employee/solicitudes/${params.solicitud_id}/`, { action: 'reject' });
-            alert('Intercambio rechazado con éxito');
-            setShowForm(false);
-            setOpenDialog(false);
-            window.location.href = "/EmployeeView";
-        } catch (error) {
-            alert('Ocurrio un error inesperado');
+        const loggedIn = localStorage.getItem('loggedIn')
+        if (loggedIn) {
+            try {
+                await axios.patch(`${baseURL}employee/solicitudes/${params.solicitud_id}/`, { action: 'reject' });
+                alert('Intercambio rechazado con éxito');
+                setShowForm(false);
+                setOpenDialog(false);
+                window.location.href = "/EmployeeView";
+            } catch (error) {
+                alert('Ocurrio un error inesperado');
+            }
+        }
+        else {
+            alert('debes iniciar sesion para realizar esta acción')
+            window.location.href = '/Login-worker';
         }
     };
 
     const handleAceptarTrueque = async () => {
-        try {
-            await axios.patch(`${baseURL}employee/solicitudes/${params.solicitud_id}/`, { action: 'accept' });
-            alert('Intercambio aceptado con éxito');
-            setShowForm(false);
-            window.location.href = "/EmployeeView";
-        } catch (error) {
-            alert('Ocurrio un error inesperado');
+        const loggedIn = localStorage.getItem('loggedIn')
+        if (loggedIn) {
+            try {
+                await axios.patch(`${baseURL}employee/solicitudes/${params.solicitud_id}/`, { action: 'accept' });
+                alert('Intercambio aceptado con éxito');
+                setShowForm(false);
+                window.location.href = "/EmployeeView";
+            } catch (error) {
+                alert('Ocurrio un error inesperado');
+            }
+        } else {
+            alert('debes iniciar sesion para realizar esta acción')
+            window.location.href = '/Login-worker';
         }
     };
 
     const handleRegistrarVentas = async (event) => {
         event.preventDefault();
-        try {
-            await axios.post(`${baseURL}employee/solicitudes/${params.solicitud_id}/ventas/`, { productos: ventaProductos });
-            alert('Ventas registrada con éxito');
-            setShowForm(false);
-        } catch (error) {
-            console.error('Error al registrar las ventas:', error);
-            alert('Error al registrar las ventas');
+        const loggedIn = localStorage.getItem('loggedIn')
+        if (loggedIn) {
+
+            try {
+                await axios.post(`${baseURL}employee/solicitudes/${params.solicitud_id}/ventas/`, { productos: ventaProductos });
+                alert('Ventas registrada con éxito');
+                setShowForm(false);
+            } catch (error) {
+                console.error('Error al registrar las ventas:', error);
+                alert('Error al registrar las ventas');
+            }
+        } else {
+            alert('debes iniciar sesion para realizar esta acción')
+            window.location.href = '/Login-worker';
         }
     };
 
@@ -166,6 +194,7 @@ function TradeCheck() {
                         {ventasVisibles && (
                             <div>
                                 <h3>Productos vendidos en el intercambio:</h3>
+                                <hr />
                                 {detalleVenta.map((detalle, index) => (
                                     <div key={index}>
                                         {detalle.productos_vendidos.map((producto, idx) => (
@@ -175,6 +204,7 @@ function TradeCheck() {
                                         ))}
                                     </div>
                                 ))}
+                                <hr />
                                 <h4>Total = ${calcularTotalVentas()}</h4>
                             </div>
                         )}

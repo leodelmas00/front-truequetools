@@ -11,7 +11,6 @@ import * as MDIcons from "react-icons/md";
 import { MdOutlineStarBorderPurple500 } from "react-icons/md";
 
 
-
 function PostDetail() {
     const [post, setPost] = useState(null);
     const params = useParams();
@@ -23,8 +22,6 @@ function PostDetail() {
     const [location, setLocation] = useLocation();
 
     const [sucursal, setSucursal] = useState(null);
-
-
 
     useEffect(() => {
         const fetchPostAndComments = async () => {
@@ -109,12 +106,9 @@ function PostDetail() {
         );
     };
 
-
     const handleIntercambiar = (postId) => {
-        // Realiza la acción deseada, como la navegación a la página de intercambio con el ID del post
         setLocation(`/SelectProduct/${postId}`);
     };
-
 
     if (loading) {
         return <div>Cargando...</div>;
@@ -124,14 +118,19 @@ function PostDetail() {
         <div className="background-image-published">
             <div className="post-container-detail">
                 <div className="post-card">
-                    <p className="post-date">{formatFecha(post.fecha)}</p> <h5>Sucursal destino: {sucursal ? `${sucursal.nombre} - ${sucursal.direccion}` : 'Cargando...'}</h5>
-
+                    <p className="post-date">{formatFecha(post.fecha)}</p>
+                    <h5>Sucursal destino: {sucursal ? `${sucursal.nombre} - ${sucursal.direccion}` : 'Cargando...'}</h5>
                     <hr />
                     <h3>Subido por: {post.usuario_propietario.username} - <MdOutlineStarBorderPurple500 /> {post.usuario_propietario.reputacion} pts.</h3>
                     <h1 className="post-title">{post.titulo}</h1>
                     <p className="post-description">{post.descripcion}</p>
                     {post.imagen && <img src={`http://127.0.0.1:8000${post.imagen}`} alt="Imagen del post" className='imagen-preview-detail' />}
                     <h5>Este producto pertenece a la categoria {post.categoria}</h5>
+                    {userInfo && userInfo.id === post.usuario_propietario.id && (
+                        <Link to={`/Post/${params.postId}/solicitudes`}>
+                            <button className="solicitudes-btn post-card-btn">Ver solicitudes recibidas<FaIcons.FaBell style={{ marginLeft: '10px' }}></FaIcons.FaBell></button>
+                        </Link>
+                    )}
                 </div>
                 <div className='botones'>
                     <Link to="/Signin">
@@ -140,10 +139,9 @@ function PostDetail() {
                     {userInfo && userInfo.id !== post.usuario_propietario.id && (
                         <button onClick={() => handleIntercambiar(post.id)}>Intercambiar <FaIcons.FaExchangeAlt size={15} /></button>
                     )}
-
                 </div>
                 <div className="post-comments">
-                    <h2>Comentarios:</h2>
+                    <h2><FaIcons.FaComments /> Comentarios: </h2>
                     <CommentList
                         comments={comments}
                         postId={params.postId}
@@ -151,13 +149,7 @@ function PostDetail() {
                         updateComments={updateComments}
                         deleteComment={deleteComment}
                         postOwnerId={post.usuario_propietario.id}
-
                     />
-
-                    {userInfo && userInfo.id === post.usuario_propietario.id && (
-                        <Link to={`/Post/${params.postId}/solicitudes`}>
-                            <button className="solicitudes-btn">Ver solicitudes recibidas</button>
-                        </Link>)}
                 </div>
                 <div className='comentar'>
                     <form onSubmit={handleSubmit}>

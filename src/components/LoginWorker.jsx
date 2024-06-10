@@ -50,7 +50,7 @@ function LogIn() {
     };
 
     if (redirect && localStorage.getItem('isAdmin') === 'true') {
-        return <Redirect to="/AdminView" />;
+        return <Redirect to="/EmployeeView" />;
     } else if (redirect) {
         return <Redirect to="/EmployeeView" />
     }

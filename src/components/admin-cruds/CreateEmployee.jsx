@@ -3,6 +3,7 @@ import { baseURL } from "../../api/trueque.api";
 import axios from "axios";
 import { getAllSucursales } from "../../api/trueque.api";
 import { Link } from 'wouter';
+import '../../styles/CreateEmployee.css';
 
 function CreateEmployee() {
     const [error, setError] = useState('');
@@ -62,56 +63,57 @@ function CreateEmployee() {
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <h1>Agregar un empleado</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <input
-                        type="text"
-                        name="email"
-                        placeholder="Email"
-                        value={form.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+        <div className="employeeAdd-container">
+            <div className="employeeAdd-box">
+                <h1 className="employeeAdd-title">Agregar un empleado</h1>
+                <hr/>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <input
+                            type="text"
+                            name="email"
+                            placeholder="Email"
+                            value={form.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
 
-                <div>
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Contraseña"
-                        value={form.password}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <select
-                        name="sucursal_de_trabajo"
-                        value={form.sucursal_de_trabajo}
-                        onChange={handleChange}
-                        required
-                    >
-                        <option value="" disabled>Sucursal de trabajo</option>
-                        {sucursales.map((sucursal) => (
-                            <option key={sucursal.id} value={sucursal.id}>
-                                {sucursal.nombre} ({sucursal.direccion})
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div>
-                    <button type="submit">Agregar</button>
-                </div>
-            </form>
-            <div>
-                <Link to="/adminview/employees">
-                    <button>Volver</button>
-                </Link>
-            </div>
-            <div>
-                <p style={{ color: error === 'Empleado dado de alta con éxito' ? 'green' : 'red' }}>{error}</p>
+                    <div>
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Contraseña"
+                            value={form.password}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <select
+                            name="sucursal_de_trabajo"
+                            value={form.sucursal_de_trabajo}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="" disabled>Sucursal de trabajo</option>
+                            {sucursales.map((sucursal) => (
+                                <option key={sucursal.id} value={sucursal.id}>
+                                    {sucursal.nombre} ({sucursal.direccion})
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="employeeAdd-msj">
+                        <p style={{ color: error === 'Empleado dado de alta con éxito' ? 'green' : 'red' }}>{error}</p>
+                    </div>
+                    <div className="employeeAdd-buttons">
+                        <Link to="/adminview/employees">
+                            <button>Volver</button>
+                        </Link>
+                        <button type="submit">Agregar</button>
+                    </div>
+                </form>
             </div>
         </div>
     );

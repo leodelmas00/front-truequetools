@@ -53,6 +53,9 @@ function Intercambiar() {
                 setIntercambioSuccess(true);
                 console.log(response.data.fecha_del_intercambio)
                 setOpenSuccess(true);
+                setTimeout(() => {
+                    window.location.href = '/SignIn';
+                }, 1500);
             }
         } catch (error) {
             console.error('Error al crear la solicitud de intercambio:', error);
@@ -61,9 +64,13 @@ function Intercambiar() {
                     setErrorMessage('Debes elegir un producto de la misma categoría que el original.');
                 } else if (error.response.status === 404) {
                     setErrorMessage('La fecha seleccionada es inválida.');
+                } else if (error.response.status === 409) {
+                    setErrorMessage('La sucursal está cerrada en ese horario.');
+                } else {
+                    setErrorMessage('Ha ocurrido un error');
                 }
             } else {
-                setErrorMessage('No se pudo conectar con el servidor.');
+                setErrorMessage('Ha ocurrido un error');
             }
             setOpenError(true);
         }

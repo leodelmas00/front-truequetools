@@ -13,12 +13,23 @@ function EmployeeView() {
     const [error, setError] = useState(null);
     const [openError, setOpenError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        const isAdminValue = localStorage.getItem('isAdmin');
+        if (isAdminValue === 'true') {
+            setIsAdmin(true);
+        } else {
+            setIsAdmin(false);
+        }
+    }, []);
 
     const handleLogout = () => {
         localStorage.setItem('loggedIn', false);
         localStorage.setItem('userEmail', '');
         window.location.href = '/Login-worker';
     };
+
     const loadSolicitudes = async () => {
         try {
             const loggedIn = localStorage.getItem('loggedIn');
@@ -76,7 +87,7 @@ function EmployeeView() {
                     setOpenError(true);
                 }
             } else {
-                setErrorMessage('Debes iniciar sesión para ver las solicitudes.');
+                setErrorMessage('Debes iniciar sesión para ver las solicitudes de hoy.');
                 setOpenError(true);
                 setTimeout(() => {
                     window.location.href = '/Login-worker';
@@ -89,6 +100,66 @@ function EmployeeView() {
         }
     };
 
+    const handlePublicaciones = async () => {
+        try {
+            const loggedIn = localStorage.getItem('loggedIn');
+            const isAdminValue = localStorage.getItem('isAdmin');
+            if (loggedIn === 'true' && isAdminValue === 'true') {
+                window.location.href = '/PostList';
+            } else {
+                setErrorMessage('Debes iniciar sesión para ver las publicaciones.');
+                setOpenError(true);
+                setTimeout(() => {
+                    window.location.href = '/Login-worker';
+                }, 1500);
+            }
+        } catch (error) {
+            console.error('Error desconocido:', error);
+            setErrorMessage('Error desconocido al redirigir a ver publicaciones.');
+            setOpenError(true);
+        }
+    };
+
+    const handleEmpleados = async () => {
+        try {
+            const loggedIn = localStorage.getItem('loggedIn');
+            const isAdminValue = localStorage.getItem('isAdmin');
+            if (loggedIn === 'true' && isAdminValue === 'true') {
+                window.location.href = '/adminview/employees';
+            } else {
+                setErrorMessage('Debes iniciar sesión para ver los empleados.');
+                setOpenError(true);
+                setTimeout(() => {
+                    window.location.href = '/Login-worker';
+                }, 1500);
+            }
+        } catch (error) {
+            console.error('Error desconocido:', error);
+            setErrorMessage('Error desconocido al redirigir a ver empleados.');
+            setOpenError(true);
+        }
+    };
+
+    const handleSucursales = async () => {
+        try {
+            const loggedIn = localStorage.getItem('loggedIn');
+            const isAdminValue = localStorage.getItem('isAdmin');
+            if (loggedIn === 'true' && isAdminValue === 'true') {
+                window.location.href = '/adminview/sucursales';
+            } else {
+                setErrorMessage('Debes iniciar sesión para ver las sucursales.');
+                setOpenError(true);
+                setTimeout(() => {
+                    window.location.href = '/Login-worker';
+                }, 1500);
+            }
+        } catch (error) {
+            console.error('Error desconocido:', error);
+            setErrorMessage('Error desconocido al redirigir a ver sucursales.');
+            setOpenError(true);
+        }
+    };
+
     const handleCloseError = () => {
         setOpenError(false);
     };
@@ -97,11 +168,29 @@ function EmployeeView() {
         <div className="employee-panel">
             <div className="employee-navigation-bar">
                 <div>
-                    <h1 className="employee-nav-titulo"> Panel de empleado </h1>
-                    <hr className='employee-separador' />
-                    <button className="employee-nav-button" onClick={handleLogout}>Cerrar Sesión</button>
-                    <button className="employee-nav-button" onClick={loadSolicitudes}>Ver Trueques activos</button>
-                    <button className="employee-nav-button" onClick={loadSolicitudesDelDia}>Ver Trueques del día</button>
+                    {isAdmin ? (
+                        <div>
+                            <h1 className="employee-nav-titulo-admin"> Panel de administrador </h1>
+                            <hr className='employee-separador' style={{ borderBlockColor: '#9696FF' }} />
+                        </div>
+                    ) : (
+                        <div>
+                            <h1 className="employee-nav-titulo"> Panel de empleado </h1>
+                            <hr className='employee-separador' style={{ borderBlockColor: '#C8FF96' }} />
+                        </div>
+                    )}
+                    <div className='employee-botones'>
+                        <button className="employee-nav-button" onClick={handleLogout}>Cerrar Sesión</button>
+                        <button className="employee-nav-button" onClick={loadSolicitudes}>Ver Trueques activos</button>
+                        <button className="employee-nav-button" onClick={loadSolicitudesDelDia}>Ver Trueques del día</button>
+                        {isAdmin && (
+                            <div className='employee-botones-admin'>
+                                <button className="employee-nav-button" onClick={handlePublicaciones}>Ver publicaciones</button>
+                                <button className="employee-nav-button" onClick={handleEmpleados}>Ver empleados</button>
+                                <button className="employee-nav-button" onClick={handleSucursales}>Ver sucursales</button>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 
@@ -134,7 +223,6 @@ function EmployeeView() {
                                     <Link href={`/tradeCheck/${solicitud.id}`}>
                                         <button className="employee-gestionar-button employee-gestionar-button-margin">Gestionar Trueque</button>
                                     </Link>
-
                                 </tr>
                             ))}
                         </tbody>

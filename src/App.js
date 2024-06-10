@@ -8,6 +8,7 @@ import PostList from "./components/PostList";
 import UserList from "./components/UserList";
 import CommentList from "./components/CommentList";
 import PostDetail from "./components/PostDetail";
+import PostDetailAdmin from "./components/PostDetailAdmin"
 import FailedTrades from "./datosBack/FailedTrades";
 import AdminView from "./components/AdminView";
 import { Route, Switch } from "wouter";
@@ -23,6 +24,8 @@ import UserPosts from './components/UserPosts'
 import PostSolicitudes from "./components/PostSolicitudes";
 import EmployeeView from "./components/EmployeeView";
 import TradeCheck from "./components/admin-cruds/TradeCheck";
+import SucursalEdit from "./components/admin-cruds/SucursalEdit";
+
 
 function App() {
   return (
@@ -38,6 +41,8 @@ function App() {
       <Route path="/UserList" component={UserList} />
       <Route path="/CommentList" component={CommentList} />
       <Route path="/Post/:postId" component={PostDetail} />
+      <Route path="/Post-admin/:postId" component={PostDetailAdmin} />
+
       <Route path="/Post/:postId/solicitudes" component={PostSolicitudes} />
       <Route path="/PostList" component={PostList} />
       <Route path="/adminview/employees" component={Employees} />
@@ -51,6 +56,7 @@ function App() {
       <Route path="/my-posts" component={UserPosts} />
       <Route path="/EmployeeView" component={EmployeeView} />
       <Route path="/TradeCheck/:id" component={TradeCheck} />
+      <Route path="/SucursalEdit/:id" component={SucursalEdit} />
 
     </Switch>
   );

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { baseURL } from "../../api/trueque.api";
 import axios from "axios";
 import { Link } from "wouter";
+import '../../styles/CreateSucursal.css';
 
 function CreateSucursal() {
     const [error, setError] = useState('')
@@ -50,42 +51,43 @@ function CreateSucursal() {
     }
 
     return (
-        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
-            <h1>Agregar sucursal</h1>
-            <form>
-                <div>
-                    <input
-                        type="text"
-                        name="nombre"
-                        placeholder="Nombre"
-                        value={form.nombre}
-                        onChange={handleChange}
-                        required
-                    />
+        <div className="sucursalAdd-container">
+            <div className="sucursalAdd-box">
+                <h1 className="sucursalAdd-title"> Agregar sucursal </h1>
+                <hr/>
+                <form>
+                    <div>
+                        <input
+                            type="text"
+                            name="nombre"
+                            placeholder="Nombre"
+                            value={form.nombre}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <input
+                            type="text"
+                            name="direccion"
+                            placeholder="Direccion"
+                            value={form.direccion}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                </form>
+                <div className="employeeAdd-msj">
+                    <p style={{ color: error === 'Sucursal creada con éxito' ? 'green' : 'red' }}>{error}</p>
                 </div>
-                <div>
-                    <input
-                        type="text"
-                        name="direccion"
-                        placeholder="Direccion"
-                        value={form.direccion}
-                        onChange={handleChange}
-                        required
-                    />
+                <div className="sucursalAdd-buttons">
+                    <Link to="/adminview/sucursales">
+                        <button>Volver</button>
+                    </Link>
+                    <button onClick={handleSubmit}>Agregar</button>
                 </div>
-            </form>
-            <div>
-                <Link to="/adminview/sucursales">
-                    <button>Volver</button>
-                </Link>
-                <button onClick={handleSubmit}>Agregar</button>
-            </div>
-            <div>
-                <p style={{ color: error === 'Sucursal creada con éxito' ? 'green' : 'red' }}>{error}</p>
             </div>
         </div>
-
-
     );
 
 

@@ -1,0 +1,34 @@
+.sucursalAdd-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.sucursalAdd-box {
+    border: 1px solid black;
+    background-color: #d3d3d3;
+    border-radius: 6px;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 20px 30px -10px;
+}
+
+.sucursalAdd-container form{
+    text-align: center;
+}
+
+.sucursalAdd-container select{
+    width: 82%;
+}
+
+.employeeAdd-msj {
+    text-align: center;
+}
+
+.sucursalAdd-buttons {
+    display: flex;
+    align-self: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    gap: 4px;
+}
