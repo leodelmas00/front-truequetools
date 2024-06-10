@@ -18,11 +18,11 @@ function EmployeeView() {
     useEffect(() => {
         const isAdminValue = localStorage.getItem('isAdmin');
         if (isAdminValue === 'true') {
-          setIsAdmin(true);
+            setIsAdmin(true);
         } else {
-          setIsAdmin(false);
+            setIsAdmin(false);
         }
-      }, []);
+    }, []);
 
     const handleLogout = () => {
         localStorage.setItem('loggedIn', false);
@@ -87,7 +87,7 @@ function EmployeeView() {
                     setOpenError(true);
                 }
             } else {
-                setErrorMessage('Debes iniciar sesión para ver las solicitudes.');
+                setErrorMessage('Debes iniciar sesión para ver las solicitudes de hoy.');
                 setOpenError(true);
                 setTimeout(() => {
                     window.location.href = '/Login-worker';
@@ -107,7 +107,7 @@ function EmployeeView() {
             if (loggedIn === 'true' && isAdminValue === 'true') {
                 window.location.href = '/PostList';
             } else {
-                setErrorMessage('Debes iniciar sesión para ver las solicitudes.');
+                setErrorMessage('Debes iniciar sesión para ver las publicaciones.');
                 setOpenError(true);
                 setTimeout(() => {
                     window.location.href = '/Login-worker';
@@ -127,7 +127,7 @@ function EmployeeView() {
             if (loggedIn === 'true' && isAdminValue === 'true') {
                 window.location.href = '/adminview/employees';
             } else {
-                setErrorMessage('Debes iniciar sesión para ver las solicitudes.');
+                setErrorMessage('Debes iniciar sesión para ver los empleados.');
                 setOpenError(true);
                 setTimeout(() => {
                     window.location.href = '/Login-worker';
@@ -147,7 +147,7 @@ function EmployeeView() {
             if (loggedIn === 'true' && isAdminValue === 'true') {
                 window.location.href = '/adminview/sucursales';
             } else {
-                setErrorMessage('Debes iniciar sesión para ver las solicitudes.');
+                setErrorMessage('Debes iniciar sesión para ver las sucursales.');
                 setOpenError(true);
                 setTimeout(() => {
                     window.location.href = '/Login-worker';
@@ -171,12 +171,12 @@ function EmployeeView() {
                     {isAdmin ? (
                         <div>
                             <h1 className="employee-nav-titulo-admin"> Panel de administrador </h1>
-                            <hr className='employee-separador' style={{borderBlockColor:'#9696FF'}}/>
+                            <hr className='employee-separador' style={{ borderBlockColor: '#9696FF' }} />
                         </div>
                     ) : (
                         <div>
                             <h1 className="employee-nav-titulo"> Panel de empleado </h1>
-                            <hr className='employee-separador' style={{borderBlockColor:'#C8FF96'}}/>
+                            <hr className='employee-separador' style={{ borderBlockColor: '#C8FF96' }} />
                         </div>
                     )}
                     <div className='employee-botones'>
