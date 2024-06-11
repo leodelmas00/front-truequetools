@@ -259,32 +259,31 @@ function EmployeeView() {
             <div className="employee-navigation-bar">
                 <div>
                     {isAdmin ? (
-                        <div>
-                            <h1 className="employee-nav-titulo-admin"> Panel de administrador </h1>
-                            <hr className='employee-separador' style={{ borderBlockColor: '#9696FF' }} />
+                        <div className='admin-elements'>
+                            <h1 className="admin-nav-titulo"> Panel de administrador </h1>
+                            <hr className='employee-separador' style={{ borderBlockColor: '#5050ff' }} />
+
+                            <button className="admin-nav-button" onClick={handleLogout}>Cerrar Sesión</button>
+                            <button className="admin-nav-button" onClick={loadSolicitudes}>Ver Trueques activos</button>
+                            <button className="admin-nav-button" onClick={loadSolicitudesDelDia}>Ver Trueques del día</button>
+                            <button className="admin-nav-button" onClick={loadSolicitudesExitosas}>Ver trueques exitosos</button>
+                            <button className="admin-nav-button" onClick={loadSolicitudesFallidas}>Ver trueques fallidos</button>
+                            {/*<button className="admin-nav-button" onClick={loadVentas}>Ver ventas</button>*/}
+                            <button className="admin-nav-button" onClick={handlePublicaciones}>Ver publicaciones</button>
+                            <button className="admin-nav-button" onClick={handleUsuarios}>Ver usuarios</button>
+                            <button className="admin-nav-button" onClick={handleEmpleados}>Ver empleados</button>
+                            <button className="admin-nav-button" onClick={handleSucursales}>Ver sucursales</button>
                         </div>
                     ) : (
-                        <div>
+                        <div className='employee-elements'>
                             <h1 className="employee-nav-titulo"> Panel de empleado </h1>
-                            <hr className='employee-separador' style={{ borderBlockColor: '#C8FF96' }} />
+                            <hr className='employee-separador' style={{ borderBlockColor: '#2bb469' }} />
+
+                            <button className="employee-nav-button" onClick={handleLogout}>Cerrar Sesión</button>
+                            <button className="employee-nav-button" onClick={loadSolicitudes}>Ver Trueques activos</button>
+                            <button className="employee-nav-button" onClick={loadSolicitudesDelDia}>Ver Trueques del día</button>
                         </div>
                     )}
-                    <div className='employee-botones'>
-                        <button className="employee-nav-button" onClick={handleLogout}>Cerrar Sesión</button>
-                        <button className="employee-nav-button" onClick={loadSolicitudes}>Ver Trueques activos</button>
-                        <button className="employee-nav-button" onClick={loadSolicitudesDelDia}>Ver Trueques del día</button>
-                        {isAdmin && (
-                            <div className='employee-botones-admin'>
-                                <button className="employee-nav-button" onClick={loadSolicitudesExitosas}>Ver trueques exitosos</button>
-                                <button className="employee-nav-button" onClick={loadSolicitudesFallidas}>Ver trueques fallidos</button>
-                                {/*<button className="employee-nav-button" onClick={loadVentas}>Ver ventas</button>*/}
-                                <button className="employee-nav-button" onClick={handlePublicaciones}>Ver publicaciones</button>
-                                <button className="employee-nav-button" onClick={handleUsuarios}>Ver usuarios</button>
-                                <button className="employee-nav-button" onClick={handleEmpleados}>Ver empleados</button>
-                                <button className="employee-nav-button" onClick={handleSucursales}>Ver sucursales</button>
-                            </div>
-                        )}
-                    </div>
                 </div>
             </div>
 

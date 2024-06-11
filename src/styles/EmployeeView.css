@@ -3,19 +3,20 @@
     align-items: center;
     text-align: center;
     justify-content: center;
-    background-color: #757575;
+    background-color: #a0a0a0;
     padding: 10px;
     margin-bottom: 50px;
+    background: linear-gradient(to right,#a0a0a0, #c0c0c0);
 }
 
 .employee-nav-titulo {
-    color: #C8FF96;
+    color: #2bb469;
     font-family: 'Courier New', Courier, monospace;
     -webkit-text-stroke: 1px black;
 }
 
-.employee-nav-titulo-admin {
-    color: #9696FF;
+.admin-nav-titulo{
+    color: #5050ff;
     font-family: 'Courier New', Courier, monospace;
     -webkit-text-stroke: 1px black;
 }
@@ -31,10 +32,11 @@
 }
 
 .employee-nav-button {
-    background-color: #f2ada7;
+    background-color: #2bb469;
     color: white;
-    border: none;
-    padding: 10px 20px;
+    border-width: 1px;
+    border-color: black;
+    padding: 5px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -43,11 +45,34 @@
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .employee-nav-button:hover {
-    background-color: #775552;
+    background-color: #317c31;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.admin-nav-button {
+    background-color: #5050ff;
+    color: white;
+    border-width: 1px;
+    border-color: black;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, box-shadow 0.3s;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.admin-nav-button:hover {
+    background-color: #2020aa;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .employee-gestionar-button {
