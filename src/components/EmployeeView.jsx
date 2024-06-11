@@ -65,6 +65,76 @@ function EmployeeView() {
         }
     };
 
+    const loadSolicitudesExitosas = async () => {
+        try {
+            const loggedIn = localStorage.getItem('loggedIn');
+            const userEmail = localStorage.getItem('userEmail');
+            if (loggedIn === 'true') {
+                try {
+                    console.log(`${baseURL}employee/solicitudes/`);
+                    const response = await axios.get(`${baseURL}employee/solicitudes/success`, {
+                        headers: {
+                            'X-User-Email': userEmail
+                        }
+                    });
+                    console.log(response.data);
+                    setSolicitudes(response.data);
+                    setTrueques(true);
+                    return response.data;
+                } catch (error) {
+                    console.error('Error en la solicitud:', error);
+                    setErrorMessage('Error al obtener las solicitudes.');
+                    setOpenError(true);
+                }
+            } else {
+                setErrorMessage('Debes iniciar sesión para ver las solicitudes.');
+                setOpenError(true);
+                setTimeout(() => {
+                    window.location.href = '/Login-worker';
+                }, 1500);
+            }
+        } catch (error) {
+            console.error('Error desconocido:', error);
+            setErrorMessage('Error desconocido al obtener las solicitudes.');
+            setOpenError(true);
+        }
+    };
+
+    const loadSolicitudesFallidas = async () => {
+        try {
+            const loggedIn = localStorage.getItem('loggedIn');
+            const userEmail = localStorage.getItem('userEmail');
+            if (loggedIn === 'true') {
+                try {
+                    console.log(`${baseURL}employee/solicitudes/`);
+                    const response = await axios.get(`${baseURL}employee/solicitudes/failure`, {
+                        headers: {
+                            'X-User-Email': userEmail
+                        }
+                    });
+                    console.log(response.data);
+                    setSolicitudes(response.data);
+                    setTrueques(true);
+                    return response.data;
+                } catch (error) {
+                    console.error('Error en la solicitud:', error);
+                    setErrorMessage('Error al obtener las solicitudes.');
+                    setOpenError(true);
+                }
+            } else {
+                setErrorMessage('Debes iniciar sesión para ver las solicitudes.');
+                setOpenError(true);
+                setTimeout(() => {
+                    window.location.href = '/Login-worker';
+                }, 1500);
+            }
+        } catch (error) {
+            console.error('Error desconocido:', error);
+            setErrorMessage('Error desconocido al obtener las solicitudes.');
+            setOpenError(true);
+        }
+    };
+
     const loadSolicitudesDelDia = async () => {
         try {
             const loggedIn = localStorage.getItem('loggedIn');
@@ -160,6 +230,26 @@ function EmployeeView() {
         }
     };
 
+    const handleUsuarios = async () => {
+        try {
+            const loggedIn = localStorage.getItem('loggedIn');
+            const isAdminValue = localStorage.getItem('isAdmin');
+            if (loggedIn === 'true' && isAdminValue === 'true') {
+                window.location.href = '/adminview/Users';
+            } else {
+                setErrorMessage('Debes iniciar sesión para ver a los usuarios.');
+                setOpenError(true);
+                setTimeout(() => {
+                    window.location.href = '/Login-worker';
+                }, 1500);
+            }
+        } catch (error) {
+            console.error('Error desconocido:', error);
+            setErrorMessage('Error desconocido al redirigir a ver a los usuarios.');
+            setOpenError(true);
+        }
+    };
+
     const handleCloseError = () => {
         setOpenError(false);
     };
@@ -185,7 +275,11 @@ function EmployeeView() {
                         <button className="employee-nav-button" onClick={loadSolicitudesDelDia}>Ver Trueques del día</button>
                         {isAdmin && (
                             <div className='employee-botones-admin'>
+                                <button className="employee-nav-button" onClick={loadSolicitudesExitosas}>Ver trueques exitosos</button>
+                                <button className="employee-nav-button" onClick={loadSolicitudesFallidas}>Ver trueques fallidos</button>
+                                {/*<button className="employee-nav-button" onClick={loadVentas}>Ver ventas</button>*/}
                                 <button className="employee-nav-button" onClick={handlePublicaciones}>Ver publicaciones</button>
+                                <button className="employee-nav-button" onClick={handleUsuarios}>Ver usuarios</button>
                                 <button className="employee-nav-button" onClick={handleEmpleados}>Ver empleados</button>
                                 <button className="employee-nav-button" onClick={handleSucursales}>Ver sucursales</button>
                             </div>

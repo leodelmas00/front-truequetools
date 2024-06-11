@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useRoute, Link } from 'wouter';
 import { baseURL } from "../../api/trueque.api";
 import '../../styles/TradeCheck.css';
+import { formatFechaSolicitud } from '../../utils';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 function TradeCheck() {
@@ -189,6 +190,20 @@ function TradeCheck() {
         <div className="trade-container">
             <div className="trade-box">
                 <h2 className="trade-title">Gestión de intercambio</h2>
+                <hr />
+                <div className="trade-info">
+                    <div className="trade-info-user1">
+                        <p> <strong>Articulo 1:</strong> {solicitud.publicacion_a_intercambiar.titulo}  </p>
+                        <p> <strong>De:</strong> {solicitud.publicacion_a_intercambiar.usuario_propietario.email}  </p>
+                    </div>
+                    <div className="trade-info-user2">
+                        <p> <strong>Articulo 2:</strong> {solicitud.publicacion_deseada.titulo} </p>
+                        <p> <strong>De:</strong> {solicitud.publicacion_deseada.usuario_propietario.email}  </p>
+                    </div>
+                    <div className="trade-info-date">
+                        <p> <strong>Fecha del Trueque:</strong> {formatFechaSolicitud(solicitud.fecha_del_intercambio)}  </p>
+                    </div>
+                </div>
                 <hr />
                 <div>
                     <Link to="/employeeview">

@@ -22,21 +22,17 @@ export default function Employees() {
             <div className="sucursales-box">
                 <h1 className="sucursales-title">Lista de Sucursales</h1>
                 <hr />
-                {/* -NOTA: Boton buscar sucursales, esta DESACTIVADO por la demo 2.
                 <div className="sucursales-search">
                     <input placeholder="Ingresa la sucursal" className="sucursales-search-input"/>
                     <button> Buscar </button>
                 </div>
-                */}
                 <div className="sucursales-box-content">
                     {sucursales.map(sucursal => (
                         <div key={sucursal.id} className='sucursales-select-box'>
                             {sucursal.nombre} - {sucursal.direccion}
-                            {/* -NOTA: Boton editar, esta DESACTIVADO por la demo 2.
-                            <Link key={sucursal.id} to={`/adminview/SucursalEdit/${sucursal.id}`}>
+                            <Link key={sucursal.id} to={`/SucursalEdit/${sucursal.id}`}>
                                 <button className='sucursales-edit'>Editar</button>
                             </Link>
-                            */}
                         </div>
                     ))}
                 </div>

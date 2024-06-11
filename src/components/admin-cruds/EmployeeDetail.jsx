@@ -21,8 +21,6 @@ export default function EmployeeDetail() {
         fetchEmployee();
     }, [params.employeeId]);
 
-    /* NOTA: Abajo deje el boton "Dar de baja", lo desactivo solo por la demo2*/
-
     return (
         <div className="employeeDetail-container">
             <div className="employeeDetail-box">
@@ -49,7 +47,7 @@ export default function EmployeeDetail() {
                     <Link to="/adminview/employees">
                         <button> Volver </button>
                     </Link>
-                    {/* <button> Dar de baja </button> */}
+                    <button> Dar de baja </button>
                 </div>
             </div>
         </div>

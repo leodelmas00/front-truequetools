@@ -180,6 +180,13 @@ function SignIn() {
                     <p className='usuario'> Usuario </p>
                     <p className='nombre-usuario'> <MdOutlineStarBorderPurple500 /> {user.reputacion} pts - {user.username}</p>
                     <hr className='separador'></hr>
+                    <div className='botonaso'>
+                    <Link to="/EditProfile" className="editarPerfil-link">
+                        <button className="editarPerfil-button">
+                            <FaIcons.FaEdit /> | Editar perfil
+                        </button>
+                    </Link>
+                    </div>
                     <Link to="/Historial" className="historial-link">
                         <button className="historial-button">
                             <FaIcons.FaHistory /> | Historial de trueques

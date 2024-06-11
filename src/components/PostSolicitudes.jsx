@@ -53,6 +53,9 @@ function PostSolicitudes() {
             const publicacionDeseadaId = solicitudes.find(s => s.id === solicitudId).publicacion_deseada;
             const nuevasSolicitudes = solicitudes.filter(solicitud => solicitud.publicacion_deseada !== publicacionDeseadaId);
             setSolicitudes(nuevasSolicitudes);
+            setTimeout(() => {
+                window.location.href = '/Historial';
+            }, 1500);
         } catch (error) {
             console.error('Error al aceptar la solicitud:', error);
         }

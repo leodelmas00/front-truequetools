@@ -11,11 +11,13 @@
 .employee-nav-titulo {
     color: #C8FF96;
     font-family: 'Courier New', Courier, monospace;
+    -webkit-text-stroke: 1px black;
 }
 
 .employee-nav-titulo-admin {
     color: #9696FF;
     font-family: 'Courier New', Courier, monospace;
+    -webkit-text-stroke: 1px black;
 }
 
 .employee-separador {

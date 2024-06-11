@@ -8,23 +8,25 @@ import PostList from "./components/PostList";
 import UserList from "./components/UserList";
 import CommentList from "./components/CommentList";
 import PostDetail from "./components/PostDetail";
-import PostDetailAdmin from "./components/PostDetailAdmin"
+import PostDetailAdmin from "./components/PostDetailAdmin";
 import FailedTrades from "./datosBack/FailedTrades";
 import AdminView from "./components/AdminView";
 import { Route, Switch } from "wouter";
-import Employees from './components/admin-cruds/Employees'
-import LoginWorker from './components/LoginWorker'
-import Sucursales from './components/admin-cruds/Sucursales'
+import Employees from './components/admin-cruds/Employees';
+import LoginWorker from './components/LoginWorker';
+import Sucursales from './components/admin-cruds/Sucursales';
 import CreateSucursal from "./components/admin-cruds/CreateSucursal";
 import CreateEmployee from "./components/admin-cruds/CreateEmployee";
 import Historial from './components//Historial';
 import SelectProduct from './components//SelectProduct';
 import EmployeeDetail from "./components/admin-cruds/EmployeeDetail";
-import UserPosts from './components/UserPosts'
+import UserPosts from './components/UserPosts';
 import PostSolicitudes from "./components/PostSolicitudes";
 import EmployeeView from "./components/EmployeeView";
 import TradeCheck from "./components/admin-cruds/TradeCheck";
 import SucursalEdit from "./components/admin-cruds/SucursalEdit";
+import EditProfile from "./components/EditProfile";
+import Users from './components/admin-cruds/Users';
 
 
 function App() {
@@ -57,6 +59,9 @@ function App() {
       <Route path="/EmployeeView" component={EmployeeView} />
       <Route path="/TradeCheck/:id" component={TradeCheck} />
       <Route path="/SucursalEdit/:id" component={SucursalEdit} />
+      <Route path="/EditProfile" component={EditProfile} />
+      <Route path="/adminview/Users" component={Users} />
+
 
     </Switch>
   );

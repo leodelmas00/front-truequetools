@@ -23,12 +23,10 @@ export default function Employees() {
             <div className="employee-box">
                 <h1 className="employee-title">Lista de Empleados</h1>
                 <hr />
-                {/* -NOTA: Boton buscar empleado, esta DESACTIVADO por la demo 2.
                 <div className="employee-search">
                     <input placeholder="Ingresa el correo del empleado" className="employee-search-input"/>
                     <button> Buscar </button>
                 </div>
-                */}
                 <div className="employee-box-content">
                     {employees.map(employee => (
                         <div key={employee.id} className='employee-select-box'>

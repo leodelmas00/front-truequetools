@@ -43,14 +43,15 @@
 }
 
 .menuItems .cerrar-sesion-button {
-    width: 14rem;
+    width: 15rem;
     height: 2.2rem;
     border-radius: 15px;
     color: #f2f0e4;
     background-color: #bf4c41;
     border-color: #f2ada7;
     font-size: large;
-    text-align: center;
+    text-align: left;
+    text-indent: 10px;
     transition: transform 0.3s ease;
 }
 
@@ -63,14 +64,15 @@
 }
 
 .menuItems .historial-button {
-    width: 14rem;
+    width: 15rem;
     height: 2.2rem;
     border-radius: 15px;
     color: #f2f0e4;
     background-color: #bf4c41;
     border-color: #f2ada7;
     font-size: large;
-    text-align: center;
+    text-align: left;
+    text-indent: 10px;
     transition: transform 0.3s ease;
     margin-bottom: 20px;
 }
@@ -83,15 +85,38 @@
     transition: transform 0.3s ease;
 }
 
-.menuItems .myposts-button {
-    width: 14rem;
+.menuItems .editarPerfil-button {
+    width: 15rem;
     height: 2.2rem;
     border-radius: 15px;
     color: #f2f0e4;
     background-color: #bf4c41;
     border-color: #f2ada7;
     font-size: large;
-    text-align: center;
+    text-align: left;
+    text-indent: 10px;
+    transition: transform 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.menuItems .editarPerfil-button:hover {
+    background-color: #f2f0e4;
+    color: #bf4c41;
+    transition: color 0.2s;
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
+}
+
+.menuItems .myposts-button {
+    width: 15rem;
+    height: 2.2rem;
+    border-radius: 15px;
+    color: #f2f0e4;
+    background-color: #bf4c41;
+    border-color: #f2ada7;
+    font-size: large;
+    text-align: left;
+    text-indent: 10px;
     transition: transform 0.3s ease;
     margin-bottom: 20px;
 }
