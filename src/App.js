@@ -27,6 +27,8 @@ import TradeCheck from "./components/admin-cruds/TradeCheck";
 import SucursalEdit from "./components/admin-cruds/SucursalEdit";
 import EditProfile from "./components/EditProfile";
 import Users from './components/admin-cruds/Users';
+import HistorialSolicitudes from "./components/HistorialSolicitudes";
+import Support from "./components/Support";
 
 
 function App() {
@@ -60,7 +62,9 @@ function App() {
       <Route path="/TradeCheck/:id" component={TradeCheck} />
       <Route path="/SucursalEdit/:id" component={SucursalEdit} />
       <Route path="/EditProfile" component={EditProfile} />
+      <Route path="/HistorialSolicitudes" component={HistorialSolicitudes} />
       <Route path="/adminview/Users" component={Users} />
+      <Route path="/Support" component={Support} />
 
 
     </Switch>

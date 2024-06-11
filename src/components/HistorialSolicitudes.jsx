@@ -1,6 +1,6 @@
-import '../styles/EditProfile.css';
+import '../styles/HistorialSolicitudes.css';
 
-function EditProfile() {
+function HistorialSolicitudes() {
 
     //IMPORTANTE: A la hora de codificar, eliminar el style del 1er div.
 
@@ -10,9 +10,9 @@ function EditProfile() {
             justifyContent: 'center',
             alignItems: 'center',
             height: '100vh'}}>
-            <h1> Editar perfil </h1>
+            <h1> Historial de solicitudes </h1>
         </div >
     );
 }
 
-export default EditProfile;
+export default HistorialSolicitudes;

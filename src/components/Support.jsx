@@ -1,6 +1,6 @@
-import '../styles/EditProfile.css';
+import '../styles/Support.css';
 
-function EditProfile() {
+function Support() {
 
     //IMPORTANTE: A la hora de codificar, eliminar el style del 1er div.
 
@@ -10,9 +10,9 @@ function EditProfile() {
             justifyContent: 'center',
             alignItems: 'center',
             height: '100vh'}}>
-            <h1> Editar perfil </h1>
+            <h1> Contactar a soporte </h1>
         </div >
     );
 }
 
-export default EditProfile;
+export default Support;
