@@ -11,6 +11,29 @@
     border-radius: 6px;
     padding: 20px;
     box-shadow: rgba(0, 0, 0, 0.120) 0px 20px 30px -10px;
+    transform: scale(1.2);
+}
+
+.trade-info{
+    display: block;
+    background-color: rgb(220, 220, 220);
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.trade-info-user1 p,
+.trade-info-user2 p {
+    margin: 1px 0;
+    padding: 0;
+}
+
+.trade-info-user1,
+.trade-info-user2 {
+    margin-bottom: 16px;
+}
+
+.trade-info-date p {
+    margin: auto;
 }
 
 .trade-button {
@@ -41,4 +64,8 @@
 
 .trade-container h4{
     margin: auto;
+}
+
+.trade-container button{
+    cursor: pointer;
 }

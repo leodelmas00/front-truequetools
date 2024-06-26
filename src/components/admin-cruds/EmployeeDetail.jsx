@@ -3,10 +3,12 @@ import axios from "axios";
 import { useRoute, Link } from "wouter";
 import { baseURL } from '../../api/trueque.api.js'
 import '../../styles/EmployeeDetail.css';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 export default function EmployeeDetail() {
     const [match, params] = useRoute('/adminview/EmployeeDetail/:employeeId');
     const [employee, setEmployee] = useState(null);
+    const [openDialog, setOpenDialog] = useState(false);
 
     useEffect(() => {
         const fetchEmployee = async () => {
@@ -21,7 +23,32 @@ export default function EmployeeDetail() {
         fetchEmployee();
     }, [params.employeeId]);
 
-    /* NOTA: Abajo deje el boton "Dar de baja", lo desactivo solo por la demo2*/
+    const handleDeleteEmployee = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.delete(`${baseURL}employee/${params.employeelId}`, {
+            //    headers: {
+            //        Authorization: `Token ${token}`,
+            //    }
+            });
+            if (response.status === 204) {
+                // Aquí puedes realizar cualquier acción adicional después de eliminar un empleado
+                console.log('Empleado eliminado exitosamente');
+            }
+        } catch (error) {
+            console.log(error);
+            console.error('Error:', error);
+            // Aquí puedes manejar los errores
+        }
+    };
+
+    const handleOpenDialog = () => {
+        setOpenDialog(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
 
     return (
         <div className="employeeDetail-container">
@@ -49,9 +76,27 @@ export default function EmployeeDetail() {
                     <Link to="/adminview/employees">
                         <button> Volver </button>
                     </Link>
-                    {/* <button> Dar de baja </button> */}
+                    <button onClick={handleOpenDialog}> Dar de baja </button>
                 </div>
             </div>
+
+            <Dialog open={openDialog} onClose={handleCloseDialog} >
+                <DialogTitle>Confirmar Acción</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        ¿Estás seguro que quieres dar de baja a este empleado?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDialog} color="primary">
+                        Cancelar
+                    </Button>
+                    <Button onClick={handleDeleteEmployee} color="primary" autoFocus>
+                        Aceptar
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
         </div>
     );
 }

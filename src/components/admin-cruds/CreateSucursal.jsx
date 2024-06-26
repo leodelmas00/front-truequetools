@@ -44,6 +44,9 @@ function CreateSucursal() {
             });
             if (response.status === 201) {
                 setError('Sucursal creada con éxito')
+                setTimeout(() => {
+                    window.location.href = '/adminview/sucursales';
+                }, 1250);
             }
         } catch (error) {
             setError('Hubo un problema al intentar dar de alta la sucursal');

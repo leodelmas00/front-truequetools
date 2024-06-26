@@ -3,6 +3,7 @@ import axios from 'axios';
 import '../styles/home.css';
 import 'animate.css';
 import logoImg from '../logo_1/logo_1_sinfondo.png';
+import userNoProfilePicture from '../logo_1/userNoProfilePicture.jpg';
 import { Link, Redirect } from 'wouter';
 import { baseURL, getAllPosts } from '../api/trueque.api';
 import * as FaIcons from "react-icons/fa";
@@ -177,12 +178,29 @@ function SignIn() {
 
             <div className={`menu ${menuOpen ? 'open' : ''}`} style={{ overflow: 'auto' }}>
                 <div className='menuItems'>
-                    <p className='usuario'> Usuario </p>
-                    <p className='nombre-usuario'> <MdOutlineStarBorderPurple500 /> {user.reputacion} pts - {user.username}</p>
+                    <div className="profile-box">
+                        <img src={userNoProfilePicture} alt='Foto de perfil' className="profile-picture"/>
+                        {/* Cuando user ya tenga imagen entonces descomentar este codigo
+                         <img src={user.imagen} className="profile-picture"/> */} 
+                    </div>
+                    <p className='usuario'> {user.username} </p>
+                    <p className='puntos'> <MdOutlineStarBorderPurple500 /> {user.reputacion} pts</p>
                     <hr className='separador'></hr>
+                    <div className='botonaso'>
+                    <Link to="/EditProfile" className="editarPerfil-link">
+                        <button className="editarPerfil-button">
+                            <FaIcons.FaUserEdit /> | Editar perfil
+                        </button>
+                    </Link>
+                    </div>
                     <Link to="/Historial" className="historial-link">
                         <button className="historial-button">
                             <FaIcons.FaHistory /> | Historial de trueques
+                        </button>
+                    </Link>
+                    <Link to="/HistorialSolicitudes" className="misSolicitudes-link">
+                        <button className="misSolicitudes-button">
+                            <FaIcons.FaHandshake /> | Mis solicitudes
                         </button>
                     </Link>
                     <Link to="/my-posts" className="myposts-link">
@@ -190,15 +208,15 @@ function SignIn() {
                             <FaIcons.FaFont /> | Publicaciones activas
                         </button>
                     </Link>
+                    <Link to="/Support" className="support-link">
+                        <button className="support-button">
+                            <FaIcons.FaQuestionCircle /> | Contactar al soporte
+                        </button>
+                    </Link>
                     <button className="cerrar-sesion-button" onClick={handleLogout}>
                         <FaIcons.FaDoorOpen /> | Cerrar sesión
                     </button>
                 </div>
-                {isStaff && (
-                    <Link to="/PostList" className="admin-link">
-                        <button className="admin-button">Ver Listado de Publicaciones</button>
-                    </Link>
-                )}
             </div>
         </div>
     );

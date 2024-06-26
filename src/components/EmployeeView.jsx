@@ -30,21 +30,21 @@ function EmployeeView() {
         window.location.href = '/Login-worker';
     };
 
-    const loadSolicitudes = async () => {
+    const loadSolicitudesHelper = async (endpoint, errorMessage) => {
         try {
             const loggedIn = localStorage.getItem('loggedIn');
-            const userEmail = localStorage.getItem('userEmail'); // Obtener el email del localStorage
+            const userEmail = localStorage.getItem('userEmail'); 
             if (loggedIn === 'true') {
                 try {
-                    console.log(`${baseURL}employee/solicitudes/`);
-                    const response = await axios.get(`${baseURL}employee/solicitudes/`, {
+                    console.log(`${baseURL}${endpoint}`);
+                    const response = await axios.get(`${baseURL}${endpoint}`, {
                         headers: {
                             'X-User-Email': userEmail
                         }
                     });
                     console.log(response.data);
                     setSolicitudes(response.data);
-                    setTrueques(true); // Asegúrate de activar la visualización de trueques
+                    setTrueques(true); 
                     return response.data;
                 } catch (error) {
                     console.error('Error en la solicitud:', error);
@@ -52,7 +52,7 @@ function EmployeeView() {
                     setOpenError(true);
                 }
             } else {
-                setErrorMessage('Debes iniciar sesión para ver las solicitudes.');
+                setErrorMessage(errorMessage);
                 setOpenError(true);
                 setTimeout(() => {
                     window.location.href = '/Login-worker';
@@ -65,49 +65,14 @@ function EmployeeView() {
         }
     };
 
-    const loadSolicitudesDelDia = async () => {
-        try {
-            const loggedIn = localStorage.getItem('loggedIn');
-            const userEmail = localStorage.getItem('userEmail');
-            if (loggedIn === 'true') {
-                try {
-                    console.log(`${baseURL}employee/solicitudes/today/`);
-                    const response = await axios.get(`${baseURL}employee/solicitudes/today/`, {
-                        headers: {
-                            'X-User-Email': userEmail
-                        }
-                    });
-                    console.log(response.data);
-                    setSolicitudes(response.data);
-                    setTrueques(true); // Asegúrate de activar la visualización de trueques
-                    return response.data;
-                } catch (error) {
-                    console.error('Error en la solicitud:', error);
-                    setErrorMessage('Error al obtener las solicitudes.');
-                    setOpenError(true);
-                }
-            } else {
-                setErrorMessage('Debes iniciar sesión para ver las solicitudes de hoy.');
-                setOpenError(true);
-                setTimeout(() => {
-                    window.location.href = '/Login-worker';
-                }, 1500);
-            }
-        } catch (error) {
-            console.error('Error desconocido:', error);
-            setErrorMessage('Error desconocido al obtener las solicitudes.');
-            setOpenError(true);
-        }
-    };
-
-    const handlePublicaciones = async () => {
+    const handleNavigation = async (path, errorMessage) => {
         try {
             const loggedIn = localStorage.getItem('loggedIn');
             const isAdminValue = localStorage.getItem('isAdmin');
             if (loggedIn === 'true' && isAdminValue === 'true') {
-                window.location.href = '/PostList';
+                window.location.href = path;
             } else {
-                setErrorMessage('Debes iniciar sesión para ver las publicaciones.');
+                setErrorMessage(errorMessage);
                 setOpenError(true);
                 setTimeout(() => {
                     window.location.href = '/Login-worker';
@@ -115,50 +80,21 @@ function EmployeeView() {
             }
         } catch (error) {
             console.error('Error desconocido:', error);
-            setErrorMessage('Error desconocido al redirigir a ver publicaciones.');
+            setErrorMessage('Error desconocido al redirigir.');
             setOpenError(true);
         }
     };
 
-    const handleEmpleados = async () => {
-        try {
-            const loggedIn = localStorage.getItem('loggedIn');
-            const isAdminValue = localStorage.getItem('isAdmin');
-            if (loggedIn === 'true' && isAdminValue === 'true') {
-                window.location.href = '/adminview/employees';
-            } else {
-                setErrorMessage('Debes iniciar sesión para ver los empleados.');
-                setOpenError(true);
-                setTimeout(() => {
-                    window.location.href = '/Login-worker';
-                }, 1500);
-            }
-        } catch (error) {
-            console.error('Error desconocido:', error);
-            setErrorMessage('Error desconocido al redirigir a ver empleados.');
-            setOpenError(true);
-        }
-    };
-
-    const handleSucursales = async () => {
-        try {
-            const loggedIn = localStorage.getItem('loggedIn');
-            const isAdminValue = localStorage.getItem('isAdmin');
-            if (loggedIn === 'true' && isAdminValue === 'true') {
-                window.location.href = '/adminview/sucursales';
-            } else {
-                setErrorMessage('Debes iniciar sesión para ver las sucursales.');
-                setOpenError(true);
-                setTimeout(() => {
-                    window.location.href = '/Login-worker';
-                }, 1500);
-            }
-        } catch (error) {
-            console.error('Error desconocido:', error);
-            setErrorMessage('Error desconocido al redirigir a ver sucursales.');
-            setOpenError(true);
-        }
-    };
+    const loadSolicitudes = () => loadSolicitudesHelper('employee/solicitudes/', 'Debes iniciar sesión para ver las solicitudes.');
+    const loadSolicitudesExitosas = () => loadSolicitudesHelper('employee/solicitudes/success', 'Debes iniciar sesión para ver las solicitudes exitosas.');
+    const loadSolicitudesFallidas = () => loadSolicitudesHelper('employee/solicitudes/failure', 'Debes iniciar sesión para ver las solicitudes fallidas.');
+    const loadSolicitudesDelDia = () => loadSolicitudesHelper('employee/solicitudes/today/', 'Debes iniciar sesión para ver las solicitudes de hoy.');
+    
+    const handlePublicaciones = () => handleNavigation('/PostList', 'Debes iniciar sesión para ver las publicaciones.');
+    const handleEmpleados = () => handleNavigation('/adminview/employees', 'Debes iniciar sesión para ver los empleados.');
+    const handleSucursales = () => handleNavigation('/adminview/sucursales', 'Debes iniciar sesión para ver las sucursales.');
+    const handleUsuarios = () => handleNavigation('/adminview/Users', 'Debes iniciar sesión para ver a los usuarios.');
+    const handleVentas = () => handleNavigation('/adminview/Ventas', 'Debes iniciar sesión para ver las ventas.');    
 
     const handleCloseError = () => {
         setOpenError(false);
@@ -169,28 +105,31 @@ function EmployeeView() {
             <div className="employee-navigation-bar">
                 <div>
                     {isAdmin ? (
-                        <div>
-                            <h1 className="employee-nav-titulo-admin"> Panel de administrador </h1>
-                            <hr className='employee-separador' style={{ borderBlockColor: '#9696FF' }} />
+                        <div className='admin-elements'>
+                            <h1 className="admin-nav-titulo"> Panel de administrador </h1>
+                            <hr className='employee-separador' style={{ borderBlockColor: '#5050ff' }} />
+
+                            <button className="admin-nav-button" onClick={handleLogout}>Cerrar Sesión</button>
+                            <button className="admin-nav-button" onClick={loadSolicitudes}>Ver Trueques activos</button>
+                            <button className="admin-nav-button" onClick={loadSolicitudesDelDia}>Ver Trueques del día</button>
+                            <button className="admin-nav-button" onClick={loadSolicitudesExitosas}>Ver trueques exitosos</button>
+                            <button className="admin-nav-button" onClick={loadSolicitudesFallidas}>Ver trueques fallidos</button>
+                            <button className="admin-nav-button" onClick={handlePublicaciones}>Ver publicaciones</button>
+                            <button className="admin-nav-button" onClick={handleUsuarios}>Ver usuarios</button>
+                            <button className="admin-nav-button" onClick={handleEmpleados}>Ver empleados</button>
+                            <button className="admin-nav-button" onClick={handleSucursales}>Ver sucursales</button>
+                            <button className="admin-nav-button" onClick={handleVentas}>Ver ventas</button>
                         </div>
                     ) : (
-                        <div>
+                        <div className='employee-elements'>
                             <h1 className="employee-nav-titulo"> Panel de empleado </h1>
-                            <hr className='employee-separador' style={{ borderBlockColor: '#C8FF96' }} />
+                            <hr className='employee-separador' style={{ borderBlockColor: '#2bb469' }} />
+
+                            <button className="employee-nav-button" onClick={handleLogout}>Cerrar Sesión</button>
+                            <button className="employee-nav-button" onClick={loadSolicitudes}>Ver Trueques activos</button>
+                            <button className="employee-nav-button" onClick={loadSolicitudesDelDia}>Ver Trueques del día</button>
                         </div>
                     )}
-                    <div className='employee-botones'>
-                        <button className="employee-nav-button" onClick={handleLogout}>Cerrar Sesión</button>
-                        <button className="employee-nav-button" onClick={loadSolicitudes}>Ver Trueques activos</button>
-                        <button className="employee-nav-button" onClick={loadSolicitudesDelDia}>Ver Trueques del día</button>
-                        {isAdmin && (
-                            <div className='employee-botones-admin'>
-                                <button className="employee-nav-button" onClick={handlePublicaciones}>Ver publicaciones</button>
-                                <button className="employee-nav-button" onClick={handleEmpleados}>Ver empleados</button>
-                                <button className="employee-nav-button" onClick={handleSucursales}>Ver sucursales</button>
-                            </div>
-                        )}
-                    </div>
                 </div>
             </div>
 
@@ -203,7 +142,6 @@ function EmployeeView() {
                                 <th>2do Articulo</th>
                                 <th>Fecha del trueque</th>
                                 <th>Truequeros</th>
-
                             </tr>
                         </thead>
                         <tbody>

@@ -12,10 +12,11 @@
     padding: 20px;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 20px 30px -10px;
     width: 400px;
-    height: 600px;
+    height: 500px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    transform: scale(1.2);
 }
 
 
@@ -87,4 +88,8 @@
     width: 100%;
     margin-top: 15px;
     gap: 4px;
+}
+
+.sucursales-container button{
+    cursor: pointer;
 }

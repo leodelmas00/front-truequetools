@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRoute, Link } from 'wouter';
 import { baseURL } from "../../api/trueque.api";
-import '../../styles/TradeCheck.css'
+import '../../styles/TradeCheck.css';
+import { formatFechaSolicitud } from '../../utils';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 function TradeCheck() {
@@ -15,11 +16,11 @@ function TradeCheck() {
     const [openDialog, setOpenDialog] = useState(false);
     const [detalleVenta, setDetalleVenta] = useState([]);
     const [ventasVisibles, setVentasVisibles] = useState(false);
-
+    const [cantidadError, setCantidadError] = useState('');
 
     useEffect(() => {
         const fetchSolicitud = async () => {
-            const loggedIn = localStorage.getItem('loggedIn')
+            const loggedIn = localStorage.getItem('loggedIn');
             if (loggedIn) {
                 try {
                     const response = await axios.get(`${baseURL}employee/solicitudes/${params.solicitud_id}/`);
@@ -28,9 +29,8 @@ function TradeCheck() {
                 } catch (error) {
                     setError('Error al obtener la solicitud.');
                 }
-            }
-            else {
-                alert('debes iniciar sesion para realizar esta acción')
+            } else {
+                alert('Debes iniciar sesión para realizar esta acción');
                 window.location.href = '/Login-worker';
             }
         };
@@ -53,7 +53,7 @@ function TradeCheck() {
     }, []);
 
     const handleRechazarTrueque = async () => {
-        const loggedIn = localStorage.getItem('loggedIn')
+        const loggedIn = localStorage.getItem('loggedIn');
         if (loggedIn) {
             try {
                 await axios.patch(`${baseURL}employee/solicitudes/${params.solicitud_id}/`, { action: 'reject' });
@@ -62,17 +62,16 @@ function TradeCheck() {
                 setOpenDialog(false);
                 window.location.href = "/EmployeeView";
             } catch (error) {
-                alert('Ocurrio un error inesperado');
+                alert('Ocurrió un error inesperado');
             }
-        }
-        else {
-            alert('debes iniciar sesion para realizar esta acción')
+        } else {
+            alert('Debes iniciar sesión para realizar esta acción');
             window.location.href = '/Login-worker';
         }
     };
 
     const handleAceptarTrueque = async () => {
-        const loggedIn = localStorage.getItem('loggedIn')
+        const loggedIn = localStorage.getItem('loggedIn');
         if (loggedIn) {
             try {
                 await axios.patch(`${baseURL}employee/solicitudes/${params.solicitud_id}/`, { action: 'accept' });
@@ -80,29 +79,31 @@ function TradeCheck() {
                 setShowForm(false);
                 window.location.href = "/EmployeeView";
             } catch (error) {
-                alert('Ocurrio un error inesperado');
+                alert('Ocurrió un error inesperado');
             }
         } else {
-            alert('debes iniciar sesion para realizar esta acción')
+            alert('Debes iniciar sesión para realizar esta acción');
             window.location.href = '/Login-worker';
         }
     };
 
     const handleRegistrarVentas = async (event) => {
         event.preventDefault();
-        const loggedIn = localStorage.getItem('loggedIn')
+        const loggedIn = localStorage.getItem('loggedIn');
         if (loggedIn) {
-
-            try {
-                await axios.post(`${baseURL}employee/solicitudes/${params.solicitud_id}/ventas/`, { productos: ventaProductos });
-                alert('Ventas registrada con éxito');
-                setShowForm(false);
-            } catch (error) {
-                console.error('Error al registrar las ventas:', error);
-                alert('Error al registrar las ventas');
+            if (validateCantidad()) {
+                try {
+                    await axios.post(`${baseURL}employee/solicitudes/${params.solicitud_id}/ventas/`, { productos: ventaProductos });
+                    alert('Ventas registradas con éxito');
+                    setShowForm(false);
+                    window.location.reload();
+                } catch (error) {
+                    console.error('Error al registrar las ventas:', error);
+                    alert('Error al registrar las ventas');
+                }
             }
         } else {
-            alert('debes iniciar sesion para realizar esta acción')
+            alert('Debes iniciar sesión para realizar esta acción');
             window.location.href = '/Login-worker';
         }
     };
@@ -118,7 +119,7 @@ function TradeCheck() {
             }
         }
         setVentasVisibles(!ventasVisibles);
-    }
+    };
 
     const handleVentasChange = (index, field, value) => {
         const updatedVentaProductos = [...ventaProductos];
@@ -138,6 +139,21 @@ function TradeCheck() {
 
     const isValidForm = () => {
         return ventaProductos.every(producto => producto.id && producto.cantidad_vendida);
+    };
+
+    const validateCantidad = () => {
+        const cantidadInvalida = ventaProductos.some(producto => {
+            const cantidad = parseFloat(producto.cantidad_vendida);
+            return isNaN(cantidad) || cantidad <= 0 || !Number.isInteger(cantidad);
+        });
+
+        if (cantidadInvalida) {
+            setCantidadError('Ingresar una cantidad valida');
+            return false;
+        } else {
+            setCantidadError('');
+            return true;
+        }
     };
 
     if (error) {
@@ -175,6 +191,20 @@ function TradeCheck() {
             <div className="trade-box">
                 <h2 className="trade-title">Gestión de intercambio</h2>
                 <hr />
+                <div className="trade-info">
+                    <div className="trade-info-user1">
+                        <p> <strong>Articulo 1:</strong> {solicitud.publicacion_a_intercambiar.titulo}  </p>
+                        <p> <strong>De:</strong> {solicitud.publicacion_a_intercambiar.usuario_propietario.email}  </p>
+                    </div>
+                    <div className="trade-info-user2">
+                        <p> <strong>Articulo 2:</strong> {solicitud.publicacion_deseada.titulo} </p>
+                        <p> <strong>De:</strong> {solicitud.publicacion_deseada.usuario_propietario.email}  </p>
+                    </div>
+                    <div className="trade-info-date">
+                        <p> <strong>Fecha del Trueque:</strong> {formatFechaSolicitud(solicitud.fecha_del_intercambio)}  </p>
+                    </div>
+                </div>
+                <hr />
                 <div>
                     <Link to="/employeeview">
                         <button type="button" className="trade-button">Volver</button>
@@ -187,7 +217,7 @@ function TradeCheck() {
                     <button type="button" className="trade-button" onClick={handleToggleForm}>Registrar Ventas</button>
                 ) : (
                     <div>
-                        <p>Ya se cargaron las ventas de este trueque!</p>
+                        <p>¡Ya se cargaron las ventas de este trueque!</p>
                         <button onClick={toggleVentas}>
                             {ventasVisibles ? 'Ocultar ventas' : 'Ver ventas'}
                         </button>
@@ -235,6 +265,7 @@ function TradeCheck() {
                             </div>
                         ))}
                         <button type="button" className="trade-add" onClick={addProducto} disabled={!isValidForm()}>+</button>
+                        {cantidadError && <p className="error-message">{cantidadError}</p>}
                         <div className="button-group">
                             <button type="submit" className="registrar" disabled={!isValidForm()}>Confirmar venta</button>
                         </div>
@@ -249,7 +280,7 @@ function TradeCheck() {
                 <DialogTitle>Confirmar Acción</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Estás seguro que quieres marcar este intercambio como fallido?
+                        ¿Estás seguro que quieres marcar este intercambio como fallido?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

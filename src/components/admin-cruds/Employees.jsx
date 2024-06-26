@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { getAllEmployees } from "../../api/trueque.api";
+import { baseURL, getAllEmployees } from "../../api/trueque.api";
 import { Link } from 'wouter'
 import '../../styles/Employees.css';
 
 export default function Employees() {
     const [employees, setEmployees] = useState([]);
-    const [redirect, setRedirect] = useState(null);
+    const [searchPerformed, setSearchPerformed] = useState(false);
+    const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
         async function loadEmployees() {
@@ -17,18 +18,34 @@ export default function Employees() {
         loadEmployees();
     }, []);
 
+    const handleSearchSubmit = async (e) => {
+        e.preventDefault();
+        setSearchPerformed(true);
+        try {
+            const token = localStorage.getItem('token')
+            const response = await axios.get(`${baseURL}search-employee/`, {
+            //    headers: {
+            //        Authorization: `Token ${token}`
+            //    },
+            //   params: { q: query }
+            });
+            setSearchResults(response.data);
+            console.log("DATA:", searchResults)
+        } catch (error) {
+            console.error('Error during search:', error);
+        }
+    };
+
 
     return (
         <div className="employee-container">
             <div className="employee-box">
                 <h1 className="employee-title">Lista de Empleados</h1>
                 <hr />
-                {/* -NOTA: Boton buscar empleado, esta DESACTIVADO por la demo 2.
                 <div className="employee-search">
                     <input placeholder="Ingresa el correo del empleado" className="employee-search-input"/>
-                    <button> Buscar </button>
+                    <button onClick={handleSearchSubmit}> Buscar </button>
                 </div>
-                */}
                 <div className="employee-box-content">
                     {employees.map(employee => (
                         <div key={employee.id} className='employee-select-box'>

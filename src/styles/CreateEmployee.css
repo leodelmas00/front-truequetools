@@ -11,6 +11,7 @@
     border-radius: 6px;
     padding: 20px;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 20px 30px -10px;
+    transform: scale(1.2);
 }
 
 .employeeAdd-container form{
@@ -31,4 +32,8 @@
     justify-content: space-between;
     width: 100%;
     gap: 4px;
+}
+
+.employeeAdd-buttons button{
+    cursor: pointer;
 }
