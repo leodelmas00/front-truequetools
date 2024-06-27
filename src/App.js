@@ -30,7 +30,7 @@ import Users from './components/admin-cruds/Users';
 import Ventas from './components/admin-cruds/Ventas';
 import HistorialSolicitudes from "./components/HistorialSolicitudes";
 import Support from "./components/Support";
-
+import VentaDetail from "./components/admin-cruds/VentaDetail";
 
 function App() {
   return (
@@ -66,6 +66,8 @@ function App() {
       <Route path="/HistorialSolicitudes" component={HistorialSolicitudes} />
       <Route path="/adminview/Users" component={Users} />
       <Route path="/adminview/Ventas" component={Ventas} />
+      <Route path="/adminview/Venta/:id" component={VentaDetail} />
+
       <Route path="/Support" component={Support} />
 
 

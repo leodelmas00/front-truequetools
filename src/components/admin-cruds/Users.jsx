@@ -53,6 +53,7 @@ export default function Users() {
             await axios.patch(`${baseURL}adminview/toggle-block/${selectedUser.id}/`, {
                 bloqueado: !selectedUser.bloqueado
             });
+            console.log(selectedUser)
             // Recargar usuarios después de cambiar el estado de bloqueo
             const response = await axios.get(`${baseURL}adminview/search-users/`, {
                 params: { q: query }

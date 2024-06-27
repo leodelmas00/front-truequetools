@@ -164,6 +164,11 @@ function EmployeeView() {
                                         </Link>
 
                                     )}
+                                    {solicitud.estado === "EXITOSA" && solicitud.venta != null && (
+                                        <Link href={`adminview/Venta/${solicitud.id}`}>
+                                            <button>Ver ventas</button>
+                                        </Link>
+                                    )}
                                 </tr>
                             ))}
                         </tbody>
