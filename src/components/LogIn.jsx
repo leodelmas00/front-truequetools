@@ -17,16 +17,21 @@ function LogIn() {
         event.preventDefault();
         try {
             const response = await axios.post(baseURL + 'login/', form);
-
+            console.log(response.status)
             if (response.status === 200 && response.data.token) {
                 localStorage.setItem('token', response.data.token);
                 setRedirect(true); // credenciales válidas, habilito redirección
-            } else {
-                setError('Correo electrónico o contraseña incorrectos');
             }
         } catch (error) {
-            console.error('Error:', error);
-            setError('Correo electrónico o contraseña incorrecta');
+            if (error.response) {
+                if (error.response.status === 403) {
+                    setError('El usuario se encuentra bloqueado.');
+                } else if (error.response.status === 400) {
+                    setError('Correo electrónico o contraseña incorrectos');
+                } else {
+                    setError('Error al iniciar sesión');
+                }
+            }
         }
     };
 

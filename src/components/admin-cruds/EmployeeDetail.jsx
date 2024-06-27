@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRoute, Link } from "wouter";
-import { baseURL } from '../../api/trueque.api.js'
 import '../../styles/EmployeeDetail.css';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
@@ -13,32 +12,29 @@ export default function EmployeeDetail() {
     useEffect(() => {
         const fetchEmployee = async () => {
             try {
-                const employeeResponse = await axios.get(`${baseURL}empleados/${params.employeeId}/`);
-                setEmployee(employeeResponse.data);
-                console.log(employeeResponse.data);
+                console.log(`http://127.0.0.1:8000/api/employee/${params.employeeId}/detail/`);
+                const response = await axios.get(`http://127.0.0.1:8000/api/employee/${params.employeeId}/detail/`);
+                setEmployee(response.data);
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Error al cargar empleado:', error);
             }
         };
-        fetchEmployee();
+
+        if (params.employeeId) {
+            fetchEmployee();
+        }
     }, [params.employeeId]);
 
     const handleDeleteEmployee = async () => {
         try {
-            const token = localStorage.getItem('token');
-            const response = await axios.delete(`${baseURL}employee/${params.employeelId}`, {
-            //    headers: {
-            //        Authorization: `Token ${token}`,
-            //    }
-            });
-            if (response.status === 204) {
-                // Aquí puedes realizar cualquier acción adicional después de eliminar un empleado
+            const response = await axios.delete(`http://127.0.0.1:8000/api/employee/${params.employeeId}/`);
+            if (response.status === 200) {
                 console.log('Empleado eliminado exitosamente');
+                alert('Empleado dado de baja con éxito')
+                window.location.href = '/adminview/employees';
             }
         } catch (error) {
-            console.log(error);
-            console.error('Error:', error);
-            // Aquí puedes manejar los errores
+            console.error('Error al eliminar empleado:', error);
         }
     };
 
@@ -54,33 +50,32 @@ export default function EmployeeDetail() {
         <div className="employeeDetail-container">
             <div className="employeeDetail-box">
                 <h1 className="employeeDetail-title">Detalle del empleado</h1>
-                <hr/>
+                <hr />
                 {employee ? (
                     <div className="employeeDetail-info">
-                        <h3> Email </h3>
-                        <hr/>
-                        <p> {employee.email} </p>
-                        <h3> Sucursal </h3>
-                        <hr/>
+                        <h3>Email</h3>
+                        <hr />
+                        <p>{employee.email}</p>
+                        <h3>Sucursal</h3>
+                        <hr />
                         {employee.sucursal ? (
                             <p>{employee.sucursal.nombre} - {employee.sucursal.direccion}</p>
                         ) : (
                             null
                         )}
-                        {/* Agrega más detalles del empleado según sea necesario */}
                     </div>
                 ) : (
                     <p>Cargando...</p>
                 )}
                 <div className="employeeDetail-buttons">
                     <Link to="/adminview/employees">
-                        <button> Volver </button>
+                        <button>Volver</button>
                     </Link>
-                    <button onClick={handleOpenDialog}> Dar de baja </button>
+                    <button onClick={handleOpenDialog}>Dar de baja</button>
                 </div>
             </div>
 
-            <Dialog open={openDialog} onClose={handleCloseDialog} >
+            <Dialog open={openDialog} onClose={handleCloseDialog}>
                 <DialogTitle>Confirmar Acción</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
@@ -96,7 +91,6 @@ export default function EmployeeDetail() {
                     </Button>
                 </DialogActions>
             </Dialog>
-
         </div>
     );
 }

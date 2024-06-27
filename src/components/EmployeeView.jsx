@@ -33,7 +33,7 @@ function EmployeeView() {
     const loadSolicitudesHelper = async (endpoint, errorMessage) => {
         try {
             const loggedIn = localStorage.getItem('loggedIn');
-            const userEmail = localStorage.getItem('userEmail'); 
+            const userEmail = localStorage.getItem('userEmail');
             if (loggedIn === 'true') {
                 try {
                     console.log(`${baseURL}${endpoint}`);
@@ -44,7 +44,7 @@ function EmployeeView() {
                     });
                     console.log(response.data);
                     setSolicitudes(response.data);
-                    setTrueques(true); 
+                    setTrueques(true);
                     return response.data;
                 } catch (error) {
                     console.error('Error en la solicitud:', error);
@@ -89,12 +89,12 @@ function EmployeeView() {
     const loadSolicitudesExitosas = () => loadSolicitudesHelper('employee/solicitudes/success', 'Debes iniciar sesión para ver las solicitudes exitosas.');
     const loadSolicitudesFallidas = () => loadSolicitudesHelper('employee/solicitudes/failure', 'Debes iniciar sesión para ver las solicitudes fallidas.');
     const loadSolicitudesDelDia = () => loadSolicitudesHelper('employee/solicitudes/today/', 'Debes iniciar sesión para ver las solicitudes de hoy.');
-    
+
     const handlePublicaciones = () => handleNavigation('/PostList', 'Debes iniciar sesión para ver las publicaciones.');
     const handleEmpleados = () => handleNavigation('/adminview/employees', 'Debes iniciar sesión para ver los empleados.');
     const handleSucursales = () => handleNavigation('/adminview/sucursales', 'Debes iniciar sesión para ver las sucursales.');
     const handleUsuarios = () => handleNavigation('/adminview/Users', 'Debes iniciar sesión para ver a los usuarios.');
-    const handleVentas = () => handleNavigation('/adminview/Ventas', 'Debes iniciar sesión para ver las ventas.');    
+    const handleVentas = () => handleNavigation('/adminview/Ventas', 'Debes iniciar sesión para ver las ventas.');
 
     const handleCloseError = () => {
         setOpenError(false);
@@ -156,11 +156,14 @@ function EmployeeView() {
                                     <td>{formatFechaSolicitud(solicitud.fecha_del_intercambio)}</td>
                                     <td>
                                         {solicitud.publicacion_a_intercambiar.usuario_propietario.email} - {solicitud.publicacion_deseada.usuario_propietario.email}
-
                                     </td>
-                                    <Link href={`/tradeCheck/${solicitud.id}`}>
-                                        <button className="employee-gestionar-button employee-gestionar-button-margin">Gestionar Trueque</button>
-                                    </Link>
+                                    {solicitud.estado === "PENDIENTE" && (
+
+                                        <Link href={`/tradeCheck/${solicitud.id}`}>
+                                            <button className="employee-gestionar-button employee-gestionar-button-margin">Gestionar Trueque</button>
+                                        </Link>
+
+                                    )}
                                 </tr>
                             ))}
                         </tbody>

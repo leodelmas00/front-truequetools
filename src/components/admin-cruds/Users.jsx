@@ -1,45 +1,76 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { baseURL, getAllUsers } from "../../api/trueque.api";
-import { Link } from 'wouter'
+import { baseURL } from "../../api/trueque.api";
+import { Link } from 'wouter';
 import '../../styles/Users.css';
 
 export default function Users() {
     const [users, setUsers] = useState([]);
-    const [Block, setBlock] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
     const [searchPerformed, setSearchPerformed] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
+    const [query, setQuery] = useState('');
 
     useEffect(() => {
         async function loadUsers() {
-            //const res = await getAllUsers();
-            //console.log(res.data);
-            //setUsers(res.data);
+            try {
+                const response = await axios.get(`${baseURL}adminview/search-users/`, {
+                    params: { q: query }
+                });
+                if (query) {
+                    setSearchResults(response.data);
+                } else {
+                    setUsers(response.data);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
         loadUsers();
-    }, []);
+    }, [query]);
 
-    const handleToggleBlock = () => {
-        setBlock(prevBlock => !prevBlock);
+    const handleSearchChange = (e) => {
+        setQuery(e.target.value);
     };
 
     const handleSearchSubmit = async (e) => {
         e.preventDefault();
         setSearchPerformed(true);
         try {
-            const token = localStorage.getItem('token')
-            const response = await axios.get(`${baseURL}search-user/`, {
-            //    headers: {
-            //        Authorization: `Token ${token}`
-            //    },
-            //   params: { q: query }
+            const response = await axios.get(`${baseURL}adminview/search-users/`, {
+                params: { q: query }
             });
             setSearchResults(response.data);
-            console.log("DATA:", searchResults)
+            console.log(response.data);
         } catch (error) {
             console.error('Error during search:', error);
         }
     };
+
+    const handleToggleBlock = async () => {
+        if (!selectedUser) return;
+        try {
+            await axios.patch(`${baseURL}adminview/toggle-block/${selectedUser.id}/`, {
+                bloqueado: !selectedUser.bloqueado
+            });
+            // Recargar usuarios después de cambiar el estado de bloqueo
+            const response = await axios.get(`${baseURL}adminview/search-users/`, {
+                params: { q: query }
+            });
+            if (query) {
+                setSearchResults(response.data);
+            } else {
+                setUsers(response.data);
+            }
+            // Actualizar usuario seleccionado
+            const updatedUser = response.data.find(user => user.id === selectedUser.id);
+            setSelectedUser(updatedUser);
+        } catch (error) {
+            console.error('Error toggling block status:', error);
+        }
+    };
+
+    const usersToDisplay = searchPerformed ? searchResults : users;
 
     return (
         <div className="user-container">
@@ -47,30 +78,35 @@ export default function Users() {
                 <h1 className="user-title">Lista de usuarios</h1>
                 <hr />
                 <div className="user-search">
-                    <input placeholder="Ingresa el correo del usuario" className="user-search-input"/>
-                    <button onClick={handleSearchSubmit}> Buscar </button>
+                    <input
+                        className='user-search-input'
+                        placeholder="Ingresa el correo del usuario"
+                        type="text"
+                        value={query}
+                        onChange={handleSearchChange}
+                    />
+                    <button onClick={handleSearchSubmit}>Buscar</button>
                 </div>
                 <div className="user-box-content">
-                    Aca deberian aparecer todos los usuarios pero me tira error 401.  Diria que gero tiene que hacer algo en el Back, pero no estoy seguro.
-                    {/* 
-                    {users.map(user => (
-                        <div key={user.id} className='user-select-box'>
-                            <Link key={user.id} to={`/adminview/UserDetail/${user.id}` } className='user-link'> {user.email} </Link>
+                    {usersToDisplay.map(user => (
+                        <div
+                            key={user.id}
+                            className={`user-select-box ${selectedUser?.id === user.id ? 'selected' : ''}`}
+                            onClick={() => setSelectedUser(user)}
+                        >
+                            <span>{user.email} - {user.bloqueado ? 'Bloqueado' : 'Desbloqueado'}</span>
                         </div>
                     ))}
-                    */}
                 </div>
                 <div className="user-buttons">
-                    <Link to="/EmployeeView" >
-                        <button >Volver</button>
+                    <Link to="/EmployeeView">
+                        <button>Volver</button>
                     </Link>
-                    {Block ? (
+                    {selectedUser && (
                         <div>
-                            <button onClick={handleToggleBlock}> Desbloquear usuario </button>
-                        </div>
-                    ) : (
-                        <div>
-                            <button onClick={handleToggleBlock}> Bloquear usuario </button>
+                            <button onClick={handleToggleBlock}>
+                                {selectedUser.bloqueado ? 'Desbloquear usuario' : 'Bloquear usuario'}
+                            </button>
                         </div>
                     )}
                 </div>

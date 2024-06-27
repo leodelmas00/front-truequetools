@@ -1,21 +1,53 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { getAllSucursales } from "../../api/trueque.api";
+import { baseURL } from "../../api/trueque.api";
 import { Link } from "wouter";
 import '../../styles/Sucursales.css';
 
-export default function Employees() {
+export default function Sucursales() {
     const [sucursales, setSucursales] = useState([]);
-    const [redirect, setRedirect] = useState(null);
+    const [selectedSucursal, setSelectedSucursal] = useState(null);
+    const [searchPerformed, setSearchPerformed] = useState(false);
+    const [searchResults, setSearchResults] = useState([]);
+    const [query, setQuery] = useState('');
 
     useEffect(() => {
         async function loadSucursales() {
-            const res = await getAllSucursales();
-            console.log(res.data);
-            setSucursales(res.data);
+            try {
+                const response = await axios.get(`${baseURL}adminview/sucursales/`, {
+                    params: { q: query }
+                });
+                if (query) {
+                    setSearchResults(response.data);
+                } else {
+                    setSucursales(response.data);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
         loadSucursales();
-    }, []);
+    }, [query]);
+
+    const handleSearchChange = (e) => {
+        setQuery(e.target.value);
+    };
+
+    const handleSearchSubmit = async (e) => {
+        e.preventDefault();
+        setSearchPerformed(true);
+        try {
+            const response = await axios.get(`${baseURL}adminview/sucursales/`, {
+                params: { q: query }
+            });
+            setSearchResults(response.data);
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error during search:', error);
+        }
+    };
+
+    const sucursalesToDisplay = searchPerformed ? searchResults : sucursales;
 
     return (
         <div className="sucursales-container">
@@ -23,11 +55,17 @@ export default function Employees() {
                 <h1 className="sucursales-title">Lista de Sucursales</h1>
                 <hr />
                 <div className="sucursales-search">
-                    <input placeholder="Ingresa la sucursal" className="sucursales-search-input"/>
-                    <button> Buscar </button>
+                    <input
+                        className="sucursales-search-input"
+                        placeholder="Ingresa el nombre de la sucursal"
+                        type="text"
+                        value={query}
+                        onChange={handleSearchChange}
+                    />
+                    <button onClick={handleSearchSubmit}>Buscar</button>
                 </div>
                 <div className="sucursales-box-content">
-                    {sucursales.map(sucursal => (
+                    {sucursalesToDisplay.map(sucursal => (
                         <div key={sucursal.id} className='sucursales-select-box'>
                             {sucursal.nombre} - {sucursal.direccion}
                             <Link key={sucursal.id} to={`/SucursalEdit/${sucursal.id}`}>
@@ -38,7 +76,7 @@ export default function Employees() {
                 </div>
                 <div className="sucursales-buttons">
                     <Link to="/EmployeeView" >
-                            <button>Volver</button>
+                        <button>Volver</button>
                     </Link>
                     <Link to="/adminview/sucursales/add" >
                         <button>Agregar sucursal</button>

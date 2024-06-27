@@ -149,7 +149,8 @@ function SignIn() {
                                     <h2 className="title-signin">
                                         {post.titulo}
                                     </h2>
-                                    {post.imagen && <img src={`http://127.0.0.1:8000/${post.imagen}`} alt="Imagen del post" className="post-image" />}
+                                    {console.log(post.imagen)}
+                                    {post.imagen && <img src={`http://127.0.0.1:8000/${post.imagen}/`} alt="Imagen del post" className="post-image" />}
                                     <p>{Object.keys(post.comentarios).length} comentario(s)</p>
                                 </div>
                             </Link>
@@ -179,19 +180,19 @@ function SignIn() {
             <div className={`menu ${menuOpen ? 'open' : ''}`} style={{ overflow: 'auto' }}>
                 <div className='menuItems'>
                     <div className="profile-box">
-                        <img src={userNoProfilePicture} alt='Foto de perfil' className="profile-picture"/>
+                        <img src={userNoProfilePicture} alt='Foto de perfil' className="profile-picture" />
                         {/* Cuando user ya tenga imagen entonces descomentar este codigo
-                         <img src={user.imagen} className="profile-picture"/> */} 
+                         <img src={user.imagen} className="profile-picture"/> */}
                     </div>
                     <p className='usuario'> {user.username} </p>
                     <p className='puntos'> <MdOutlineStarBorderPurple500 /> {user.reputacion} pts</p>
                     <hr className='separador'></hr>
                     <div className='botonaso'>
-                    <Link to="/EditProfile" className="editarPerfil-link">
-                        <button className="editarPerfil-button">
-                            <FaIcons.FaUserEdit /> | Editar perfil
-                        </button>
-                    </Link>
+                        <Link to="/EditProfile" className="editarPerfil-link">
+                            <button className="editarPerfil-button">
+                                <FaIcons.FaUserEdit /> | Editar perfil
+                            </button>
+                        </Link>
                     </div>
                     <Link to="/Historial" className="historial-link">
                         <button className="historial-button">

@@ -1,52 +1,68 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, useRoute, Link } from "wouter";
+import { useRoute, Link } from "wouter";
 import { baseURL } from '../../api/trueque.api.js'
 import '../../styles/SucursalEdit.css';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 export default function SucursalEdit() {
-    const [match, params] = useRoute('/adminview/SucursalEdit/:sucursalId');
+    const [match, params] = useRoute('/SucursalEdit/:sucursalId');
     const [sucursal, setSucursal] = useState(null);
-    const [showForm, setShowForm] = useState(false);
+    const [formData, setFormData] = useState({
+        nombre: '',
+        direccion: ''
+    });
     const [openDialog, setOpenDialog] = useState(false);
 
     useEffect(() => {
         const fetchSucursal = async () => {
             try {
-                if (params && params.sucursalId) { // Verifica si params es null o undefined y si params.sucursalId existe
+                if (params && params.sucursalId) {
                     const sucursalResponse = await axios.get(`${baseURL}sucursales/${params.sucursalId}/`);
                     setSucursal(sucursalResponse.data);
-                    console.log(sucursalResponse.data);
+                    setFormData({
+                        nombre: sucursalResponse.data.nombre,
+                        direccion: sucursalResponse.data.direccion
+                    });
                 }
             } catch (error) {
                 console.error('Error:', error);
             }
         };
         fetchSucursal();
-    }, [params]);
+    }, []);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+    const handleSaveChanges = async () => {
+        try {
+            const response = await axios.patch(`${baseURL}sucursales/${params.sucursalId}/`, formData);
+            if (response.status === 200) {
+                alert('Sucursal actualizada exitosamente');
+                setSucursal(response.data);
+            }
+        } catch (error) {
+            console.error('Error al actualizar sucursal:', error);
+        }
+    };
 
     const handleDeleteSucursal = async () => {
         try {
-            const token = localStorage.getItem('token');
-            const response = await axios.delete(`${baseURL}sucursales/${params.sucursalId}`, {
-            //    headers: {
-            //        Authorization: `Token ${token}`,
-            //    }
-            });
+            const response = await axios.delete(`${baseURL}sucursales/${params.sucursalId}/`);
             if (response.status === 204) {
-                // Aquí puedes realizar cualquier acción adicional después de eliminar la sucursal
-                console.log('Sucursal eliminada exitosamente');
+                alert('Sucursal eliminada exitosamente');
+                window.location.href = '/adminview/sucursales';
             }
         } catch (error) {
             console.log(error);
             console.error('Error:', error);
-            // Aquí puedes manejar los errores de acuerdo a tus necesidades
         }
-    };
-
-    const handleToggleForm = () => {
-        setShowForm(prevShowForm => !prevShowForm);
     };
 
     const handleOpenDialog = () => {
@@ -56,42 +72,46 @@ export default function SucursalEdit() {
     const handleCloseDialog = () => {
         setOpenDialog(false);
     };
-    
 
     return (
         <div className="sucursalEdit-container">
             <div className="sucursalEdit-box">
                 <h1 className="sucursalEdit-title">Editar sucursal</h1>
-                <hr/>
+                <hr />
                 {sucursal ? (
-                    <div className="sucursalEdit-info">
-                        <h3> Nombre </h3>
-                        <hr/>
-                        <p> {sucursal.nombre} </p>
-                        <h3> Direccion </h3>
-                        <hr/> 
-                        <p> {sucursal.direccion} </p>
-                        {/* Agrega más detalles de la sucursal según sea necesario */}
+                    <div className="sucursalEdit-form">
+                        <div>
+                            <label>Nombre</label>
+                            <input
+                                type="text"
+                                name="nombre"
+                                value={formData.nombre}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div>
+                            <label>Dirección</label>
+                            <input
+                                type="text"
+                                name="direccion"
+                                value={formData.direccion}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <button onClick={handleSaveChanges}>Guardar cambios</button>
                     </div>
                 ) : (
-                    /*<p>Cargando...</p>*/
-                    <p>
-                        Falta implementar en el back para que
-                        <br/>
-                        muestre info de la sucursal y poder borrarla.
-                        <br/>
-                        De resto estaria todo (creo). -mapache
-                    </p>
+                    <p>Cargando...</p>
                 )}
                 <div className="sucursalEdit-buttons">
                     <Link to="/adminview/sucursales">
-                        <button> Volver </button>
+                        <button>Volver</button>
                     </Link>
-                    <button onClick={handleOpenDialog}> Dar de baja </button>
+                    <button onClick={handleOpenDialog}>Dar de baja</button>
                 </div>
             </div>
 
-            <Dialog open={openDialog} onClose={handleCloseDialog} >
+            <Dialog open={openDialog} onClose={handleCloseDialog}>
                 <DialogTitle>Confirmar Acción</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
@@ -109,5 +129,4 @@ export default function SucursalEdit() {
             </Dialog>
         </div>
     );
-
 }

@@ -3,11 +3,11 @@ import { useParams } from 'wouter';
 import axios from 'axios';
 import UserPosts from './UserPosts';
 import '../styles/SelectProduct.css';
-import { baseURL } from '../api/trueque.api';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { baseURL } from '../api/trueque.api';
 
 function Intercambiar() {
     const { id: publicacionDeseadaId } = useParams();
@@ -51,7 +51,6 @@ function Intercambiar() {
 
             if (response.status === 201 && response.data) {
                 setIntercambioSuccess(true);
-                console.log(response.data.fecha_del_intercambio)
                 setOpenSuccess(true);
                 setTimeout(() => {
                     window.location.href = '/SignIn';
@@ -86,25 +85,30 @@ function Intercambiar() {
 
     return (
         <div className="intercambiar-container">
-            <UserPosts className="misProductos" onPostSelect={handlePostSelect} isIntercambioMode={true} />
-            {selectedPost && (
-                <div className="selected-box">
-                    <h2 className="selected-title">Has seleccionado: {selectedPost.titulo}</h2>
-                    <TextField
-                        label="Fecha y hora de intercambio"
-                        type="datetime-local"
-                        value={horario}
-                        onChange={(e) => setHorario(e.target.value)}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        className="input-horario"
-                    />
-                    <Button onClick={handleIntercambioSubmit} className='intercambio-button' variant="contained" color="primary" >
-                        Solicitar Intercambio
-                    </Button>
-                </div>
-            )}
+            <div className="user-posts-container">
+                <UserPosts className="misProductos" onPostSelect={handlePostSelect} isIntercambioMode={true} />
+            </div>
+            <div className="selected-box">
+                {selectedPost && (
+                    <>
+                        <h2 className="selected-title">Has seleccionado: {selectedPost.titulo}</h2>
+                        <TextField
+                            label="Fecha y hora de intercambio"
+                            type="datetime-local"
+                            value={horario}
+                            onChange={(e) => setHorario(e.target.value)}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            className="input-horario"
+                        />
+                        <Button onClick={handleIntercambioSubmit} className='intercambio-button' variant="contained" color="primary" >
+                            Solicitar Intercambio
+                        </Button>
+                    </>
+                )}
+            </div>
+
             <Snackbar open={openSuccess} autoHideDuration={6000} onClose={handleCloseSuccess}>
                 <MuiAlert elevation={6} variant="filled" onClose={handleCloseSuccess} severity="success">
                     La solicitud de intercambio se envió correctamente.
@@ -120,3 +124,4 @@ function Intercambiar() {
 }
 
 export default Intercambiar;
+

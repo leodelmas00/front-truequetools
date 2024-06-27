@@ -4,14 +4,37 @@
     min-height: 100vh;
     text-align: center;
     overflow: hidden;
+    align-items: flex-start;
+
+}
+
+.user-posts-container {
+    flex: 1;
+    /* Ocupa todo el espacio disponible */
+    margin-right: 20px;
+    /* Espacio entre UserPosts y selected-box */
+}
+
+.misProductosContainer {
+    flex: 1;
 }
 
 .selected-box {
     position: absolute;
     bottom: 5rem;
     left: 50%;
-    transform: translateX(-50%);;
+    transform: translateX(-50%);
+    margin-left: 20px;
+    /* Margen izquierdo para separación */
+    flex: 1;
     align-items: center;
+}
+
+.input-horario {
+    width: 100%;
+    /* Ajusta el ancho del input */
+    margin-top: 10px;
+    /* Espacio arriba del input */
 }
 
 .selected-title {
