@@ -43,7 +43,7 @@ function PostSolicitudes() {
     const handleAceptar = async (solicitudId) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.patch(`${baseURL}solicitudes/${solicitudId}/`, { estado: 'PENDIENTE' }, {
+            await axios.patch(`${baseURL}mis-solicitudes/${solicitudId}/`, { estado: 'PENDIENTE' }, {
                 headers: {
                     Authorization: `Token ${token}`,
                 }
@@ -64,7 +64,7 @@ function PostSolicitudes() {
     const handleRechazar = async (solicitudId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.delete(`${baseURL}solicitudes/${solicitudId}/`, {
+            const response = await axios.delete(`${baseURL}mis-solicitudes/${solicitudId}/`, {
                 headers: {
                     Authorization: `Token ${token}`,
                 }
