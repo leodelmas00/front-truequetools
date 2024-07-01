@@ -681,7 +681,8 @@ a:hover {
 
 .notifications-container {
     position: absolute;
-
+    max-height: 400px;
+    overflow-y: auto;
     left: 47%;
     top: 100%;
     width: 34em;
