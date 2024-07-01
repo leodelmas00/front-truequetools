@@ -9,10 +9,11 @@ import { baseURL, getAllPosts } from '../api/trueque.api';
 import * as FaIcons from "react-icons/fa";
 import { formatFecha } from '../utils';
 import { MdOutlineStarBorderPurple500 } from "react-icons/md";
-
+import { IoIosNotifications } from "react-icons/io";
+import { FaEye } from "react-icons/fa";
 
 function SignIn() {
-    const [menuOpen, setMenuOpen] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(true);
     const [isLoggedIn, setIsLoggedIn] = useState(true);
     const postsContainerRef = useRef(null);
     const [isStaff, setIsStaff] = useState(false);
@@ -22,10 +23,14 @@ function SignIn() {
     const [redirect, setRedirect] = useState(null);
     const [searchPerformed, setSearchPerformed] = useState(false);
     const [user, setUser] = useState({});
+    const [showNotifications, setShowNotifications] = useState(false);
+    const [notificationCount, setNotificationCount] = useState(0);
+    const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
         fetchUserInfo();
         loadPosts();
+        fetchNotifications(); // Cargar las notificaciones al inicio
     }, []);
 
     const fetchUserInfo = async () => {
@@ -74,7 +79,6 @@ function SignIn() {
         } catch (error) {
             window.location.href = '/Login';
         }
-
     };
 
     const handlePostClick = (id) => {
@@ -103,35 +107,104 @@ function SignIn() {
         }
     };
 
+    const handleNotificationsClick = () => {
+        setShowNotifications(!showNotifications);
+    };
+
+    const fetchNotifications = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.get(`${baseURL}mis-notificaciones/`, {
+                headers: {
+                    Authorization: `Token ${token}`,
+                }
+            });
+            setNotifications(response.data);
+            setNotificationCount(response.data.length); // Actualizar el contador de notificaciones
+        } catch (error) {
+            console.error('Error fetching notifications:', error);
+        }
+    };
+
+    const handleReadNotification = async (notificationId) => {
+        try {
+            const token = localStorage.getItem('token');
+            await axios.patch(`${baseURL}marcar-leida/${notificationId}/`, { leida: true }, {
+                headers: {
+                    Authorization: `Token ${token}`,
+                }
+            });
+
+            // Actualizar localmente el estado de la notificación marcada como leída
+            const updatedNotifications = notifications.map(notification => {
+                if (notification.id === notificationId) {
+                    return { ...notification, leida: true };
+                }
+                return notification;
+            });
+
+            setNotifications(updatedNotifications);
+
+            // Actualizar el contador de notificaciones
+            setNotificationCount(prevCount => prevCount - 1);
+        } catch (error) {
+            console.error('Error marking notification as read:', error);
+        }
+    };
+
     if (redirect) {
         return <Redirect to={redirect} />;
     }
 
     return (
         <div className="backgroundHome">
-
             <div className="navigation-bar">
                 <FaIcons.FaBars className="menu-button" onClick={handleMenuToggle} />
                 <div className='search-box'>
                     <input
                         className='search-input'
-                        placeholder="¿Que estas buscando?"
+                        placeholder="¿Qué estás buscando?"
                         type="text"
                         value={query}
                         onChange={handleSearchChange}
                     />
                     <button className='search-button' onClick={handleSearchSubmit}>Buscar</button>
                 </div>
-                <Link to="/Post" className="post-link"> <button className="publicar-button">Publicar producto</button> </Link>
-                <a href="/" onClick={handleLogoClick}> <img src={logoImg} alt="Logo" className="logo" />
+                <div>
+                    <Link to="/Post" className="post-link">
+                        <button className="publicar-button">Publicar producto</button>
+                    </Link>
+                    <button className="notification-bn" onClick={handleNotificationsClick}>
+                        <IoIosNotifications size={30} />
+                        {notificationCount > 0 && <span className="notification-count">{notificationCount}</span>}
+                    </button>
+                </div>
+
+                <div className='notification-container'>
+                    {showNotifications && (
+                        <div className="notifications-container">
+                            {/* Contenido del contenedor de notificaciones */}
+                            {notifications.map(notification => (
+                                <div key={notification.id} className={`notification-item ${notification.leida ? 'read' : 'unread'}`}>
+                                    <p>{notification.contenido}</p>
+                                    <button className='read-btn' onClick={() => handleReadNotification(notification.id)}>
+                                        <FaEye />
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                <a href="/" onClick={handleLogoClick}>
+                    <img src={logoImg} alt="Logo" className="logo" />
                 </a>
             </div>
 
             <br />
             <div>
-                <h1 className={`title-most-searched ${menuOpen ? 'slide-right' : ''}`}>Mas destacados</h1>
+                <h1> . </h1>
             </div>
-
             <div className='separate-div'></div>
 
             <div className={`posts-container ${menuOpen ? 'shifted' : ''}`} ref={postsContainerRef}>
@@ -176,13 +249,10 @@ function SignIn() {
                 )}
             </div>
 
-
             <div className={`menu ${menuOpen ? 'open' : ''}`} style={{ overflow: 'auto' }}>
                 <div className='menuItems'>
                     <div className="profile-box">
                         <img src={userNoProfilePicture} alt='Foto de perfil' className="profile-picture" />
-                        {/* Cuando user ya tenga imagen entonces descomentar este codigo
-                         <img src={user.imagen} className="profile-picture"/> */}
                     </div>
                     <p className='usuario'> {user.username} </p>
                     <p className='puntos'> <MdOutlineStarBorderPurple500 /> {user.reputacion} pts</p>
@@ -222,6 +292,5 @@ function SignIn() {
         </div>
     );
 }
-
 
 export default SignIn;

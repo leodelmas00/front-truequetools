@@ -4,6 +4,9 @@ import { Link, Redirect } from "wouter";
 import { getMyPosts } from '../api/trueque.api';
 import axios from 'axios';
 import { formatFecha } from '../utils';
+import * as FaIcons from "react-icons/fa";
+import * as MDIcons from "react-icons/md";
+
 
 function ActivePosts({ onPostSelect, isIntercambioMode }) {
     const [estado, setEstado] = useState(null);
@@ -69,6 +72,7 @@ function ActivePosts({ onPostSelect, isIntercambioMode }) {
                                         <h2 className="title-signin">{post.titulo}</h2>
                                         {post.imagen && <img src={`http://127.0.0.1:8000/${post.imagen}`} alt="Imagen del post" className="post-image" />}
                                         <p>Este producto es categoria {post.categoria}</p>
+                                        
                                     </>
                                 ) : (
                                     <Link to={`/post/${post.id}`}>
@@ -77,6 +81,7 @@ function ActivePosts({ onPostSelect, isIntercambioMode }) {
                                         <h2 className="title-signin">{post.titulo}</h2>
                                         {post.imagen && <img src={`http://127.0.0.1:8000/${post.imagen}`} alt="Imagen del post" className="post-image" />}
                                         <p>Este producto es categoria {post.categoria}</p>
+                                        
                                     </Link>
                                 )}
                             </div>

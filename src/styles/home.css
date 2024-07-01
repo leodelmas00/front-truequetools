@@ -650,3 +650,69 @@ a:hover {
         opacity: 1;
     }
 }
+
+.notification-bn{
+    position: fixed;
+    top: 4vh;
+    left: 72%;
+    z-index: 9999;
+    width: auto;
+    height: 2.2rem;
+    border-radius: 15px;
+    color: #f2f0e4;
+    background-color: #bf4c41;
+    border-color: #f2ada7;
+    font-size: large;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.3s ease;
+    
+}
+
+.notification-bn:hover{
+    background-color: #f2f0e4;
+    color: #bf4c41;
+    transition: color 0.2s;
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
+}
+
+.notifications-container{
+    position: absolute;
+    left: 47%;
+    top: 100%;
+    width: 34em;
+    overflow-y: auto;
+    overflow-x:hidden;
+    background-color: white;
+    padding: 1%;
+    z-index: 100;
+    border-radius: 15px;
+    background-color: #f2ada7;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.notification-item {
+    border: white;
+    background-color: #f2f0e4;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    
+    
+}
+
+.read-btn {
+    padding: 1% 3%;
+    border-radius: 15%;
+    border: none;
+    background-color: #bf4c41; /* Color base */
+    cursor: pointer;
+}
+
+.read-btn.read {
+    background-color: #4caf50; /* Color verde cuando la notificación está leída */
+}
+

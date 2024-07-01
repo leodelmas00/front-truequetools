@@ -9,7 +9,8 @@ import { formatFecha } from '../utils';
 import * as FaIcons from "react-icons/fa";
 import * as MDIcons from "react-icons/md";
 import { MdOutlineStarBorderPurple500 } from "react-icons/md";
-
+import { FaRegTrashAlt } from "react-icons/fa";
+import { FaMoneyCheck } from "react-icons/fa";
 
 function PostDetail() {
     const [post, setPost] = useState(null);
@@ -20,7 +21,6 @@ function PostDetail() {
     const [comments, setComments] = useState([]);
     const [userInfo, setUserInfo] = useState(null);
     const [location, setLocation] = useLocation();
-
     const [sucursal, setSucursal] = useState(null);
 
     useEffect(() => {
@@ -36,14 +36,13 @@ function PostDetail() {
                 setUserInfo(userInfoResponse.data);
                 setPost(postResponse.data);
 
-                console.log(postResponse.data)
                 const sucursalResponse = await axios.get(`${baseURL}sucursal/${postResponse.data.sucursal_destino.id}/`, {
                     headers: {
                         Authorization: `Token ${token}`,
                     }
                 });
                 setSucursal(sucursalResponse.data);
-                console.log(sucursalResponse.data)
+
                 const commentsResponse = await axios.get(`${baseURL}post/${params.postId}/comments_list/`, {
                     headers: {
                         Authorization: `Token ${token}`,
@@ -110,9 +109,21 @@ function PostDetail() {
         setLocation(`/SelectProduct/${postId}`);
     };
 
+    const handleDelete = () => {
+        if (window.confirm("¿Estás seguro de que quieres eliminar esta publicación?")) {
+            // Aquí colocas la lógica para eliminar la publicación
+            console.log("Publicación eliminada");
+        } else {
+            // El usuario canceló la eliminación
+            console.log("Cancelaste la eliminación");
+        }
+    };
+
     if (loading) {
         return <div>Cargando...</div>;
     }
+
+
 
     return (
         <div className="background-image-published">
@@ -127,9 +138,13 @@ function PostDetail() {
                     {post.imagen && <img src={`http://127.0.0.1:8000${post.imagen}`} alt="Imagen del post" className='imagen-preview-detail' />}
                     <h5>Este producto pertenece a la categoria {post.categoria}</h5>
                     {userInfo && userInfo.id === post.usuario_propietario.id && (
-                        <Link to={`/Post/${params.postId}/solicitudes`}>
-                            <button className="solicitudes-btn post-card-btn">Ver solicitudes recibidas<FaIcons.FaBell style={{ marginLeft: '10px' }}></FaIcons.FaBell></button>
-                        </Link>
+                        <div>
+                            <Link to={`/Post/${params.postId}/solicitudes`}>
+                                <button className="solicitudes-btn post-card-btn">Ver solicitudes recibidas<FaIcons.FaBell style={{ marginLeft: '10px' }}></FaIcons.FaBell></button>
+                            </Link>
+                            <button className="highlight-btn " >Destacar <FaMoneyCheck /></button>
+                            <button className="delete-btn" onClick={handleDelete}><FaRegTrashAlt /> Eliminar</button>
+                        </div>
                     )}
                 </div>
                 <div className='botones'>

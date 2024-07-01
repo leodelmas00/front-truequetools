@@ -28,32 +28,7 @@
     /* Espacio entre la imagen y el contenido siguiente */
 }
 
-.solicitudes-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 999;
-    /* Asegura que el botón esté por encima de otros elementos */
-    background-color: #bf4c41;
-    /* Rosa pastel */
-    color: #fff;
-    /* Texto blanco */
-    border: none;
-    padding: 10px 20px;
-    /* Ajusta el tamaño del botón */
-    font-size: 16px;
-    /* Tamaño de fuente */
-    border-radius: 10px;
-    /* Bordes redondeados */
-    cursor: pointer;
-    /* Cambia el cursor al pasar por encima */
-    /* Agrega estilos adicionales según sea necesario */
-}
 
-.solicitudes-btn:hover {
-    background-color: #c56d65;
-    /* Cambia el color de fondo al pasar el mouse */
-}
 
 .enlace-clickeable {
     color: #4b0082;
