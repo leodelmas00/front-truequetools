@@ -7,7 +7,9 @@ import '../styles/PostDetailStyle.css';
 import { formatFecha } from '../utils';
 import * as FaIcons from "react-icons/fa";
 import * as MDIcons from "react-icons/md";
+import { FaRegTrashAlt } from "react-icons/fa";
 import { MdOutlineStarBorderPurple500 } from "react-icons/md";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 
 function PostDetail() {
@@ -18,7 +20,50 @@ function PostDetail() {
     const [comments, setComments] = useState([]);
     const [openError, setOpenError] = useState('')
     const [userInfo, setUserInfo] = useState('')
+    const [openDialog, setOpenDialog] = useState(false);
 
+    /*
+    const handleDelete = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            await axios.delete(
+                `${baseURL}publicaciones/${params.postId}/`,
+                {
+                    headers: {
+                        Authorization: `Token ${token}`,
+                    }
+                }
+            );
+            console.log("Publicación eliminada");
+        } catch (error) {
+            console.log("Error", error.status)
+        }
+    }
+    */
+
+    const handleDelete = async () => {
+        try {
+            const userEmail = localStorage.getItem('userEmail');
+            await axios.delete(`${baseURL}adminview/post/${params.postId}/`, {
+                    headers: {
+                        'X-User-Email': userEmail
+                    }
+                }
+            );
+            console.log("Publicación eliminada");
+            window.alert("La publicacion fue eliminada con exito!")
+            setTimeout(() => {
+                window.location.href = '/PostList';
+            }, 1000);
+        } catch (error) {
+            console.error('Error al querer borrar publicacion:', error);
+            setErrorMessage('Error al querer borrar publicacion.');
+            setOpenError(true);
+            setTimeout(() => {
+                window.location.href = '/Login-worker';
+            }, 1000);
+        }
+    }
 
     useEffect(() => {
         const fetchPostAndComments = async () => {
@@ -95,9 +140,18 @@ function PostDetail() {
     }
     console.log('userInfo:', userInfo);
 
+    const handleOpenDialog = () => {
+        setOpenDialog(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
+
     return (
         <div className="background-image-published">
             <div className="post-container-detail">
+                <button className="delete-btn" onClick={handleOpenDialog}><FaRegTrashAlt /> Eliminar</button>
                 <div className="post-card">
                     <p className="post-date">{formatFecha(post.fecha)}</p>
                     <hr />
@@ -126,6 +180,24 @@ function PostDetail() {
                     />
                 </div>
             </div>
+
+            <Dialog open={openDialog} onClose={handleCloseDialog}>
+                <DialogTitle>Confirmar Acción</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        ¿Estás seguro de que quieres eliminar esta publicación?"
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDialog} color="primary">
+                        Cancelar
+                    </Button>
+                    <Button onClick={handleDelete} color="primary" autoFocus>
+                        Aceptar
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
         </div>
     );
 }
