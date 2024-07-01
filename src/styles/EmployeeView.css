@@ -76,11 +76,12 @@
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.employee-gestionar-button {
-    background-color: #f2ada7;
+.nav-button {
+    background-color: #bebebe;
     color: white;
-    border: none;
-    padding: 13px 24px;
+    border-width: 1px;
+    border-color: black;
+    padding: 5px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -91,15 +92,13 @@
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.employee-gestionar-button:hover {
-    background-color: #775552;
+.nav-button:hover {
+    background-color: #7a7a7a;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-.employee-gestionar-button-margin {
+.nav-button {
     margin-left: 20px;
-    /* Ajusta este valor según el espacio que desees */
-
 }
 
 .employee-panel table {

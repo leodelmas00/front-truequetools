@@ -3,6 +3,7 @@ import axios from "axios";
 import { baseURL } from "../../api/trueque.api";
 import { Link } from 'wouter';
 import '../../styles/Users.css';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 export default function Users() {
     const [users, setUsers] = useState([]);
@@ -10,6 +11,7 @@ export default function Users() {
     const [searchPerformed, setSearchPerformed] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
     const [query, setQuery] = useState('');
+    const [openDialog, setOpenDialog] = useState(false);
 
     useEffect(() => {
         async function loadUsers() {
@@ -66,9 +68,22 @@ export default function Users() {
             // Actualizar usuario seleccionado
             const updatedUser = response.data.find(user => user.id === selectedUser.id);
             setSelectedUser(updatedUser);
+            window.location.href = '/adminview/users';
         } catch (error) {
             console.error('Error toggling block status:', error);
         }
+    };
+
+    const handleUserClick = (user) => {
+        setSelectedUser(prevSelectedUser => (prevSelectedUser?.id === user.id ? null : user));
+    };
+
+    const handleOpenDialog = () => {
+        setOpenDialog(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
     };
 
     const usersToDisplay = searchPerformed ? searchResults : users;
@@ -93,9 +108,16 @@ export default function Users() {
                         <div
                             key={user.id}
                             className={`user-select-box ${selectedUser?.id === user.id ? 'selected' : ''}`}
-                            onClick={() => setSelectedUser(user)}
+                            onClick={() => handleUserClick(user)}
                         >
-                            <span>{user.email} - {user.bloqueado ? 'Bloqueado' : 'Desbloqueado'}</span>
+                            <div className="user-box-mail">
+                                {user.email}
+                            </div>
+                            <div className="user-box-isBlocked">
+                                <span style={{ color: user.bloqueado ? 'red' : '#1256a3' }}>
+                                    {user.bloqueado ? ' Bloqueado' : ' Desbloqueado'}
+                                </span>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -105,9 +127,27 @@ export default function Users() {
                     </Link>
                     {selectedUser && (
                         <div>
-                            <button onClick={handleToggleBlock}>
+                            <button className='user-buttons-block' onClick={handleOpenDialog}>
                                 {selectedUser.bloqueado ? 'Desbloquear usuario' : 'Bloquear usuario'}
                             </button>
+
+                            <Dialog open={openDialog} onClose={handleCloseDialog}>
+                                <DialogTitle>Confirmar Acción</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText>
+                                        ¿Estás seguro que quieres {selectedUser.bloqueado ? 'desbloquear' : 'bloquear'} a este usuario?
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={handleCloseDialog} color="primary">
+                                        Cancelar
+                                    </Button>
+                                    <Button onClick={handleToggleBlock} color="primary" autoFocus>
+                                        Aceptar
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
+
                         </div>
                     )}
                 </div>

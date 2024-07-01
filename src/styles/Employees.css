@@ -54,6 +54,7 @@
     background-color: #dfdfdf;
     border: 1px solid black;
     margin-top: 2px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .employee-link{
@@ -62,7 +63,7 @@
     height: 100%;
 }
 
-.employee-link:hover{
+.employee-select-box:hover{
     background-color: #b7c8ff;
     transition: transform 0.1s ease;
 }

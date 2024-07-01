@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { useRoute } from "wouter";
+import { useRoute, Link } from "wouter";
 import { baseURL } from "../../api/trueque.api";
+import '../../styles/VentaDetail.css';
 
 function VentasDeSolicitudDetail() {
     const [ventas, setVentas] = useState([]);
@@ -38,30 +39,37 @@ function VentasDeSolicitudDetail() {
     };
 
     return (
-        <div>
-            <h1>Ventas de la Solicitud {solicitudId}</h1>
-            {loading ? (
-                <p>Cargando ventas...</p>
-            ) : (
-                <div>
-                    {ventas.map(venta => (
-                        <div key={venta.id}>
-                            <h2>Intercambio: {venta.intercambio}</h2>
-                            <ul>
-                                {venta.productos_vendidos.map(vp => (
-                                    <li key={vp.id}>
-                                        <p>Producto: {vp.producto.nombre}</p>
-                                        <p>Cantidad: {vp.cantidad}</p>
-                                        <p>Precio unitario: ${vp.producto.precio_unitario}</p>
-                                        <p>Precio total: ${vp.cantidad * vp.producto.precio_unitario}</p>
-                                    </li>
-                                ))}
-                            </ul>
-                            <p>Precio Total de la Venta: ${calcularPrecioTotal(venta)}</p>
+        <div className="ventaDetail-container">
+            <div className="ventaDetail-box">
+                <h1 className="ventaDetail-title">Ventas del intercambio {solicitudId}</h1>
+                <hr />
+                <div className="ventaDetail-box-content">
+                    {loading ? (
+                        <p>Cargando ventas...</p>
+                    ) : (
+                        <div>
+                            {ventas.map(venta => (
+                                <div key={venta.id}>
+                                    {venta.productos_vendidos.map(vp => (
+                                        <div className="ventaDetail-particular" key={vp.id}>
+                                            <p>Producto: {vp.producto.nombre}</p>
+                                            <p>Cantidad: {vp.cantidad}</p>
+                                            <p>Precio unitario: ${vp.producto.precio_unitario}</p>
+                                            <p>Precio total: ${vp.cantidad * vp.producto.precio_unitario}</p>
+                                        </div>
+                                    ))}
+                                    <p className="ventaDetail-total">Precio Total de la Venta: ${calcularPrecioTotal(venta)}</p>
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    )}
                 </div>
-            )}
+                <div className="employee-buttons">
+                    <Link to="/EmployeeView">
+                        <button>Volver</button>
+                    </Link>
+                </div>
+            </div>
         </div>
     );
 }

@@ -13,6 +13,7 @@ export default function SucursalEdit() {
         direccion: ''
     });
     const [openDialog, setOpenDialog] = useState(false);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         const fetchSucursal = async () => {
@@ -46,9 +47,11 @@ export default function SucursalEdit() {
             if (response.status === 200) {
                 alert('Sucursal actualizada exitosamente');
                 setSucursal(response.data);
+                window.location.href = '/adminview/sucursales';
             }
         } catch (error) {
             console.error('Error al actualizar sucursal:', error);
+            setError('Error al actualizar sucursal');
         }
     };
 
@@ -79,26 +82,33 @@ export default function SucursalEdit() {
                 <h1 className="sucursalEdit-title">Editar sucursal</h1>
                 <hr />
                 {sucursal ? (
-                    <div className="sucursalEdit-form">
-                        <div>
-                            <label>Nombre</label>
-                            <input
-                                type="text"
-                                name="nombre"
-                                value={formData.nombre}
-                                onChange={handleInputChange}
-                            />
+                    <div>
+                        <div className="sucursalEdit-info">
+                            <label>Nombre actual: {sucursal.nombre} </label>
+                            <label>Direccion actual: {sucursal.direccion} </label>
                         </div>
-                        <div>
-                            <label>Dirección</label>
-                            <input
-                                type="text"
-                                name="direccion"
-                                value={formData.direccion}
-                                onChange={handleInputChange}
-                            />
+                        <hr />
+                        <div className="sucursalEdit-form">
+                            <div>
+                                <label>Nombre: </label>
+                                <input style={{ marginLeft:'8px'}}
+                                    type="text"
+                                    name="nombre"
+                                    value={formData.nombre}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                            <div>
+                                <label>Dirección: </label>
+                                <input
+                                    type="text"
+                                    name="direccion"
+                                    value={formData.direccion}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                            {error && <p className="error-message">{error}</p>}
                         </div>
-                        <button onClick={handleSaveChanges}>Guardar cambios</button>
                     </div>
                 ) : (
                     <p>Cargando...</p>
@@ -108,6 +118,7 @@ export default function SucursalEdit() {
                         <button>Volver</button>
                     </Link>
                     <button onClick={handleOpenDialog}>Dar de baja</button>
+                    <button onClick={handleSaveChanges}>Guardar cambios</button>
                 </div>
             </div>
 
