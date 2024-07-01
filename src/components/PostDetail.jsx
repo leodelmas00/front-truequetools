@@ -109,15 +109,26 @@ function PostDetail() {
         setLocation(`/SelectProduct/${postId}`);
     };
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         if (window.confirm("¿Estás seguro de que quieres eliminar esta publicación?")) {
-            // Aquí colocas la lógica para eliminar la publicación
-            console.log("Publicación eliminada");
-        } else {
-            // El usuario canceló la eliminación
-            console.log("Cancelaste la eliminación");
-        }
-    };
+            try {
+                const token = localStorage.getItem('token');
+                await axios.delete(
+                    `${baseURL}publicaciones/${params.postId}/`,
+                    {
+                        headers: {
+                            Authorization: `Token ${token}`,
+                        }
+                    }
+                );
+                setLocation(`/signIn`);
+                console.log("Publicación eliminada");
+            } catch (error) {
+                console.log("Error", error.status)
+            }
+        };
+
+    }
 
     if (loading) {
         return <div>Cargando...</div>;

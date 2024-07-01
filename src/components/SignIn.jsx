@@ -120,25 +120,30 @@ function SignIn() {
                 }
             });
             setNotifications(response.data);
-            setNotificationCount(response.data.length); // Actualizar el contador de notificaciones
+            const unreadNotifications = response.data.filter(notification => !notification.leida);
+            setNotificationCount(unreadNotifications.length);
         } catch (error) {
             console.error('Error fetching notifications:', error);
         }
     };
 
-    const handleReadNotification = async (notificationId) => {
+    const handleReadNotification = async (notificationId, currentStatus) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.patch(`${baseURL}marcar-leida/${notificationId}/`, { leida: true }, {
-                headers: {
-                    Authorization: `Token ${token}`,
+            const newStatus = !currentStatus;
+            await axios.patch(
+                `${baseURL}mis-notificaciones/${notificationId}/`, { leida: newStatus },
+                {
+                    headers: {
+                        Authorization: `Token ${token}`,
+                    }
                 }
-            });
+            );
 
-            // Actualizar localmente el estado de la notificación marcada como leída
+            // Actualizar localmente el estado de la notificación
             const updatedNotifications = notifications.map(notification => {
                 if (notification.id === notificationId) {
-                    return { ...notification, leida: true };
+                    return { ...notification, leida: newStatus };
                 }
                 return notification;
             });
@@ -146,9 +151,13 @@ function SignIn() {
             setNotifications(updatedNotifications);
 
             // Actualizar el contador de notificaciones
-            setNotificationCount(prevCount => prevCount - 1);
+            if (newStatus) {
+                setNotificationCount(prevCount => prevCount - 1);
+            } else {
+                setNotificationCount(prevCount => prevCount + 1);
+            }
         } catch (error) {
-            console.error('Error marking notification as read:', error);
+            console.error('Error marking notification as read/unread:', error);
         }
     };
 
@@ -187,7 +196,10 @@ function SignIn() {
                             {notifications.map(notification => (
                                 <div key={notification.id} className={`notification-item ${notification.leida ? 'read' : 'unread'}`}>
                                     <p>{notification.contenido}</p>
-                                    <button className='read-btn' onClick={() => handleReadNotification(notification.id)}>
+                                    <button
+                                        className={`read-btn ${notification.leida ? 'read' : ''}`}
+                                        onClick={() => handleReadNotification(notification.id, notification.leida)}
+                                    >
                                         <FaEye />
                                     </button>
                                 </div>
