@@ -160,13 +160,13 @@ function EmployeeView() {
                                     {solicitud.estado === "PENDIENTE" && (
 
                                         <Link href={`/tradeCheck/${solicitud.id}`}>
-                                            <button className="employee-gestionar-button employee-gestionar-button-margin">Gestionar Trueque</button>
+                                            <button className="nav-button">Gestionar Trueque</button>
                                         </Link>
 
                                     )}
                                     {solicitud.estado === "EXITOSA" && solicitud.venta != null && (
                                         <Link href={`adminview/Venta/${solicitud.id}`}>
-                                            <button>Ver ventas</button>
+                                            <button className="nav-button">Ver ventas</button>
                                         </Link>
                                     )}
                                 </tr>
