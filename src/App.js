@@ -31,6 +31,8 @@ import Ventas from './components/admin-cruds/Ventas';
 import HistorialSolicitudes from "./components/HistorialSolicitudes";
 import Support from "./components/Support";
 import VentaDetail from "./components/admin-cruds/VentaDetail";
+import HighlightPost from "./components/HighlightPost";
+
 
 function App() {
   return (
@@ -67,7 +69,8 @@ function App() {
       <Route path="/adminview/Users" component={Users} />
       <Route path="/adminview/Ventas" component={Ventas} />
       <Route path="/adminview/Venta/:id" component={VentaDetail} />
-
+      <Route path="/HighlightPost" component={HighlightPost} />
+                    
       <Route path="/Support" component={Support} />
 
 
