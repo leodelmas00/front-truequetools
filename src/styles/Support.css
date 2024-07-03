@@ -26,6 +26,25 @@
 .label-support {
     display: block;
     margin-bottom: 8px;
+    font-size: larger;
+}
+
+.input-subject-support {
+    width: 90%;
+    padding: 8px;
+    font-size: 150%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+
+.textarea-description-support{
+    font-size: 150%;
+    margin-top: 5%;
+    border-radius: 15px;
+    overflow-y: auto;
 }
 
 .input-email-support,

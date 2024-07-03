@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Snackbar, Alert } from '@mui/material';
-import { IoChevronBackCircle } from 'react-icons/io5'; // Importar el ícono aquí
+import { IoChevronBackCircle } from 'react-icons/io5';
 import '../styles/Support.css';
 
 function Support() {
-    const [email, setEmail] = useState('');
+    const [subject, setSubject] = useState('');
     const [description, setDescription] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -12,10 +12,10 @@ function Support() {
 
     const handleGoBack = () => {
         window.history.back(); // Redirige a la página anterior en el historial del navegador
-      };
+    };
 
-    const handleEmailChange = (event) => {
-        setEmail(event.target.value);
+    const handleSubjectChange = (event) => {
+        setSubject(event.target.value);
     };
 
     const handleDescriptionChange = (event) => {
@@ -29,18 +29,18 @@ function Support() {
     const handleSubmit = (event) => {
         event.preventDefault();
         
-        if (!email || !description) {
-            setErrorMessage('Por favor ingresa un email y una descripción válida.');
+        if (!subject || !description) {
+            setErrorMessage('Por favor ingresa un asunto y una descripción válida.');
         } else if (description.length > 500) {
             setErrorMessage('La descripción no debe exceder los 500 caracteres.');
         } else {
             setSnackbarMessage('Mensaje enviado al soporte con éxito');
             setSnackbarOpen(true);
             // Aquí iría la lógica para enviar los datos al backend o manejarlos localmente
-            console.log('Email:', email);
+            console.log('Asunto:', subject);
             console.log('Descripción:', description);
             // Reiniciar el formulario después de enviar los datos
-            setEmail('');
+            setSubject('');
             setDescription('');
             setErrorMessage('');
         }
@@ -60,13 +60,14 @@ function Support() {
                 <h1>Contactar a soporte</h1>
                 <form onSubmit={handleSubmit} className="support-form">
                     <div className="form-group-support">
-                        <label htmlFor="email" className="label-support">Email:</label>
+                        <label htmlFor="subject" className="label-support">Asunto:</label>
                         <input
-                            type="email"
-                            id="email"
-                            value={email}
-                            onChange={handleEmailChange}
-                            className="input-email-support"
+                            type="text"
+                            id="subject"
+                            value={subject}
+                            onChange={handleSubjectChange}
+                            className="input-subject-support"
+                            maxLength={30}
                         />
                     </div>
                     <div className="form-group-support">
