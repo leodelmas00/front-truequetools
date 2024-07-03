@@ -1,0 +1,106 @@
+.background-editProfile-unique {
+    background-image: url('../logo_1/Fondo_Invertido_Published.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Ajusta la altura del contenedor al 100% del viewport */
+    padding: 20px; /* Espacio interno */
+}
+
+.edit-profile-container-unique {
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    width: 90%;
+    max-width: 1000px;
+    margin: auto;
+    margin-top: 10%;
+    padding: 2%;
+    background: linear-gradient(145deg, #f2f0e4, #f2ada7);
+    border-radius: 8px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+
+
+.inputs-form-unique {
+    flex: 1;
+    margin-right: 2%;
+}
+
+.image-form-unique {
+    flex: 1;
+    margin-left: 2%;
+}
+
+.form-group-editProfile-unique {
+    margin-bottom: 2%;
+}
+
+.profile-picture-preview-unique {
+    margin-top: 5%;
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    max-width: 200px;
+    border-radius: 15%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.button-unique {
+    width: 102%;
+    padding: 1%;
+    border: none;
+    border-radius: 4px;
+    background-color: #a67c63;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.button-unique:hover {
+    background-color: #f2f0e4;
+    color:#a67c63;
+}
+
+input[type="file"].input-file-unique {
+    width: 100%;
+    padding: 1%;
+}
+
+label.label-unique {
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+input[type="text"].input-text-unique,
+input[type="email"].input-email-unique,
+input[type="password"].input-password-unique,
+input[type="date"].input-date-unique {
+    width: 100%;
+    padding: 1%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.uploadIMG{
+    background-color: #a67c63;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    color: #f2f0e4;
+    border-radius: 15px;
+    font-size: larger;
+    padding: 2%;
+    cursor: pointer;
+}
+
+.uploadIMG:hover{
+    background-color: #f2f0e4;
+    color:#a67c63;
+}
