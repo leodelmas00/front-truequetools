@@ -10,6 +10,7 @@ function EditProfile() {
     const [profilePicture, setProfilePicture] = useState(null);
     const [password, setPassword] = useState('');
     const [preview, setPreview] = useState(null);
+    const [userInfo, setUserInfo] = useState(null);
 
     const handleImagenSeleccionada = (event) => {
         const imagenSeleccionada = event.target.files[0];
@@ -101,7 +102,7 @@ function EditProfile() {
                     <div className="form-group-editProfile-unique">
                         <label htmlFor="password" className="label-unique">Contraseña:</label>
                         <input
-                            type="password"
+                            type="password" 
                             id="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}

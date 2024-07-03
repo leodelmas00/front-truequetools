@@ -1,0 +1,61 @@
+/* Support.css */
+
+/* Estilos para centrar todo el contenido */
+.support-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ajusta la altura según tu diseño */
+    background: url("../logo_1/FONDO_LOGIN.png") no-repeat center;
+    background-size: cover;
+}
+
+.support-content {
+    width: 80%; /* Ancho del contenido principal */
+    max-width: 600px; /* Ancho máximo del contenido */
+    background: linear-gradient(145deg, #f2ada7, #f2f0e4);
+    border-radius: 15px;
+    text-align: center; /* Centra el contenido dentro del contenedor */
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.support-form {
+    margin-top: 20px; /* Espacio superior entre el título y el formulario */
+}
+
+.label-support {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.input-email-support,
+.textarea-description-support,
+.button-submit-support {
+    width: 90%; /* Ancho completo del input y del botón */
+    padding: 10px; /* Espaciado interno */
+    margin-bottom: 15px; /* Espacio inferior entre elementos */
+    border: 1px solid #ccc; /* Borde del input y del textarea */
+    border-radius: 4px; /* Bordes redondeados */
+    box-sizing: border-box; /* Caja de borde incluye el padding */
+}
+
+.textarea-description-support {
+    height: 150px; /* Altura fija del textarea */
+}
+
+.button-submit-support {
+    background-color: #bf4c41; /* Color de fondo del botón */
+    color: #f2f0e4; /* Color del texto del botón */
+    cursor: pointer; /* Cursor al pasar sobre el botón */
+    
+}
+
+.button-submit-support:hover{
+    color: #f2f0e4;
+    background-color: #734429;
+}
+
+.error-message-support {
+    color: red; /* Color del mensaje de error */
+    margin-top: 5px; /* Espacio superior para el mensaje de error */
+}
