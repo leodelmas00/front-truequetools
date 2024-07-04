@@ -13,7 +13,7 @@ export default function Employees() {
     useEffect(() => {
         async function loadEmployees() {
             try {
-                const response = await getAllEmployees();
+                const response = await axios.get(`${baseURL}adminview/employees/`);
                 setEmployees(response.data);
             } catch (error) {
                 console.error('Error:', error);
