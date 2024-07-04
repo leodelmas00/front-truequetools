@@ -257,7 +257,7 @@
 
 .highlight-btn{
     position: fixed;
-    top: 7%;
+    top: 10%;
     right: 2%;
     z-index: 999;
     background-color: #bf4c41;
@@ -295,4 +295,9 @@
 
 .delete-btn:hover {
     background-color: #c56d65;
+}
+
+.icon-highlight{
+    margin-left: 8px;
+    align-self: center;
 }

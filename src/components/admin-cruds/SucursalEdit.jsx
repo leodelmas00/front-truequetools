@@ -57,14 +57,18 @@ export default function SucursalEdit() {
 
     const handleDeleteSucursal = async () => {
         try {
-            const response = await axios.delete(`${baseURL}sucursales/${params.sucursalId}/`);
-            if (response.status === 204) {
-                alert('Sucursal eliminada exitosamente');
+            const response = await axios.patch(`${baseURL}adminview/sucursales/${params.sucursalId}/`);
+            if (response.status === 200) {
+                alert('Sucursal dada de baja exitosamente');
                 window.location.href = '/adminview/sucursales';
             }
         } catch (error) {
-            console.log(error);
-            console.error('Error:', error);
+            if (error.response && error.response.status === 400) {
+                alert('No puedes eliminar la última sucursal del sistema.');
+            } else {
+                alert('Ocurrió un error al intentar dar de baja la sucursal.');
+            }
+            console.error('Error:', error.response ? error.response.data : error.message);
         }
     };
 
@@ -91,7 +95,7 @@ export default function SucursalEdit() {
                         <div className="sucursalEdit-form">
                             <div>
                                 <label>Nombre: </label>
-                                <input style={{ marginLeft:'8px'}}
+                                <input style={{ marginLeft: '8px' }}
                                     type="text"
                                     name="nombre"
                                     value={formData.nombre}

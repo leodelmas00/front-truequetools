@@ -193,16 +193,20 @@ function SignIn() {
                     {showNotifications && (
                         <div className="notifications-container">
                             {/* Contenido del contenedor de notificaciones */}
+                            
                             {notifications.map(notification => (
+                                
                                 <div key={notification.id} className={`notification-item ${notification.leida ? 'read' : 'unread'}`}>
-                                    <h5>{formatFecha(notification.fecha)}</h5>
-                                    <h3>{notification.contenido}</h3>
                                     <button
                                         className={`read-btn ${notification.leida ? 'read' : ''}`}
                                         onClick={() => handleReadNotification(notification.id, notification.leida)}
                                     >
                                         <FaEye />
                                     </button>
+                                    
+                                    <h5>{formatFecha(notification.fecha)}</h5>
+                                    <h3>{notification.contenido}</h3>
+                                    
                                 </div>
                             ))}
                         </div>
