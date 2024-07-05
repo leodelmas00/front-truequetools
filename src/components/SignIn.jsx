@@ -269,13 +269,13 @@ function SignIn() {
 
             <div className={`menu ${menuOpen ? 'open' : ''}`} style={{ overflow: 'auto' }}>
                 <div className='menuItems'>
-                <div className="profile-box">
-                    <img 
-                        src={userInfo && userInfo.imagen ? userInfo.imagen : userNoProfilePicture} 
-                        alt='Foto de perfil' 
-                        className="profile-picture" 
-                    />
-                </div>
+                    <div className="profile-box">
+                        <img 
+                            src={userInfo && userInfo.imagen !== userNoProfilePicture ? userInfo.imagen : userNoProfilePicture} 
+                            alt='Foto de perfil' 
+                            className="profile-picture" 
+                        />
+                    </div>
                     <p className='usuario'> {user.username} </p>
                     <p className='puntos'> <MdOutlineStarBorderPurple500 /> {user.reputacion} pts</p>
                     <hr className='separador'></hr>
