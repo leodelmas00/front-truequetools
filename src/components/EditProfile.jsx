@@ -71,13 +71,10 @@ function EditProfile() {
         formData.append('sucursal_favorita', favoriteBranch);
         formData.append('username', username);
         formData.append('email', email);
-
+        formData.append('new_password', newPassword);
+        formData.append('confirm_password', confirmNewPassword)
         if (profilePicture) {
             formData.append('avatar', profilePicture);
-        }
-        if (changingPassword && newPassword && newPassword === confirmNewPassword) {
-            formData.append('new_password', newPassword);
-            formData.append('confirm_password', confirmNewPassword)
         }
 
         try {
@@ -100,6 +97,10 @@ function EditProfile() {
         } catch (error) {
             if (error.response && error.response.status === 406) {
                 alert('La contraseña debe tener al menos 6 caracteres');
+            }
+            if (error.response && error.response.status === 409) {
+                alert('Las contraseñas no coinciden');
+
             }
             console.error('Error al actualizar el perfil:', error);
         }

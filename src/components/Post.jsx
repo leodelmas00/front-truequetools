@@ -45,10 +45,10 @@ function PostProduct() {
             const res = await getUserInfo();
             setUserInfo(res.data);
             if (res.data && res.data.sucursal_favorita) {
-                setSucursalFavoritaId(res.data.sucursal_favorita.id);
+                setSucursalFavoritaId(res.data.sucursal_favorita);
                 setForm(prevState => ({
                     ...prevState,
-                    sucursal_destino: res.data.sucursal_favorita.id
+                    sucursal_destino: res.data.sucursal_favorita
                 }));
             }
         }
