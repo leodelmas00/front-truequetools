@@ -34,7 +34,8 @@ function EditProfile() {
             const res = await getUserInfo();
             setUserInfo(res.data);
             if (res.data && res.data.sucursal_favorita) {
-                setFavoriteBranch(res.data.sucursal_favorita.id);
+                console.log("DATAAAAAAA", res.data)
+                setFavoriteBranch(res.data.sucursal_favorita);
             }
             setUsername(res.data.username);
             setEmail(res.data.email);
@@ -70,14 +71,13 @@ function EditProfile() {
         formData.append('sucursal_favorita', favoriteBranch);
         formData.append('username', username);
         formData.append('email', email);
+
         if (profilePicture) {
             formData.append('avatar', profilePicture);
         }
         if (changingPassword && newPassword && newPassword === confirmNewPassword) {
             formData.append('new_password', newPassword);
-        } else if (changingPassword) {
-            alert('Las contraseñas no coinciden');
-            return;
+            formData.append('confirm_password', confirmNewPassword)
         }
 
         try {
@@ -187,7 +187,7 @@ function EditProfile() {
                             {editFields.email ? 'Guardar' : 'Cambiar'}
                         </button>
                     </div>
-                    
+
                     {!changingPassword && (
                         <button
                             type="button"

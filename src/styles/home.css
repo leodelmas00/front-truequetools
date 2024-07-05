@@ -29,7 +29,7 @@
 .backgroundHome {
     position: relative;
     /* Asegura que el menú esté posicionado correctamente dentro de este contenedor */
-    overflow-x: auto;
+    /* overflow-x: auto; */
 }
 
 .navigation-bar {
