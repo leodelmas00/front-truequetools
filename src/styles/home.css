@@ -41,7 +41,8 @@
     background-color: #f2ada7;
     z-index: 10;
     background: linear-gradient(to right, #f2ada7, #f7c2bd);
-    
+
+
 }
 
 .menuItems {
@@ -372,7 +373,6 @@
     /* Ajusta este valor según el ancho del menú */
     transition: transform 0.5s ease;
     /* Transición suave para el desplazamiento */
-    display: inline-block;
 }
 
 .title-most-searched {
@@ -714,7 +714,7 @@ a:hover {
 }
 
 .read-btn {
-    position:absolute;
+    position: absolute;
     left: 90%;
     transition: transform 0.3s ease;
     padding: 1% 3%;
