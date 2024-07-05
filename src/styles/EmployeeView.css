@@ -137,12 +137,12 @@
     padding: 10px;
 }
 
-.employee-statistics-filter input, button{
+.employee-statistics-filter input, select, button{
     margin-right: 4px;
 }
 
 .employee-statistics-filter input{
-    width: 37%;
+    width: 28%;
 }
 
 .employee-statistics-total {
@@ -154,4 +154,12 @@
     width: auto;
     padding: 10px;
     margin-left: 10px;
+}
+
+.employee-statistics-buttons {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 15px;
+    gap: 4px;
 }

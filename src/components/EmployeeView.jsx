@@ -3,9 +3,10 @@ import axios from 'axios';
 import { Link } from 'wouter';
 import { formatFechaSolicitud } from '../utils';
 import '../styles/EmployeeView.css';
-import { baseURL } from '../api/trueque.api';
+import { baseURL, getAllSucursales } from '../api/trueque.api';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import * as FaIcons from "react-icons/fa";
 
 function EmployeeView() {
     const [solicitudes, setSolicitudes] = useState([]);
@@ -17,6 +18,8 @@ function EmployeeView() {
     const [estadisticas, setEstadistica] = useState(false);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [sucursal, setSucursal] = useState('');
+    const [sucursales, setSucursales] = useState([]);
 
     useEffect(() => {
         const isAdminValue = localStorage.getItem('isAdmin');
@@ -25,7 +28,19 @@ function EmployeeView() {
         } else {
             setIsAdmin(false);
         }
-    }, []);
+
+        if (estadisticas) {
+            async function loadSucursales() {
+                try {
+                    const res = await getAllSucursales();
+                    setSucursales(res.data);
+                } catch (error) {
+                    console.error('Error al cargar las sucursales:', error);
+                }
+            }
+            loadSucursales();
+        }
+    }, [estadisticas]);
 
     const handleLogout = () => {
         localStorage.setItem('loggedIn', false);
@@ -148,10 +163,24 @@ function EmployeeView() {
         setEndDate(e.target.value);
     };
 
-    const handleCancel = () => {
-        setStartDate('');
-        setEndDate('');
+    const handleSucursalChange = (e) => {
+        setSucursal(e.target.value);
     };
+
+    const handleCancel = (varInput) => {
+        if (varInput === 'fecha1') {
+            setStartDate('');
+        } else if (varInput === 'fecha2') {
+            setEndDate('');
+        } else if (varInput === 'sucursal') {
+            setSucursal('');
+        } else {
+            setStartDate('');
+            setEndDate('');
+            setSucursal('');
+        }
+    };
+    
 
     const Filtrar = async () => {
         // Intercambia las fechas si startDate es más reciente que endDate
@@ -164,6 +193,7 @@ function EmployeeView() {
         try {
             console.log(`Fecha 1: ${startDate}`);
             console.log(`Fecha 2: ${endDate}`);
+            console.log(`Sucursal: ${sucursal}`);
 
             const response = await axios.get(`${baseURL}adminview/stats/`, {
                 params: {
@@ -235,16 +265,32 @@ function EmployeeView() {
                         </div>
                     )}
                 </div>
-            </div>
+            </div> 
 
             <div className="employee-elements">
                 {estadisticas && (              //Se ejecuta esto si se apreto el boton Estadisticas
                     <div className="employee-statistics-bar">
                         <div className="employee-statistics-filter">
                             <input className='statistics-date1' type="date" value={startDate} onChange={handleStartDateChange} />
-                            <input className='statistics-date2' type="date" value={endDate} onChange={handleEndDateChange} />
-                            <button className="statistics-button" onClick={handleCancel}> Cancelar </button>
-                            <button className="statistics-button" onClick={Filtrar}> Filtrar </button>
+                            <button className="statistics-button" onClick={() => handleCancel('fecha1')}>
+                                 <FaIcons.FaRedo style={{fontSize:'10px'}}/>
+                            </button>
+                            <input className='statistics-date2' type="date" value={endDate} onChange={handleEndDateChange}/>
+                            <button className="statistics-button" onClick={() => handleCancel('fecha2')}> <FaIcons.FaRedo style={{fontSize:'10px'}}/> </button>
+                            <select className="statistics-sucursal" onChange={handleSucursalChange} value={sucursal}>
+                                <option className="input-select-sucursal" value="" disabled> Eliga una Sucursal </option>
+                                {sucursales.map((sucursal, index) => (
+                                    <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{' (' + sucursal.direccion + ')'}</option>
+                                ))}
+                            </select>
+                            <button className="statistics-button" onClick={() => handleCancel('sucursal')}>
+                                <FaIcons.FaRedo style={{ fontSize: '10px' }} />
+                            </button>
+                            <hr/>
+                            <div className="employee-statistics-buttons">
+                                <button className="statistics-button" onClick={handleCancel}> Limpiar filtros </button>
+                                <button className="statistics-button" onClick={Filtrar}> Filtrar </button>
+                            </div>
                         </div>
                         <div className="employee-statistics-total">
                             <h style={{ color: 'green', fontWeight: 'bold' }}> ${calcularPrecioGeneralVentas(solicitudes)} </h>
