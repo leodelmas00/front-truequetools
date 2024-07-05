@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/HighlightPost.css';
 import { IoChevronBackCircle } from "react-icons/io5";
 import { TbCoinFilled } from "react-icons/tb";
+import { baseURL } from '../api/trueque.api';
+import axios from 'axios';
+import { useParams } from "wouter"; // Importar desde 'wouter'
 
 function HighlightPost() {
   const [cardNumber1, setCardNumber1] = useState("");
@@ -14,12 +17,20 @@ function HighlightPost() {
   const [showInsufficientMessage, setShowInsufficientMessage] = useState(false);
   const [showIncompleteFieldsMessage, setShowIncompleteFieldsMessage] = useState(false);
   const [showInvalidCardMessage, setShowInvalidCardMessage] = useState(false);
+  const [publicacionId, setPublicacionId] = useState(null);
+  const params = useParams(); // Usar solo useParams, no es un array destructuring
+
+  useEffect(() => {
+    if (params && params.publicacion_id) {
+      setPublicacionId(params.publicacion_id);
+    }
+  }, [params]);
 
   const handleGoBack = () => {
     window.history.back(); // Redirige a la página anterior en el historial del navegador
   };
 
-  const handlePagar = () => {
+  const handlePagar = async () => {
     // Verificar si algún campo está vacío
     if (!cardNumber1 || !cardNumber2 || !cardNumber3 || !cardNumber4 || !expiryDate || !cvv) {
       setShowIncompleteFieldsMessage(true);
@@ -49,6 +60,22 @@ function HighlightPost() {
       setShowInsufficientMessage(false);
       setShowIncompleteFieldsMessage(false);
       setShowInvalidCardMessage(false);
+
+      try {
+        const token = localStorage.getItem('token');
+        await axios.patch(
+          `${baseURL}mis-publicaciones/${params.publicacion_id}/destacar/`, {},  // Usar publicacion_id
+          {
+            headers: {
+              Authorization: `Token ${token}`,
+            }
+          }
+        );
+        // Manejo adicional después de realizar el pago exitosamente
+      } catch (error) {
+        console.error("Error destacando la publicación", error);
+        // Manejo de errores
+      }
     } else {
       setShowInvalidCardMessage(true);
       setShowSuccess(false);
@@ -75,7 +102,7 @@ function HighlightPost() {
 
   const handleAceptarSuccess = () => {
     setShowSuccess(false);
-    // Redirigir a /SignIn
+    // Redirigir a /SignIn o a otra página según sea necesario
     window.location.href = "/SignIn";
   };
 
@@ -83,7 +110,6 @@ function HighlightPost() {
     <div className="container-card">
       <div>
         <button className="volver-btn" onClick={handleGoBack}>
-          <IoChevronBackCircle size={25} />
           Volver
         </button>
       </div>

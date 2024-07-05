@@ -153,7 +153,7 @@ function PostDetail() {
                             <Link to={`/Post/${params.postId}/solicitudes`}>
                                 <button className="solicitudes-btn post-card-btn">Ver solicitudes recibidas<FaIcons.FaBell style={{ marginLeft: '10px' }}></FaIcons.FaBell></button>
                             </Link>
-                            <Link to={`/HighlightPost`}>
+                            <Link to={`/HighlightPost/${params.postId}`}>
                                 <button className="highlight-btn " >Destacar <FaMoneyCheck className="icon-highlight" /></button>
                             </Link>
                             <button className="delete-btn" onClick={handleDelete}><FaRegTrashAlt /> Eliminar</button>

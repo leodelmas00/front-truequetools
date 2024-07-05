@@ -69,8 +69,8 @@ function App() {
       <Route path="/adminview/Users" component={Users} />
       <Route path="/adminview/Ventas" component={Ventas} />
       <Route path="/adminview/Venta/:id" component={VentaDetail} />
-      <Route path="/HighlightPost" component={HighlightPost} />
-                    
+      <Route path="/HighlightPost/:id" component={HighlightPost} />
+
       <Route path="/Support" component={Support} />
 
 
