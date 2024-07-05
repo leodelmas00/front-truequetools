@@ -5,7 +5,7 @@
     justify-content: center;
     background-color: #a0a0a0;
     padding: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     background: linear-gradient(to right,#a0a0a0, #c0c0c0);
     border-bottom: 1px solid #000000;
 }
@@ -118,4 +118,40 @@
 
 .employee-table th {
     background-color: #dddddd;
+}
+
+.employee-statistics-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.employee-statistics-filter {
+    justify-content: center;
+    background-color: #dfdfdf;
+    border: 1px solid black;
+    border-radius: 20px;
+    height: 2%;
+    width: 30%;
+    padding: 10px;
+}
+
+.employee-statistics-filter input, button{
+    margin-right: 4px;
+}
+
+.employee-statistics-filter input{
+    width: 37%;
+}
+
+.employee-statistics-total {
+    justify-content: center;
+    background-color: #dfdfdf;
+    border: 1px solid black;
+    border-radius: 20px;
+    height: 2%;
+    width: auto;
+    padding: 10px;
+    margin-left: 10px;
 }
