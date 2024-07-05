@@ -29,7 +29,7 @@
 .backgroundHome {
     position: relative;
     /* Asegura que el menú esté posicionado correctamente dentro de este contenedor */
-    overflow-x: hidden;
+    overflow-x: auto;
 }
 
 .navigation-bar {
@@ -560,14 +560,11 @@ a:hover {
     z-index: 999;
 }
 
-
-
 .signin-post-container {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     display: inline-block;
-    padding-left: 60px;
+    padding-left: 0px;
     /* Espacio para el avatar */
-
     margin: 2% 2.5%;
     max-width: 20%;
     min-width: 20%;
@@ -583,19 +580,15 @@ a:hover {
 
 .avatar {
     position: absolute;
-    top: 0;
     left: 0;
-    margin-left: 10%;
+    margin-top: 2%;
+    margin-left: 2%;
     width: 50px;
-    /* Ancho del avatar */
+    z-index: 99999;
     height: 50px;
-    /* Altura del avatar */
-    border-radius: 40%;
-    /* Para hacerlo circular */
+    border-radius: 50%;
     object-fit: cover;
-    /* Mantener la proporción y recortar si es necesario */
     object-position: center;
-    /* Centrar la imagen dentro del contenedor */
 }
 
 .post-image {

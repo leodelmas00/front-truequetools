@@ -233,11 +233,14 @@ function SignIn() {
                         searchResults.map(post => (
                             <Link key={post.id} to={`/post/${post.id}`} onClick={() => handlePostClick(post.id)}>
                                 <div className="signin-post-container">
+                                    <div> 
                                     <img
                                         src={post.usuario_propietario.avatar}
                                         alt="Avatar del usuario"
                                         className="avatar"
                                     />
+                                    </div>
+                                    
                                     <p>{formatFecha(post.fecha)}</p>
                                     <h3 className="author-signin">
                                         <h3>Autor: {post.usuario_propietario.username} - <MdOutlineStarBorderPurple500 /> {post.usuario_propietario.reputacion} pts.</h3>

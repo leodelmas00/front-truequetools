@@ -13,6 +13,7 @@ function HighlightPost() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showInsufficientMessage, setShowInsufficientMessage] = useState(false);
   const [showIncompleteFieldsMessage, setShowIncompleteFieldsMessage] = useState(false);
+  const [showInvalidCardMessage, setShowInvalidCardMessage] = useState(false);
 
   const handleGoBack = () => {
     window.history.back(); // Redirige a la página anterior en el historial del navegador
@@ -24,6 +25,7 @@ function HighlightPost() {
       setShowIncompleteFieldsMessage(true);
       setShowInsufficientMessage(false);
       setShowSuccess(false);
+      setShowInvalidCardMessage(false);
       return;
     }
 
@@ -32,6 +34,7 @@ function HighlightPost() {
       setShowInsufficientMessage(true);
       setShowSuccess(false);
       setShowIncompleteFieldsMessage(false);
+      setShowInvalidCardMessage(false);
       // Reiniciar los campos
       setCardNumber1("");
       setCardNumber2("");
@@ -45,10 +48,21 @@ function HighlightPost() {
       setShowSuccess(true);
       setShowInsufficientMessage(false);
       setShowIncompleteFieldsMessage(false);
+      setShowInvalidCardMessage(false);
     } else {
+      setShowInvalidCardMessage(true);
       setShowSuccess(false);
       setShowInsufficientMessage(false);
       setShowIncompleteFieldsMessage(false);
+    }
+  };
+
+  const handleExpiryDateChange = (e) => {
+    const input = e.target.value.replace(/\D/g, ''); // Eliminar todos los caracteres no numéricos
+    if (input.length <= 2) {
+      setExpiryDate(input);
+    } else if (input.length <= 4) {
+      setExpiryDate(input.slice(0, 2) + '/' + input.slice(2));
     }
   };
 
@@ -56,6 +70,7 @@ function HighlightPost() {
     setShowInsufficientMessage(false);
     setShowSuccess(false);
     setShowIncompleteFieldsMessage(false);
+    setShowInvalidCardMessage(false);
   };
 
   const handleAceptarSuccess = () => {
@@ -88,7 +103,7 @@ function HighlightPost() {
         <div className="card-details">
           <div className="expiry-date">
             <label htmlFor="expiry">Fecha de Caducidad</label>
-            <input type="text" maxLength="4" id="expiry" placeholder="MM/AA" required value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} />
+            <input type="text" maxLength="5" id="expiry" placeholder="MM/AA" required value={expiryDate} onChange={handleExpiryDateChange} />
           </div>
           <div className="cvv">
             <label htmlFor="cvv">CVV</label>
@@ -123,6 +138,15 @@ function HighlightPost() {
         <div className="mensaje-emergente">
           <div className="modal-content">
             <p>Por favor complete todos los campos.</p>
+            <button className="aceptar-btn" onClick={handleAceptar}>Aceptar</button>
+          </div>
+        </div>
+      )}
+
+      {showInvalidCardMessage && (
+        <div className="mensaje-emergente">
+          <div className="modal-content">
+            <p>Número de tarjeta inválida.</p>
             <button className="aceptar-btn" onClick={handleAceptar}>Aceptar</button>
           </div>
         </div>

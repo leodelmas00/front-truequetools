@@ -16,8 +16,13 @@ function EditProfile() {
     const [preview, setPreview] = useState(null);
     const [sucursales, setSucursales] = useState([]);
     const [userInfo, setUserInfo] = useState(null);
-    const [showPassword, setShowPassword] = useState(false); // Estado para manejar la visibilidad de la contraseña
-    const [changingPassword, setChangingPassword] = useState(false); // Estado para controlar si se está cambiando la contraseña
+    const [showPassword, setShowPassword] = useState(false);
+    const [changingPassword, setChangingPassword] = useState(false);
+    const [editFields, setEditFields] = useState({
+        favoriteBranch: false,
+        username: false,
+        email: false
+    });
 
     useEffect(() => {
         async function loadSucursales() {
@@ -86,16 +91,15 @@ function EditProfile() {
 
             if (response.status === 200) {
                 alert('Perfil actualizado con éxito');
-                // Limpiar campos de contraseña después de la actualización
                 setPassword('');
                 setNewPassword('');
                 setConfirmNewPassword('');
-                setChangingPassword(false); // Desactivar el modo de cambio de contraseña
+                setChangingPassword(false);
+                window.history.back();
             }
         } catch (error) {
             if (error.response && error.response.status === 406) {
                 alert('La contraseña debe tener al menos 6 caracteres');
-
             }
             console.error('Error al actualizar el perfil:', error);
         }
@@ -103,6 +107,13 @@ function EditProfile() {
 
     const handleGoBack = () => {
         window.history.back();
+    };
+
+    const handleEditField = (field) => {
+        setEditFields({
+            ...editFields,
+            [field]: !editFields[field]
+        });
     };
 
     return (
@@ -123,14 +134,22 @@ function EditProfile() {
                             value={favoriteBranch}
                             onChange={(e) => setFavoriteBranch(e.target.value)}
                             className="input-text-sucursal-unique"
+                            disabled={!editFields.favoriteBranch}
                         >
-                            <option value="" disabled>Selecciona una sucursal</option>
                             {sucursales.map((sucursal) => (
                                 <option key={sucursal.id} value={sucursal.id}>
                                     {sucursal.nombre} ({sucursal.direccion})
                                 </option>
                             ))}
                         </select>
+
+                        <button
+                            type="button"
+                            onClick={() => handleEditField('favoriteBranch')}
+                            className="edit-field-btn"
+                        >
+                            {editFields.favoriteBranch ? 'Guardar' : 'Cambiar'}
+                        </button>
                     </div>
                     <div className="form-group-editProfile-unique">
                         <label htmlFor="username" className="label-unique">Nombre de Usuario:</label>
@@ -140,7 +159,15 @@ function EditProfile() {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             className="input-text-unique"
+                            disabled={!editFields.username}
                         />
+                        <button
+                            type="button"
+                            onClick={() => handleEditField('username')}
+                            className="edit-field-btn"
+                        >
+                            {editFields.username ? 'Guardar' : 'Cambiar'}
+                        </button>
                     </div>
                     <div className="form-group-editProfile-unique">
                         <label htmlFor="email" className="label-unique">Email:</label>
@@ -150,28 +177,17 @@ function EditProfile() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="input-email-unique"
+                            disabled={!editFields.email}
                         />
+                        <button
+                            type="button"
+                            onClick={() => handleEditField('email')}
+                            className="edit-field-btn"
+                        >
+                            {editFields.email ? 'Guardar' : 'Cambiar'}
+                        </button>
                     </div>
-                    <div className="form-group-editProfile-unique">
-                        <label htmlFor="password" className="label-unique">Contraseña Actual:</label>
-                        <div className="password-container">
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                id="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="input-password-unique"
-                                placeholder="********"
-                            />
-                            <button
-                                type="button"
-                                onClick={() => setShowPassword(!showPassword)}
-                                className="toggle-password-visibility"
-                            >
-                                {showPassword ? "Ocultar" : "Mostrar"}
-                            </button>
-                        </div>
-                    </div>
+                    
                     {!changingPassword && (
                         <button
                             type="button"
@@ -207,7 +223,7 @@ function EditProfile() {
                             </div>
                         </>
                     )}
-                    <button type="submit" className="button-unique">Guardar Cambios</button>
+                    <button type="submit" className="button-unique">Aplicar Cambios</button>
                 </form>
                 <div className="image-form-unique">
                     <div className="form-group-editProfile-unique">
@@ -244,4 +260,3 @@ function EditProfile() {
 }
 
 export default EditProfile;
-
