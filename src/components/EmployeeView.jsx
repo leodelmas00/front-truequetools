@@ -14,6 +14,9 @@ function EmployeeView() {
     const [openError, setOpenError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
+    const [estadisticas, setEstadistica] = useState(false);
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
 
     useEffect(() => {
         const isAdminValue = localStorage.getItem('isAdmin');
@@ -31,6 +34,7 @@ function EmployeeView() {
     };
 
     const loadSolicitudesHelper = async (endpoint, errorMessage) => {
+        setEstadistica(false);
         try {
             const loggedIn = localStorage.getItem('loggedIn');
             const userEmail = localStorage.getItem('userEmail');
@@ -100,6 +104,70 @@ function EmployeeView() {
         setOpenError(false);
     };
 
+    const loadEstadisticas = async () => {
+        try {
+            const loggedIn = localStorage.getItem('loggedIn');
+            const userEmail = localStorage.getItem('userEmail');
+            if (loggedIn === 'true') {
+                try {
+                    console.log(`${baseURL}employee/solicitudes/`);
+                    const response = await axios.get(`${baseURL}employee/solicitudes/success`, {
+                        headers: {
+                            'X-User-Email': userEmail
+                        }
+                    });
+                    console.log(response.data);
+                    setSolicitudes(response.data);
+                    setTrueques(true);
+                    setEstadistica(true);
+                    return response.data;
+                } catch (error) {
+                    console.error('Error en la solicitud:', error);
+                    setErrorMessage('Error al obtener las solicitudes.');
+                    setOpenError(true);
+                }
+            } else {
+                setErrorMessage('Debes iniciar sesión para ver las solicitudes.');
+                setOpenError(true);
+                setTimeout(() => {
+                    window.location.href = '/Login-worker';
+                }, 1500);
+            }
+        } catch (error) {
+            console.error('Error desconocido:', error);
+            setErrorMessage('Error desconocido al obtener las solicitudes.');
+            setOpenError(true);
+        }
+    };
+
+    const handleStartDateChange = (e) => {
+        setStartDate(e.target.value);
+    };
+
+    const handleEndDateChange = (e) => {
+        setEndDate(e.target.value);
+    };
+
+    const handleCancel = () => {
+        setStartDate('');
+        setEndDate('');
+    };
+
+    const Filtrar = () => {
+        if (new Date(startDate) > new Date(endDate)) { // Intercambia las fechas si startDate es más reciente que endDate
+            const temp = startDate;
+            setStartDate(endDate);
+            setEndDate(temp);
+        }
+        try {
+            console.log(`Fecha 1: ${startDate}`);
+            console.log(`Fecha 2: ${endDate}`);
+        }
+        catch{
+
+        }
+    };
+
     return (
         <div className="employee-panel">
             <div className="employee-navigation-bar">
@@ -118,7 +186,7 @@ function EmployeeView() {
                             <button className="admin-nav-button" onClick={handleUsuarios}>Ver usuarios</button>
                             <button className="admin-nav-button" onClick={handleEmpleados}>Ver empleados</button>
                             <button className="admin-nav-button" onClick={handleSucursales}>Ver sucursales</button>
-                            <button className="admin-nav-button" onClick={handleVentas}>Ver ventas</button>
+                            <button className="admin-nav-button" onClick={loadEstadisticas}>Estadisticas</button>
                         </div>
                     ) : (
                         <div className='employee-elements'>
@@ -134,6 +202,19 @@ function EmployeeView() {
             </div>
 
             <div className="employee-elements">
+                {estadisticas && (              //Se ejecuta esto si se apreto el boton Estadisticas
+                    <div className="employee-statistics-bar">
+                        <div className="employee-statistics-filter">
+                            <input className='statistics-date1' type="date" value={startDate} onChange={handleStartDateChange} />
+                            <input className='statistics-date2' type="date" value={endDate} onChange={handleEndDateChange}/>
+                            <button className="statistics-button" onClick={handleCancel}> Cancelar </button>
+                            <button className="statistics-button" onClick={Filtrar}> Filtrar </button>
+                        </div>
+                        <div className="employee-statistics-total">
+                            <h style={{color:'green', fontWeight: 'bold'}}> $TOTAL </h>
+                        </div>
+                    </div>
+                )}
                 {trueques && (
                     <table className="employee-table">
                         <thead>
@@ -142,6 +223,8 @@ function EmployeeView() {
                                 <th>2do Articulo</th>
                                 <th>Fecha del trueque</th>
                                 <th>Truequeros</th>
+                                <th>Sucursal</th>
+                                {estadisticas && ( <th> Total </th>)}
                             </tr>
                         </thead>
                         <tbody>
@@ -157,12 +240,14 @@ function EmployeeView() {
                                     <td>
                                         {solicitud.publicacion_a_intercambiar.usuario_propietario.email} - {solicitud.publicacion_deseada.usuario_propietario.email}
                                     </td>
+                                    <td>
+                                        {solicitud.publicacion_deseada.sucursal_destino.nombre} - {solicitud.publicacion_deseada.sucursal_destino.direccion}
+                                    </td>
+                                    {estadisticas && ( <td> $Total </td>)}
                                     {solicitud.estado === "PENDIENTE" && (
-
                                         <Link href={`/tradeCheck/${solicitud.id}`}>
                                             <button className="nav-button">Gestionar Trueque</button>
                                         </Link>
-
                                     )}
                                     {solicitud.estado === "EXITOSA" && solicitud.venta != null && (
                                         <Link href={`adminview/Venta/${solicitud.id}`}>
