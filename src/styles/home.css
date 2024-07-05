@@ -29,6 +29,7 @@
 .backgroundHome {
     position: relative;
     /* Asegura que el menú esté posicionado correctamente dentro de este contenedor */
+    overflow-x: hidden;
 }
 
 .navigation-bar {
@@ -40,6 +41,7 @@
     background-color: #f2ada7;
     z-index: 10;
     background: linear-gradient(to right, #f2ada7, #f7c2bd);
+
 }
 
 .menuItems {
@@ -363,11 +365,14 @@
     transition: transform 0.3s ease;
 }
 
+
+
 .posts-container.shifted {
     transform: translateX(250px);
     /* Ajusta este valor según el ancho del menú */
     transition: transform 0.5s ease;
     /* Transición suave para el desplazamiento */
+
 }
 
 .title-most-searched {
@@ -567,6 +572,7 @@ a:hover {
     text-align: center;
     position: relative;
     z-index: 2;
+    overflow-x: none;
     transition: transform 0.5s ease;
 }
 
@@ -708,7 +714,7 @@ a:hover {
 }
 
 .read-btn {
-    position:absolute;
+    position: absolute;
     left: 90%;
     transition: transform 0.3s ease;
     padding: 1% 3%;

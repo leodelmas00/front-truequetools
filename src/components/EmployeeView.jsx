@@ -153,19 +153,55 @@ function EmployeeView() {
         setEndDate('');
     };
 
-    const Filtrar = () => {
-        if (new Date(startDate) > new Date(endDate)) { // Intercambia las fechas si startDate es más reciente que endDate
+    const Filtrar = async () => {
+        // Intercambia las fechas si startDate es más reciente que endDate
+        if (new Date(startDate) > new Date(endDate)) {
             const temp = startDate;
             setStartDate(endDate);
             setEndDate(temp);
         }
+
         try {
             console.log(`Fecha 1: ${startDate}`);
             console.log(`Fecha 2: ${endDate}`);
-        }
-        catch{
 
+            const response = await axios.get(`${baseURL}adminview/stats/`, {
+                params: {
+                    fecha1: startDate,
+                    fecha2: endDate
+                }
+            });
+
+            console.log(response.data); // Aquí puedes manejar los datos recibidos
+            // Por ejemplo, puedes actualizar el estado con las solicitudes filtradas
+            setSolicitudes(response.data);
+
+        } catch (error) {
+            console.error('Error en la solicitud:', error);
+            setErrorMessage('Error al filtrar las solicitudes.');
+            setOpenError(true);
         }
+    };
+
+
+    const calcularPrecioTotal = (venta) => {
+        let total = 0;
+        if (venta && venta.productos_vendidos) {
+            venta.productos_vendidos.forEach(vp => {
+                total += vp.cantidad * vp.producto.precio_unitario;
+            });
+        }
+        return total;
+    };
+
+    const calcularPrecioGeneralVentas = (solicitudes) => {
+        let totalGeneral = 0;
+        solicitudes.forEach(solicitud => {
+            if (solicitud.venta) {
+                totalGeneral += calcularPrecioTotal(solicitud.venta);
+            }
+        });
+        return totalGeneral;
     };
 
     return (
@@ -206,12 +242,12 @@ function EmployeeView() {
                     <div className="employee-statistics-bar">
                         <div className="employee-statistics-filter">
                             <input className='statistics-date1' type="date" value={startDate} onChange={handleStartDateChange} />
-                            <input className='statistics-date2' type="date" value={endDate} onChange={handleEndDateChange}/>
+                            <input className='statistics-date2' type="date" value={endDate} onChange={handleEndDateChange} />
                             <button className="statistics-button" onClick={handleCancel}> Cancelar </button>
                             <button className="statistics-button" onClick={Filtrar}> Filtrar </button>
                         </div>
                         <div className="employee-statistics-total">
-                            <h style={{color:'green', fontWeight: 'bold'}}> $TOTAL </h>
+                            <h style={{ color: 'green', fontWeight: 'bold' }}> ${calcularPrecioGeneralVentas(solicitudes)} </h>
                         </div>
                     </div>
                 )}
@@ -224,7 +260,7 @@ function EmployeeView() {
                                 <th>Fecha del trueque</th>
                                 <th>Truequeros</th>
                                 <th>Sucursal</th>
-                                {estadisticas && ( <th> Total </th>)}
+                                {estadisticas && (<th> Total venta </th>)}
                             </tr>
                         </thead>
                         <tbody>
@@ -243,7 +279,7 @@ function EmployeeView() {
                                     <td>
                                         {solicitud.publicacion_deseada.sucursal_destino.nombre} - {solicitud.publicacion_deseada.sucursal_destino.direccion}
                                     </td>
-                                    {estadisticas && ( <td> $Total </td>)}
+                                    {estadisticas && (<td> ${calcularPrecioTotal(solicitud.venta)} </td>)}
                                     {solicitud.estado === "PENDIENTE" && (
                                         <Link href={`/tradeCheck/${solicitud.id}`}>
                                             <button className="nav-button">Gestionar Trueque</button>
