@@ -578,12 +578,12 @@ a:hover {
     transition: transform 0.5s ease;
 }
 
-.highlighted-post{
+.highlighted-post {
     position: relative;
     background-image: url('../logo_1/pngwing.com.png');
     background-size: 100% 100%;
     background-color: #F2D680;
-    
+
 }
 
 .avatar {
@@ -758,4 +758,16 @@ a:hover {
 .notification-item.unread {
     background-color: #fff;
     /* Color para notificaciones no leídas */
+}
+
+.promotion-timer {
+    background-color: #ffd700;
+    /* Color dorado */
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
 }

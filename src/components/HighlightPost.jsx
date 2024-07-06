@@ -20,9 +20,9 @@ function HighlightPost() {
   const params = useParams(); // Usar solo useParams, no es un array destructuring
 
   useEffect(() => {
-    if (params && params.publicacion_id) {
-      console.log("Publicacion ID:", params.publicacion_id);
-      setPublicacionId(params.publicacion_id);
+    if (params && params.id) {
+      console.log("Publicacion ID:", params.id);
+      setPublicacionId(params.id);
     }
   }, [params]);
 

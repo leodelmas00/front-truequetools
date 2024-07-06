@@ -30,15 +30,17 @@ function EmployeeView() {
         }
 
         if (estadisticas) {
-            async function loadSucursales() {
+            const loadSucursales = async () => {
                 try {
-                    const res = await getAllSucursales();
+                    const res = await axios.get(`${baseURL}sucursales/todas/`);
                     setSucursales(res.data);
                 } catch (error) {
                     console.error('Error al cargar las sucursales:', error);
+                    setErrorMessage('Error al cargar las sucursales.');
+                    setOpenError(true);
                 }
-            }
-            loadSucursales();
+            };
+            loadSucursales()
         }
     }, [estadisticas]);
 
@@ -108,10 +110,9 @@ function EmployeeView() {
     const loadSolicitudesExitosas = () => loadSolicitudesHelper('employee/solicitudes/success', 'Debes iniciar sesión para ver las solicitudes exitosas.');
     const loadSolicitudesFallidas = () => loadSolicitudesHelper('employee/solicitudes/failure', 'Debes iniciar sesión para ver las solicitudes fallidas.');
     const loadSolicitudesDelDia = () => loadSolicitudesHelper('employee/solicitudes/today/', 'Debes iniciar sesión para ver las solicitudes de hoy.');
-
     const handlePublicaciones = () => handleNavigation('/PostList', 'Debes iniciar sesión para ver las publicaciones.');
     const handleEmpleados = () => handleNavigation('/adminview/employees', 'Debes iniciar sesión para ver los empleados.');
-    const handleSucursales = () => handleNavigation('/adminview/sucursales', 'Debes iniciar sesión para ver las sucursales.');
+    const handleSucursales = () => handleNavigation('/adminview/sucursales/', 'Debes iniciar sesión para ver las sucursales.');
     const handleUsuarios = () => handleNavigation('/adminview/Users', 'Debes iniciar sesión para ver a los usuarios.');
     const handleVentas = () => handleNavigation('/adminview/Ventas', 'Debes iniciar sesión para ver las ventas.');
 
@@ -180,7 +181,7 @@ function EmployeeView() {
             setSucursal('');
         }
     };
-    
+
 
     const Filtrar = async () => {
         // Intercambia las fechas si startDate es más reciente que endDate
@@ -198,7 +199,8 @@ function EmployeeView() {
             const response = await axios.get(`${baseURL}adminview/stats/`, {
                 params: {
                     fecha1: startDate,
-                    fecha2: endDate
+                    fecha2: endDate,
+                    sucursal: sucursal,
                 }
             });
 
@@ -251,7 +253,7 @@ function EmployeeView() {
                             <button className="admin-nav-button" onClick={handlePublicaciones}>Ver publicaciones</button>
                             <button className="admin-nav-button" onClick={handleUsuarios}>Ver usuarios</button>
                             <button className="admin-nav-button" onClick={handleEmpleados}>Ver empleados</button>
-                            <button className="admin-nav-button" onClick={handleSucursales}>Ver sucursales</button>
+                            <button className="admin-nav-button" onClick={handleSucursales}>Ver sucursales activas</button>
                             <button className="admin-nav-button" onClick={loadEstadisticas}>Estadisticas</button>
                         </div>
                     ) : (
@@ -265,7 +267,7 @@ function EmployeeView() {
                         </div>
                     )}
                 </div>
-            </div> 
+            </div>
 
             <div className="employee-elements">
                 {estadisticas && (              //Se ejecuta esto si se apreto el boton Estadisticas
@@ -273,20 +275,22 @@ function EmployeeView() {
                         <div className="employee-statistics-filter">
                             <input className='statistics-date1' type="date" value={startDate} onChange={handleStartDateChange} />
                             <button className="statistics-button" onClick={() => handleCancel('fecha1')}>
-                                 <FaIcons.FaRedo style={{fontSize:'10px'}}/>
+                                <FaIcons.FaRedo style={{ fontSize: '10px' }} />
                             </button>
-                            <input className='statistics-date2' type="date" value={endDate} onChange={handleEndDateChange}/>
-                            <button className="statistics-button" onClick={() => handleCancel('fecha2')}> <FaIcons.FaRedo style={{fontSize:'10px'}}/> </button>
+                            <input className='statistics-date2' type="date" value={endDate} onChange={handleEndDateChange} />
+                            <button className="statistics-button" onClick={() => handleCancel('fecha2')}> <FaIcons.FaRedo style={{ fontSize: '10px' }} /> </button>
                             <select className="statistics-sucursal" onChange={handleSucursalChange} value={sucursal}>
-                                <option className="input-select-sucursal" value="" disabled> Eliga una Sucursal </option>
+                                <option className="input-select-sucursal" value="" disabled> Elija una Sucursal </option>
                                 {sucursales.map((sucursal, index) => (
-                                    <option key={sucursal.id} value={sucursal.id}>{sucursal.nombre}{' (' + sucursal.direccion + ')'}</option>
+                                    <option key={sucursal.id} value={sucursal.id}>
+                                        {sucursal.nombre}{' (' + sucursal.direccion + ')'}{sucursal.borrada ? '*' : ''}
+                                    </option>
                                 ))}
                             </select>
                             <button className="statistics-button" onClick={() => handleCancel('sucursal')}>
                                 <FaIcons.FaRedo style={{ fontSize: '10px' }} />
                             </button>
-                            <hr/>
+                            <hr />
                             <div className="employee-statistics-buttons">
                                 <button className="statistics-button" onClick={handleCancel}> Limpiar filtros </button>
                                 <button className="statistics-button" onClick={Filtrar}> Filtrar </button>
