@@ -232,18 +232,19 @@ function SignIn() {
                     ) : (
                         searchResults.map(post => (
                             <Link key={post.id} to={`/post/${post.id}`} onClick={() => handlePostClick(post.id)}>
+                            <div className={`highlighted-post ${post.fecha_fin_promocion ? 'border-highlighted' : ''}`}>
                                 <div className="signin-post-container">
-                                    <div> 
-                                    <img
-                                        src={post.usuario_propietario.avatar}
-                                        alt="Avatar del usuario"
-                                        className="avatar"
-                                    />
+                                    <div>
+                                        <img
+                                            src={post.usuario_propietario.avatar}
+                                            alt={post.fecha_fin_promocion ? 'Publicación destacada' : 'Publicación'}
+                                            className="avatar"
+                                            title={post.fecha_fin_promocion ? 'Publicación destacada' : 'Publicación'}
+                                        />
                                     </div>
-                                    
                                     <p>{formatFecha(post.fecha)}</p>
                                     <h3 className="author-signin">
-                                        <h3>Autor: {post.usuario_propietario.username} - <MdOutlineStarBorderPurple500 /> {post.usuario_propietario.reputacion} pts.</h3>
+                                        Autor: {post.usuario_propietario.username} - <MdOutlineStarBorderPurple500 /> {post.usuario_propietario.reputacion} pts.
                                     </h3>
                                     <h2 className="title-signin">
                                         {post.titulo}
@@ -251,13 +252,15 @@ function SignIn() {
                                     {post.imagen && <img src={`http://127.0.0.1:8000/${post.imagen}/`} alt="Imagen del post" className="post-image" />}
                                     <p>{Object.keys(post.comentarios).length} comentario(s)</p>
                                 </div>
-                            </Link>
+                            </div>
+
+                        </Link>
                         ))
                     )
                 ) : (
                     posts.map(post => (
                         <Link key={post.id} to={`/post/${post.id}`} onClick={() => handlePostClick(post.id)}>
-                            <div className="signin-post-container">
+                            <div className={`signin-post-container ${post.fecha_fin_promocion ? 'highlighted-post' : ''}`}>
                                 {console.log("UIMAGEN", post.usuario_propietario.avatar)}
                                 <img
                                     src={post.usuario_propietario.avatar}

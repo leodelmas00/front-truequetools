@@ -578,6 +578,14 @@ a:hover {
     transition: transform 0.5s ease;
 }
 
+.highlighted-post{
+    position: relative;
+    background-image: url('../logo_1/pngwing.com.png');
+    background-size: 100% 100%;
+    background-color: #F2D680;
+    
+}
+
 .avatar {
     position: absolute;
     left: 0;
@@ -592,7 +600,7 @@ a:hover {
 }
 
 .post-image {
-    width: 100%;
+    width: 73%;
     /* Para que la imagen ocupe todo el ancho del contenedor */
     height: auto;
     max-height: 200px;

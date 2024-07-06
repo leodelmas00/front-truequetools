@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/HighlightPost.css';
-import { IoChevronBackCircle } from "react-icons/io5";
 import { TbCoinFilled } from "react-icons/tb";
 import { baseURL } from '../api/trueque.api';
 import axios from 'axios';
@@ -22,6 +21,7 @@ function HighlightPost() {
 
   useEffect(() => {
     if (params && params.publicacion_id) {
+      console.log("Publicacion ID:", params.publicacion_id);
       setPublicacionId(params.publicacion_id);
     }
   }, [params]);
@@ -63,8 +63,9 @@ function HighlightPost() {
 
       try {
         const token = localStorage.getItem('token');
+        console.log("Publicacion ID antes de axios:", publicacionId);
         await axios.patch(
-          `${baseURL}mis-publicaciones/${params.publicacion_id}/destacar/`, {},  // Usar publicacion_id
+          `${baseURL}mis-publicaciones/${publicacionId}/destacar/`, {},  // Usar publicacionId en lugar de params.publicacion_id
           {
             headers: {
               Authorization: `Token ${token}`,

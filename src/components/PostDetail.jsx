@@ -11,6 +11,7 @@ import * as MDIcons from "react-icons/md";
 import { MdOutlineStarBorderPurple500 } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaMoneyCheck } from "react-icons/fa";
+import { TbReportMoney } from "react-icons/tb";
 
 function PostDetail() {
     const [post, setPost] = useState(null);
@@ -134,10 +135,16 @@ function PostDetail() {
         return <div>Cargando...</div>;
     }
 
-
-
     return (
         <div className="background-image-published">
+            {post.fecha_fin_promocion && (
+                <div className="highlighted-message">
+                <TbReportMoney size={25} />
+                <span style={{ marginLeft: '5px', marginRight: '5px' }}>Publicación destacada</span>
+                <TbReportMoney size={25} />
+            </div>
+            
+            )}
             <div className="post-container-detail">
                 <div className="post-card">
                     <p className="post-date">{formatFecha(post.fecha)}</p>
