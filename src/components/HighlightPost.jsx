@@ -65,7 +65,7 @@ function HighlightPost() {
         const token = localStorage.getItem('token');
         console.log("Publicacion ID antes de axios:", publicacionId);
         await axios.patch(
-          `${baseURL}mis-publicaciones/${publicacionId}/destacar/`, {},  // Usar publicacionId en lugar de params.publicacion_id
+          `${baseURL}mis-publicaciones/destacar/${publicacionId}/`, {},  // Usar publicacionId en lugar de params.publicacion_id
           {
             headers: {
               Authorization: `Token ${token}`,

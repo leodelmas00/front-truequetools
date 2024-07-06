@@ -204,11 +204,14 @@ function PostDetail() {
                         </div>
                     )}
                 </div>
-                {userInfo && userInfo.id === post.usuario_propietario.id && post.fecha_fin_promocion && (
+                {userInfo && userInfo.id === post.usuario_propietario.id && (
                     <div className="promotion-timer">
-                        <p>La promoción tu publicación vence en: {timeLeft}</p>
+                        {post.fecha_fin_promocion ? (
+                            <p>La promoción de tu publicación {timeLeft === 'La promoción ha terminado' ? 'se venció' : `vence en: ${timeLeft}`}</p>
+                        ) : null}
                     </div>
                 )}
+
                 <div className='botones'>
                     <Link to="/Signin">
                         <button> <MDIcons.MdArrowCircleLeft size={15} /> Volver al inicio</button>

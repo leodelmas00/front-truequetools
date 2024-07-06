@@ -32,7 +32,23 @@ function SignIn() {
         fetchUserInfo();
         loadPosts();
         fetchNotifications(); // Cargar las notificaciones al inicio
+        chequearPromociones();
     }, []);
+
+    const chequearPromociones = async () => {
+        try {
+            const token = localStorage.getItem('token');
+
+            const response = await axios.patch(`${baseURL}chequear-promos/`, {
+            }, {
+                headers: {
+                    Authorization: `Token ${token}`,
+                }
+            });
+        } catch (error) {
+            console.error('Error fetching user info:', error);
+        }
+    };
 
     const fetchUserInfo = async () => {
         try {
@@ -232,29 +248,29 @@ function SignIn() {
                     ) : (
                         searchResults.map(post => (
                             <Link key={post.id} to={`/post/${post.id}`} onClick={() => handlePostClick(post.id)}>
-                            <div className={`highlighted-post ${post.fecha_fin_promocion ? 'border-highlighted' : ''}`}>
-                                <div className="signin-post-container">
-                                    <div>
-                                        <img
-                                            src={post.usuario_propietario.avatar}
-                                            alt={post.fecha_fin_promocion ? 'Publicación destacada' : 'Publicación'}
-                                            className="avatar"
-                                            title={post.fecha_fin_promocion ? 'Publicación destacada' : 'Publicación'}
-                                        />
+                                <div className={`highlighted-post ${post.fecha_fin_promocion ? 'border-highlighted' : ''}`}>
+                                    <div className="signin-post-container">
+                                        <div>
+                                            <img
+                                                src={post.usuario_propietario.avatar}
+                                                alt={post.fecha_fin_promocion ? 'Publicación destacada' : 'Publicación'}
+                                                className="avatar"
+                                                title={post.fecha_fin_promocion ? 'Publicación destacada' : 'Publicación'}
+                                            />
+                                        </div>
+                                        <p>{formatFecha(post.fecha)}</p>
+                                        <h3 className="author-signin">
+                                            Autor: {post.usuario_propietario.username} - <MdOutlineStarBorderPurple500 /> {post.usuario_propietario.reputacion} pts.
+                                        </h3>
+                                        <h2 className="title-signin">
+                                            {post.titulo}
+                                        </h2>
+                                        {post.imagen && <img src={`http://127.0.0.1:8000/${post.imagen}/`} alt="Imagen del post" className="post-image" />}
+                                        <p>{Object.keys(post.comentarios).length} comentario(s)</p>
                                     </div>
-                                    <p>{formatFecha(post.fecha)}</p>
-                                    <h3 className="author-signin">
-                                        Autor: {post.usuario_propietario.username} - <MdOutlineStarBorderPurple500 /> {post.usuario_propietario.reputacion} pts.
-                                    </h3>
-                                    <h2 className="title-signin">
-                                        {post.titulo}
-                                    </h2>
-                                    {post.imagen && <img src={`http://127.0.0.1:8000/${post.imagen}/`} alt="Imagen del post" className="post-image" />}
-                                    <p>{Object.keys(post.comentarios).length} comentario(s)</p>
                                 </div>
-                            </div>
 
-                        </Link>
+                            </Link>
                         ))
                     )
                 ) : (
