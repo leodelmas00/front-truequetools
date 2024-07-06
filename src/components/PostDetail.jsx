@@ -62,7 +62,6 @@ function PostDetail() {
         fetchPostAndComments();
     }, [params.postId]);
 
-
     useEffect(() => {
         if (post && post.fecha_fin_promocion) {
             const calculateTimeLeft = () => {
@@ -76,7 +75,12 @@ function PostDetail() {
                     const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
                     const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-                    setTimeLeft(`${days} dias ${hours}:${minutes}:${seconds}`);
+                    // Función para agregar un cero delante si el número es menor que 10
+                    const formatNumber = (number) => {
+                        return number.toString().padStart(2, '0');
+                    };
+
+                    setTimeLeft(`${days} dias ${formatNumber(hours)}:${formatNumber(minutes)}:${formatNumber(seconds)}`);
                 } else {
                     setTimeLeft('La promoción ha terminado');
                 }
@@ -88,6 +92,7 @@ function PostDetail() {
             return () => clearInterval(interval);
         }
     }, [post]);
+
 
     const handleInputChange = (event) => {
         setNuevoComentario(event.target.value);
