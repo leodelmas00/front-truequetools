@@ -11,6 +11,7 @@ import * as MDIcons from "react-icons/md";
 import { MdOutlineStarBorderPurple500 } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaMoneyCheck } from "react-icons/fa";
+import { TbReportMoney } from "react-icons/tb";
 
 function PostDetail() {
     const [post, setPost] = useState(null);
@@ -22,6 +23,8 @@ function PostDetail() {
     const [userInfo, setUserInfo] = useState(null);
     const [location, setLocation] = useLocation();
     const [sucursal, setSucursal] = useState(null);
+    const [timeLeft, setTimeLeft] = useState('');
+
 
     useEffect(() => {
         const fetchPostAndComments = async () => {
@@ -58,6 +61,33 @@ function PostDetail() {
 
         fetchPostAndComments();
     }, [params.postId]);
+
+
+    useEffect(() => {
+        if (post && post.fecha_fin_promocion) {
+            const calculateTimeLeft = () => {
+                const now = new Date();
+                const endDate = new Date(post.fecha_fin_promocion);
+                const difference = endDate - now;
+
+                if (difference > 0) {
+                    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                    setTimeLeft(`${days} dias ${hours}:${minutes}:${seconds}`);
+                } else {
+                    setTimeLeft('La promoción ha terminado');
+                }
+            };
+
+            calculateTimeLeft();
+            const interval = setInterval(calculateTimeLeft, 1000); // Actualiza cada segundo
+
+            return () => clearInterval(interval);
+        }
+    }, [post]);
 
     const handleInputChange = (event) => {
         setNuevoComentario(event.target.value);
@@ -114,7 +144,7 @@ function PostDetail() {
             try {
                 const token = localStorage.getItem('token');
                 await axios.delete(
-                    `${baseURL}publicaciones/${params.postId}/`,
+                    `${baseURL}mis-publicaciones/${params.postId}/`,
                     {
                         headers: {
                             Authorization: `Token ${token}`,
@@ -134,10 +164,17 @@ function PostDetail() {
         return <div>Cargando...</div>;
     }
 
-
-
     return (
         <div className="background-image-published">
+            {post.fecha_fin_promocion && (
+                <div className="highlighted-message">
+                    <TbReportMoney size={25} />
+                    <span style={{ marginLeft: '5px', marginRight: '5px' }}>Publicación destacada</span>
+                    <TbReportMoney size={25} />
+                </div>
+
+            )}
+
             <div className="post-container-detail">
                 <div className="post-card">
                     <p className="post-date">{formatFecha(post.fecha)}</p>
@@ -153,13 +190,20 @@ function PostDetail() {
                             <Link to={`/Post/${params.postId}/solicitudes`}>
                                 <button className="solicitudes-btn post-card-btn">Ver solicitudes recibidas<FaIcons.FaBell style={{ marginLeft: '10px' }}></FaIcons.FaBell></button>
                             </Link>
-                            <Link to={`/HighlightPost`}> 
-                                <button className="highlight-btn " >Destacar <FaMoneyCheck className="icon-highlight" /></button>
-                            </Link>
+                            {post.fecha_fin_promocion === null && (
+                                <Link to={`/HighlightPost/${params.postId}`}>
+                                    <button className="highlight-btn">Destacar <FaMoneyCheck className="icon-highlight" /></button>
+                                </Link>
+                            )}
                             <button className="delete-btn" onClick={handleDelete}><FaRegTrashAlt /> Eliminar</button>
                         </div>
                     )}
                 </div>
+                {userInfo && userInfo.id === post.usuario_propietario.id && post.fecha_fin_promocion && (
+                    <div className="promotion-timer">
+                        <p>La promoción tu publicación vence en: {timeLeft}</p>
+                    </div>
+                )}
                 <div className='botones'>
                     <Link to="/Signin">
                         <button> <MDIcons.MdArrowCircleLeft size={15} /> Volver al inicio</button>

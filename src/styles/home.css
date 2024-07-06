@@ -29,6 +29,7 @@
 .backgroundHome {
     position: relative;
     /* Asegura que el menú esté posicionado correctamente dentro de este contenedor */
+    /* overflow-x: auto; */
 }
 
 .navigation-bar {
@@ -40,6 +41,8 @@
     background-color: #f2ada7;
     z-index: 10;
     background: linear-gradient(to right, #f2ada7, #f7c2bd);
+
+
 }
 
 .menuItems {
@@ -363,6 +366,8 @@
     transition: transform 0.3s ease;
 }
 
+
+
 .posts-container.shifted {
     transform: translateX(250px);
     /* Ajusta este valor según el ancho del menú */
@@ -558,6 +563,8 @@ a:hover {
 .signin-post-container {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     display: inline-block;
+    padding-left: 0px;
+    /* Espacio para el avatar */
     margin: 2% 2.5%;
     max-width: 20%;
     min-width: 20%;
@@ -567,12 +574,33 @@ a:hover {
     text-align: center;
     position: relative;
     z-index: 2;
+    overflow-x: none;
     transition: transform 0.5s ease;
 }
 
+.highlighted-post {
+    position: relative;
+    background-image: url('../logo_1/pngwing.com.png');
+    background-size: 100% 100%;
+    background-color: #F2D680;
+
+}
+
+.avatar {
+    position: absolute;
+    left: 0;
+    margin-top: 2%;
+    margin-left: 2%;
+    width: 50px;
+    z-index: 99999;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+}
 
 .post-image {
-    width: 100%;
+    width: 73%;
     /* Para que la imagen ocupe todo el ancho del contenedor */
     height: auto;
     max-height: 200px;
@@ -596,24 +624,26 @@ a:hover {
     /* Escalar la imagen al 110% de su tamaño original */
 }
 
-.menuItems .profile-box {
-    width: 100px;
-    height: 100px;
-    overflow: hidden;
+.profile-box {
+    width: 55%;
+    height: 130px;
+    /* Altura fija para la sección de la foto de perfil */
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 20px;
-    background-color: #cecece;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
 }
 
-.menuItems .profile-picture {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
+.profile-picture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* La imagen cubrirá todo el contenedor sin deformarse */
+    border-radius: 50%;
+    /* Para que la imagen sea circular */
 }
+
 
 .success-message {
     background-color: #4caf50;
@@ -708,7 +738,7 @@ a:hover {
 }
 
 .read-btn {
-    position:absolute;
+    position: absolute;
     left: 90%;
     transition: transform 0.3s ease;
     padding: 1% 3%;
@@ -728,4 +758,16 @@ a:hover {
 .notification-item.unread {
     background-color: #fff;
     /* Color para notificaciones no leídas */
+}
+
+.promotion-timer {
+    background-color: #ffd700;
+    /* Color dorado */
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
 }

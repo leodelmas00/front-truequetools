@@ -26,6 +26,7 @@ function SignIn() {
     const [showNotifications, setShowNotifications] = useState(false);
     const [notificationCount, setNotificationCount] = useState(0);
     const [notifications, setNotifications] = useState([]);
+    const [userInfo, setUserInfo] = useState(null);
 
     useEffect(() => {
         fetchUserInfo();
@@ -193,9 +194,9 @@ function SignIn() {
                     {showNotifications && (
                         <div className="notifications-container">
                             {/* Contenido del contenedor de notificaciones */}
-                            
+
                             {notifications.map(notification => (
-                                
+
                                 <div key={notification.id} className={`notification-item ${notification.leida ? 'read' : 'unread'}`}>
                                     <button
                                         className={`read-btn ${notification.leida ? 'read' : ''}`}
@@ -203,10 +204,10 @@ function SignIn() {
                                     >
                                         <FaEye />
                                     </button>
-                                    
+
                                     <h5>{formatFecha(notification.fecha)}</h5>
                                     <h3>{notification.contenido}</h3>
-                                    
+
                                 </div>
                             ))}
                         </div>
@@ -231,27 +232,42 @@ function SignIn() {
                     ) : (
                         searchResults.map(post => (
                             <Link key={post.id} to={`/post/${post.id}`} onClick={() => handlePostClick(post.id)}>
+                            <div className={`highlighted-post ${post.fecha_fin_promocion ? 'border-highlighted' : ''}`}>
                                 <div className="signin-post-container">
+                                    <div>
+                                        <img
+                                            src={post.usuario_propietario.avatar}
+                                            alt={post.fecha_fin_promocion ? 'Publicación destacada' : 'Publicación'}
+                                            className="avatar"
+                                            title={post.fecha_fin_promocion ? 'Publicación destacada' : 'Publicación'}
+                                        />
+                                    </div>
                                     <p>{formatFecha(post.fecha)}</p>
                                     <h3 className="author-signin">
-                                        <h3>Autor: {post.usuario_propietario.username} - <MdOutlineStarBorderPurple500 /> {post.usuario_propietario.reputacion} pts.</h3>
+                                        Autor: {post.usuario_propietario.username} - <MdOutlineStarBorderPurple500 /> {post.usuario_propietario.reputacion} pts.
                                     </h3>
                                     <h2 className="title-signin">
                                         {post.titulo}
                                     </h2>
-                                    {console.log(post.imagen)}
                                     {post.imagen && <img src={`http://127.0.0.1:8000/${post.imagen}/`} alt="Imagen del post" className="post-image" />}
                                     <p>{Object.keys(post.comentarios).length} comentario(s)</p>
                                 </div>
-                            </Link>
+                            </div>
+
+                        </Link>
                         ))
                     )
                 ) : (
                     posts.map(post => (
                         <Link key={post.id} to={`/post/${post.id}`} onClick={() => handlePostClick(post.id)}>
-                            <div className="signin-post-container">
+                            <div className={`signin-post-container ${post.fecha_fin_promocion ? 'highlighted-post' : ''}`}>
+                                {console.log("UIMAGEN", post.usuario_propietario.avatar)}
+                                <img
+                                    src={post.usuario_propietario.avatar}
+                                    alt="Avatar del usuario"
+                                    className="avatar"
+                                />
                                 <p>{formatFecha(post.fecha)}</p>
-
                                 <h3 className="author-signin">
                                     <h5>Autor: {post.usuario_propietario.username} - <MdOutlineStarBorderPurple500 /> {post.usuario_propietario.reputacion} pts.</h5>
                                 </h3>
@@ -266,10 +282,12 @@ function SignIn() {
                 )}
             </div>
 
+
             <div className={`menu ${menuOpen ? 'open' : ''}`} style={{ overflow: 'auto' }}>
                 <div className='menuItems'>
                     <div className="profile-box">
-                        <img src={userNoProfilePicture} alt='Foto de perfil' className="profile-picture" />
+                        {console.log(user.avatar)}
+                        <img src={`http://127.0.0.1:8000${user.avatar}`} alt="foto de perfil" className='profile-picture' />
                     </div>
                     <p className='usuario'> {user.username} </p>
                     <p className='puntos'> <MdOutlineStarBorderPurple500 /> {user.reputacion} pts</p>

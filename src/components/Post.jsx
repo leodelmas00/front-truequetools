@@ -44,11 +44,12 @@ function PostProduct() {
         async function loadUserInfo() {
             const res = await getUserInfo();
             setUserInfo(res.data);
+            console.log(res.data)
             if (res.data && res.data.sucursal_favorita) {
-                setSucursalFavoritaId(res.data.sucursal_favorita.id);
+                setSucursalFavoritaId(res.data.sucursal_favorita);
                 setForm(prevState => ({
                     ...prevState,
-                    sucursal_destino: res.data.sucursal_favorita.id
+                    sucursal_destino: res.data.sucursal_favorita
                 }));
             }
         }

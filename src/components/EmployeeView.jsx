@@ -3,9 +3,10 @@ import axios from 'axios';
 import { Link } from 'wouter';
 import { formatFechaSolicitud } from '../utils';
 import '../styles/EmployeeView.css';
-import { baseURL } from '../api/trueque.api';
+import { baseURL, getAllSucursales } from '../api/trueque.api';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import * as FaIcons from "react-icons/fa";
 
 function EmployeeView() {
     const [solicitudes, setSolicitudes] = useState([]);
@@ -14,6 +15,11 @@ function EmployeeView() {
     const [openError, setOpenError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
+    const [estadisticas, setEstadistica] = useState(false);
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [sucursal, setSucursal] = useState('');
+    const [sucursales, setSucursales] = useState([]);
 
     useEffect(() => {
         const isAdminValue = localStorage.getItem('isAdmin');
@@ -22,7 +28,21 @@ function EmployeeView() {
         } else {
             setIsAdmin(false);
         }
-    }, []);
+
+        if (estadisticas) {
+            const loadSucursales = async () => {
+                try {
+                    const res = await axios.get(`${baseURL}sucursales/todas/`);
+                    setSucursales(res.data);
+                } catch (error) {
+                    console.error('Error al cargar las sucursales:', error);
+                    setErrorMessage('Error al cargar las sucursales.');
+                    setOpenError(true);
+                }
+            };
+            loadSucursales()
+        }
+    }, [estadisticas]);
 
     const handleLogout = () => {
         localStorage.setItem('loggedIn', false);
@@ -31,6 +51,7 @@ function EmployeeView() {
     };
 
     const loadSolicitudesHelper = async (endpoint, errorMessage) => {
+        setEstadistica(false);
         try {
             const loggedIn = localStorage.getItem('loggedIn');
             const userEmail = localStorage.getItem('userEmail');
@@ -89,15 +110,130 @@ function EmployeeView() {
     const loadSolicitudesExitosas = () => loadSolicitudesHelper('employee/solicitudes/success', 'Debes iniciar sesión para ver las solicitudes exitosas.');
     const loadSolicitudesFallidas = () => loadSolicitudesHelper('employee/solicitudes/failure', 'Debes iniciar sesión para ver las solicitudes fallidas.');
     const loadSolicitudesDelDia = () => loadSolicitudesHelper('employee/solicitudes/today/', 'Debes iniciar sesión para ver las solicitudes de hoy.');
-
     const handlePublicaciones = () => handleNavigation('/PostList', 'Debes iniciar sesión para ver las publicaciones.');
     const handleEmpleados = () => handleNavigation('/adminview/employees', 'Debes iniciar sesión para ver los empleados.');
-    const handleSucursales = () => handleNavigation('/adminview/sucursales', 'Debes iniciar sesión para ver las sucursales.');
+    const handleSucursales = () => handleNavigation('/adminview/sucursales/', 'Debes iniciar sesión para ver las sucursales.');
     const handleUsuarios = () => handleNavigation('/adminview/Users', 'Debes iniciar sesión para ver a los usuarios.');
     const handleVentas = () => handleNavigation('/adminview/Ventas', 'Debes iniciar sesión para ver las ventas.');
 
     const handleCloseError = () => {
         setOpenError(false);
+    };
+
+    const loadEstadisticas = async () => {
+        try {
+            const loggedIn = localStorage.getItem('loggedIn');
+            const userEmail = localStorage.getItem('userEmail');
+            if (loggedIn === 'true') {
+                try {
+                    console.log(`${baseURL}employee/solicitudes/`);
+                    const response = await axios.get(`${baseURL}employee/solicitudes/success`, {
+                        headers: {
+                            'X-User-Email': userEmail
+                        }
+                    });
+                    console.log(response.data);
+                    setSolicitudes(response.data);
+                    setTrueques(true);
+                    setEstadistica(true);
+                    return response.data;
+                } catch (error) {
+                    console.error('Error en la solicitud:', error);
+                    setErrorMessage('Error al obtener las solicitudes.');
+                    setOpenError(true);
+                }
+            } else {
+                setErrorMessage('Debes iniciar sesión para ver las solicitudes.');
+                setOpenError(true);
+                setTimeout(() => {
+                    window.location.href = '/Login-worker';
+                }, 1500);
+            }
+        } catch (error) {
+            console.error('Error desconocido:', error);
+            setErrorMessage('Error desconocido al obtener las solicitudes.');
+            setOpenError(true);
+        }
+    };
+
+    const handleStartDateChange = (e) => {
+        setStartDate(e.target.value);
+    };
+
+    const handleEndDateChange = (e) => {
+        setEndDate(e.target.value);
+    };
+
+    const handleSucursalChange = (e) => {
+        setSucursal(e.target.value);
+    };
+
+    const handleCancel = (varInput) => {
+        if (varInput === 'fecha1') {
+            setStartDate('');
+        } else if (varInput === 'fecha2') {
+            setEndDate('');
+        } else if (varInput === 'sucursal') {
+            setSucursal('');
+        } else {
+            setStartDate('');
+            setEndDate('');
+            setSucursal('');
+        }
+    };
+
+
+    const Filtrar = async () => {
+        // Intercambia las fechas si startDate es más reciente que endDate
+        if (new Date(startDate) > new Date(endDate)) {
+            const temp = startDate;
+            setStartDate(endDate);
+            setEndDate(temp);
+        }
+
+        try {
+            console.log(`Fecha 1: ${startDate}`);
+            console.log(`Fecha 2: ${endDate}`);
+            console.log(`Sucursal: ${sucursal}`);
+
+            const response = await axios.get(`${baseURL}adminview/stats/`, {
+                params: {
+                    fecha1: startDate,
+                    fecha2: endDate,
+                    sucursal: sucursal,
+                }
+            });
+
+            console.log(response.data); // Aquí puedes manejar los datos recibidos
+            // Por ejemplo, puedes actualizar el estado con las solicitudes filtradas
+            setSolicitudes(response.data);
+
+        } catch (error) {
+            console.error('Error en la solicitud:', error);
+            setErrorMessage('Error al filtrar las solicitudes.');
+            setOpenError(true);
+        }
+    };
+
+
+    const calcularPrecioTotal = (venta) => {
+        let total = 0;
+        if (venta && venta.productos_vendidos) {
+            venta.productos_vendidos.forEach(vp => {
+                total += vp.cantidad * vp.producto.precio_unitario;
+            });
+        }
+        return total;
+    };
+
+    const calcularPrecioGeneralVentas = (solicitudes) => {
+        let totalGeneral = 0;
+        solicitudes.forEach(solicitud => {
+            if (solicitud.venta) {
+                totalGeneral += calcularPrecioTotal(solicitud.venta);
+            }
+        });
+        return totalGeneral;
     };
 
     return (
@@ -117,8 +253,8 @@ function EmployeeView() {
                             <button className="admin-nav-button" onClick={handlePublicaciones}>Ver publicaciones</button>
                             <button className="admin-nav-button" onClick={handleUsuarios}>Ver usuarios</button>
                             <button className="admin-nav-button" onClick={handleEmpleados}>Ver empleados</button>
-                            <button className="admin-nav-button" onClick={handleSucursales}>Ver sucursales</button>
-                            <button className="admin-nav-button" onClick={handleVentas}>Ver ventas</button>
+                            <button className="admin-nav-button" onClick={handleSucursales}>Ver sucursales activas</button>
+                            <button className="admin-nav-button" onClick={loadEstadisticas}>Estadisticas</button>
                         </div>
                     ) : (
                         <div className='employee-elements'>
@@ -134,6 +270,37 @@ function EmployeeView() {
             </div>
 
             <div className="employee-elements">
+                {estadisticas && (              //Se ejecuta esto si se apreto el boton Estadisticas
+                    <div className="employee-statistics-bar">
+                        <div className="employee-statistics-filter">
+                            <input className='statistics-date1' type="date" value={startDate} onChange={handleStartDateChange} />
+                            <button className="statistics-button" onClick={() => handleCancel('fecha1')}>
+                                <FaIcons.FaRedo style={{ fontSize: '10px' }} />
+                            </button>
+                            <input className='statistics-date2' type="date" value={endDate} onChange={handleEndDateChange} />
+                            <button className="statistics-button" onClick={() => handleCancel('fecha2')}> <FaIcons.FaRedo style={{ fontSize: '10px' }} /> </button>
+                            <select className="statistics-sucursal" onChange={handleSucursalChange} value={sucursal}>
+                                <option className="input-select-sucursal" value="" disabled> Elija una Sucursal </option>
+                                {sucursales.map((sucursal, index) => (
+                                    <option key={sucursal.id} value={sucursal.id}>
+                                        {sucursal.nombre}{' (' + sucursal.direccion + ')'}{sucursal.borrada ? '*' : ''}
+                                    </option>
+                                ))}
+                            </select>
+                            <button className="statistics-button" onClick={() => handleCancel('sucursal')}>
+                                <FaIcons.FaRedo style={{ fontSize: '10px' }} />
+                            </button>
+                            <hr />
+                            <div className="employee-statistics-buttons">
+                                <button className="statistics-button" onClick={handleCancel}> Limpiar filtros </button>
+                                <button className="statistics-button" onClick={Filtrar}> Filtrar </button>
+                            </div>
+                        </div>
+                        <div className="employee-statistics-total">
+                            <h style={{ color: 'green', fontWeight: 'bold' }}> ${calcularPrecioGeneralVentas(solicitudes)} </h>
+                        </div>
+                    </div>
+                )}
                 {trueques && (
                     <table className="employee-table">
                         <thead>
@@ -142,6 +309,8 @@ function EmployeeView() {
                                 <th>2do Articulo</th>
                                 <th>Fecha del trueque</th>
                                 <th>Truequeros</th>
+                                <th>Sucursal</th>
+                                {estadisticas && (<th> Total venta </th>)}
                             </tr>
                         </thead>
                         <tbody>
@@ -157,12 +326,14 @@ function EmployeeView() {
                                     <td>
                                         {solicitud.publicacion_a_intercambiar.usuario_propietario.email} - {solicitud.publicacion_deseada.usuario_propietario.email}
                                     </td>
+                                    <td>
+                                        {solicitud.publicacion_deseada.sucursal_destino.nombre} - {solicitud.publicacion_deseada.sucursal_destino.direccion}
+                                    </td>
+                                    {estadisticas && (<td> ${calcularPrecioTotal(solicitud.venta)} </td>)}
                                     {solicitud.estado === "PENDIENTE" && (
-
                                         <Link href={`/tradeCheck/${solicitud.id}`}>
                                             <button className="nav-button">Gestionar Trueque</button>
                                         </Link>
-
                                     )}
                                     {solicitud.estado === "EXITOSA" && solicitud.venta != null && (
                                         <Link href={`adminview/Venta/${solicitud.id}`}>

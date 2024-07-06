@@ -60,11 +60,15 @@ function Historial() {
     const handleDelete = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.delete(`${baseURL}solicitudes/${selectedSolicitudId}/cancel`, {
-                headers: {
-                    Authorization: `Token ${token}`,
+            const response = await axios.patch(
+                `${baseURL}solicitudes/${selectedSolicitudId}/cancel/`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Token ${token}`,
+                    }
                 }
-            });
+            );
             if (response.status === 204) {
                 setSolicitudesConSucursal(prevSolicitudes =>
                     prevSolicitudes.filter(solicitud => solicitud.id !== selectedSolicitudId)

@@ -45,10 +45,10 @@ function PostDetail() {
         try {
             const userEmail = localStorage.getItem('userEmail');
             await axios.delete(`${baseURL}adminview/post/${params.postId}/`, {
-                    headers: {
-                        'X-User-Email': userEmail
-                    }
+                headers: {
+                    'X-User-Email': userEmail
                 }
+            }
             );
             console.log("Publicación eliminada");
             window.alert("La publicacion fue eliminada con exito!")

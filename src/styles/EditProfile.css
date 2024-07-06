@@ -104,3 +104,23 @@ input[type="date"].input-date-unique {
     background-color: #f2f0e4;
     color:#a67c63;
 }
+
+.input-text-sucursal-unique{
+    border-radius: 6px;
+    background: #f2ada7;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.edit-field-btn{
+    border-radius: 6px;
+    border: none;
+    background-color: #a67c63;
+    color: #f2f0e4;
+    cursor:pointer
+}
+
+.edit-field-btn:hover{
+    background:#734429;
+    color: #f2f0e4;
+}
