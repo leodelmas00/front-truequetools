@@ -27,6 +27,7 @@
     position: absolute;
     top: 5.5%;
     left: 60px;
+    
 }
 
 .Historial .historial-button {
@@ -51,17 +52,19 @@
 }
 
 .Historial .Titulo {
-    position: absolute;
     font-size: 3rem;
-    left: 50%;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    transform: translate(-50%, -50%);
+    text-align: center; /* Centra el texto horizontalmente */
+    margin: 0 auto; /* Centra el contenedor del texto */
 }
+
 
 .Historial-box table {
     width: 75%;
     border-collapse: collapse;
     margin-left: 12%;
+    margin-bottom: 5%;
+    
     /* centrar la tabla con un margin esta CROTISIMO pero bueno che, solucion temporal */
 }
 

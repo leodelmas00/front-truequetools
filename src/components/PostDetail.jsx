@@ -12,6 +12,8 @@ import { MdOutlineStarBorderPurple500 } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaMoneyCheck } from "react-icons/fa";
 import { TbReportMoney } from "react-icons/tb";
+import 'animate.css';
+import 'animate.css/animate.min.css';
 
 function PostDetail() {
     const [post, setPost] = useState(null);
@@ -172,7 +174,7 @@ function PostDetail() {
     return (
         <div className="background-image-published">
             {post.fecha_fin_promocion && (
-                <div className="highlighted-message">
+                <div className="highlighted-message animate__animated animate__flip animate__delay-2s">
                     <TbReportMoney size={25} />
                     <span style={{ marginLeft: '5px', marginRight: '5px' }}>Publicación destacada</span>
                     <TbReportMoney size={25} />
@@ -205,7 +207,7 @@ function PostDetail() {
                     )}
                 </div>
                 {userInfo && userInfo.id === post.usuario_propietario.id && (
-                    <div className="promotion-timer">
+                    <div className="promotion-timer animate__animated animate__pulse" style={{ animationDelay: '4s' }}>
                         {post.fecha_fin_promocion ? (
                             <p>La promoción de tu publicación {timeLeft === 'La promoción ha terminado' ? 'se venció' : `vence en: ${timeLeft}`}</p>
                         ) : null}

@@ -184,12 +184,6 @@ function EmployeeView() {
 
 
     const Filtrar = async () => {
-        // Intercambia las fechas si startDate es más reciente que endDate
-        if (new Date(startDate) > new Date(endDate)) {
-            const temp = startDate;
-            setStartDate(endDate);
-            setEndDate(temp);
-        }
 
         try {
             console.log(`Fecha 1: ${startDate}`);

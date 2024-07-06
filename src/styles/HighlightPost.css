@@ -19,7 +19,7 @@
       height: 15%;
       width: 125%;
       left: -16.6%;
-      top:-25%;
+      top:-18%;
       border: none;
     }
   
@@ -117,8 +117,8 @@
     
     .monto-a-pagar{
       position: absolute;
-      left: 37%;
-      top: 16%;
+      left: 32%;
+      top: 10%;
       align-self: center;
       padding-right: 2%;
       font-size: 300%;

@@ -11,6 +11,7 @@ import { formatFecha } from '../utils';
 import { MdOutlineStarBorderPurple500 } from "react-icons/md";
 import { IoIosNotifications } from "react-icons/io";
 import { FaEye } from "react-icons/fa";
+import { CiUnread } from "react-icons/ci";
 
 function SignIn() {
     const [menuOpen, setMenuOpen] = useState(true);
@@ -156,7 +157,7 @@ function SignIn() {
                     }
                 }
             );
-
+    
             // Actualizar localmente el estado de la notificación
             const updatedNotifications = notifications.map(notification => {
                 if (notification.id === notificationId) {
@@ -164,9 +165,9 @@ function SignIn() {
                 }
                 return notification;
             });
-
+    
             setNotifications(updatedNotifications);
-
+    
             // Actualizar el contador de notificaciones
             if (newStatus) {
                 setNotificationCount(prevCount => prevCount - 1);
@@ -177,6 +178,8 @@ function SignIn() {
             console.error('Error marking notification as read/unread:', error);
         }
     };
+    
+    
 
     if (redirect) {
         return <Redirect to={redirect} />;
@@ -210,25 +213,24 @@ function SignIn() {
                     {showNotifications && (
                         <div className="notifications-container">
                             {/* Contenido del contenedor de notificaciones */}
-
                             {notifications.map(notification => (
-
                                 <div key={notification.id} className={`notification-item ${notification.leida ? 'read' : 'unread'}`}>
                                     <button
                                         className={`read-btn ${notification.leida ? 'read' : ''}`}
                                         onClick={() => handleReadNotification(notification.id, notification.leida)}
                                     >
-                                        <FaEye />
+                                        {notification.leida ? <CiUnread /> : <FaEye />}
                                     </button>
-
                                     <h5>{formatFecha(notification.fecha)}</h5>
                                     <h3>{notification.contenido}</h3>
-
                                 </div>
                             ))}
                         </div>
                     )}
                 </div>
+
+
+                
 
                 <a href="/" onClick={handleLogoClick}>
                     <img src={logoImg} alt="Logo" className="logo" />
@@ -248,28 +250,25 @@ function SignIn() {
                     ) : (
                         searchResults.map(post => (
                             <Link key={post.id} to={`/post/${post.id}`} onClick={() => handlePostClick(post.id)}>
-                                <div className={`highlighted-post ${post.fecha_fin_promocion ? 'border-highlighted' : ''}`}>
-                                    <div className="signin-post-container">
-                                        <div>
-                                            <img
-                                                src={post.usuario_propietario.avatar}
-                                                alt={post.fecha_fin_promocion ? 'Publicación destacada' : 'Publicación'}
-                                                className="avatar"
-                                                title={post.fecha_fin_promocion ? 'Publicación destacada' : 'Publicación'}
-                                            />
-                                        </div>
-                                        <p>{formatFecha(post.fecha)}</p>
-                                        <h3 className="author-signin">
-                                            Autor: {post.usuario_propietario.username} - <MdOutlineStarBorderPurple500 /> {post.usuario_propietario.reputacion} pts.
-                                        </h3>
-                                        <h2 className="title-signin">
-                                            {post.titulo}
-                                        </h2>
-                                        {post.imagen && <img src={`http://127.0.0.1:8000/${post.imagen}/`} alt="Imagen del post" className="post-image" />}
-                                        <p>{Object.keys(post.comentarios).length} comentario(s)</p>
+                                <div className={`signin-post-container ${post.fecha_fin_promocion ? 'highlighted-post' : ''}`}>
+                                    <div>
+                                        <img
+                                            src={post.usuario_propietario.avatar}
+                                            alt={post.fecha_fin_promocion ? 'Publicación destacada' : 'Publicación'}
+                                            className="avatar"
+                                            title={post.fecha_fin_promocion ? 'Publicación destacada' : 'Publicación'}
+                                        />
                                     </div>
+                                    <p>{formatFecha(post.fecha)}</p>
+                                    <h3 className="author-signin">
+                                        Autor: {post.usuario_propietario.username} - <MdOutlineStarBorderPurple500 /> {post.usuario_propietario.reputacion} pts.
+                                    </h3>
+                                    <h2 className="title-signin">
+                                        {post.titulo}
+                                    </h2>
+                                    {post.imagen && <img src={`http://127.0.0.1:8000/${post.imagen}/`} alt="Imagen del post" className="post-image" />}
+                                    <p>{Object.keys(post.comentarios).length} comentario(s)</p>
                                 </div>
-
                             </Link>
                         ))
                     )
@@ -297,6 +296,7 @@ function SignIn() {
                     ))
                 )}
             </div>
+
 
 
             <div className={`menu ${menuOpen ? 'open' : ''}`} style={{ overflow: 'auto' }}>

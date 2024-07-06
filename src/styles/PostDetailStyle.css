@@ -308,16 +308,16 @@
     z-index: 999;
     padding: 1%;
     top: 5%;
-    left: 16%;
+    left: 11%;
     border-radius: 10px;
     text-align: center;
     font-size: larger;
     color: #f2f0e4;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     background: linear-gradient(145deg, #A67233, #F2D680);
-
     /* Ajustes para centrar contenido verticalmente */
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
