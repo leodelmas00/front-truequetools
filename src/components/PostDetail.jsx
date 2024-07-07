@@ -186,8 +186,11 @@ function PostDetail() {
                 <div className="post-card">
                     <p className="post-date">{formatFecha(post.fecha)}</p>
                     <h5>Sucursal destino: {sucursal ? `${sucursal.nombre} - ${sucursal.direccion}` : 'Cargando...'}</h5>
+
+                    {post.imagen && <img src={`http://127.0.0.1:8000${post.usuario_propietario.avatar}`} alt="Imagen de perfil" className='profile-picture-detail' />}
                     <hr />
                     <h3>Subido por: {post.usuario_propietario.username} - <MdOutlineStarBorderPurple500 /> {post.usuario_propietario.reputacion} pts.</h3>
+                    {console.log(post.usuario_propietario.avatar, "HOLAA")}
                     <h1 className="post-title">{post.titulo}</h1>
                     <p className="post-description">{post.descripcion}</p>
                     {post.imagen && <img src={`http://127.0.0.1:8000${post.imagen}`} alt="Imagen del post" className='imagen-preview-detail' />}
@@ -231,6 +234,7 @@ function PostDetail() {
                         updateComments={updateComments}
                         deleteComment={deleteComment}
                         postOwnerId={post.usuario_propietario.id}
+                        post={post}
                     />
                 </div>
                 <div className='comentar'>

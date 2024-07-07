@@ -13,7 +13,9 @@
     max-width: 35%;
     margin: 0 auto;
     padding: 2vw;
+    position: relative;
 }
+
 
 .imagen-preview-detail {
     max-width: 100%;
@@ -323,5 +325,24 @@
 
 .promotion-timer {
     background: linear-gradient(145deg, #F2D680, #A67233);
+
+}
+
+.profile-picture-detail {
+    position: absolute;
+    top: 45px;
+    right: 50px;
+    width: 78px;
+    height: 78px;
+    border-radius: 20%;
+    border: 2px solid #000000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    object-fit: cover;
+}
+
+.profile-picture-comment {
+    width: 40px;
+    height: 40px;
+    border-radius: 70%;
 
 }
