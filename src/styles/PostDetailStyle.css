@@ -255,7 +255,7 @@
     background-color: #c56d65;
 }
 
-.highlight-btn{
+.highlight-btn {
     position: fixed;
     top: 10%;
     right: 2%;
@@ -297,7 +297,7 @@
     background-color: #c56d65;
 }
 
-.icon-highlight{
+.icon-highlight {
     margin-left: 8px;
     align-self: center;
 }
@@ -321,3 +321,7 @@
     align-items: center;
 }
 
+.promotion-timer {
+    background: linear-gradient(145deg, #F2D680, #A67233);
+
+}

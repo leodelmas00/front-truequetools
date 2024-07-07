@@ -206,7 +206,7 @@ function PostDetail() {
                         </div>
                     )}
                 </div>
-                {userInfo && userInfo.id === post.usuario_propietario.id && (
+                {userInfo && userInfo.id === post.usuario_propietario.id && post.fecha_fin_promocion != null && (
                     <div className="promotion-timer animate__animated animate__pulse" style={{ animationDelay: '4s' }}>
                         {post.fecha_fin_promocion ? (
                             <p>La promoción de tu publicación {timeLeft === 'La promoción ha terminado' ? 'se venció' : `vence en: ${timeLeft}`}</p>
