@@ -139,3 +139,25 @@ input[type="date"].input-date-unique {
     background:#734429;
     color: #f2f0e4;
 }
+
+
+.custom-file-upload-editProfile {
+    position: relative;
+    cursor: pointer;
+    padding: 1%;
+    border: none;
+    border-radius: 5px;
+    font-size: large;
+    margin-bottom: 20px; /* Aumenta el margen inferior para separar más */
+    background-color: #a67c63;
+    color: #f2f0e4;
+    display: block;
+    margin: 7% auto 0; /* Ajusta el margen: arriba 20px, automático a los lados, y 0 abajo */
+    width: fit-content;
+}
+
+
+
+.custom-file-upload-editProfile:hover {
+    background-color: #f2ada7;
+}

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { IoChevronBackCircle } from 'react-icons/io5';
 import axios from 'axios';
 import '../styles/EditProfile.css';
-import { baseURL } from '../api/trueque.api';
 import { getAllSucursales, getUserInfo } from '../api/trueque.api';
+import { baseURL } from '../api/trueque.api';
 
 function EditProfile() {
     const [favoriteBranch, setFavoriteBranch] = useState('');
@@ -17,6 +17,7 @@ function EditProfile() {
     const [sucursales, setSucursales] = useState([]);
     const [userInfo, setUserInfo] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
+    const [user, setUser] = useState({});
     const [changingPassword, setChangingPassword] = useState(false);
     const [editFields, setEditFields] = useState({
         favoriteBranch: false,
@@ -34,7 +35,6 @@ function EditProfile() {
             const res = await getUserInfo();
             setUserInfo(res.data);
             if (res.data && res.data.sucursal_favorita) {
-                console.log("DATAAAAAAA", res.data)
                 setFavoriteBranch(res.data.sucursal_favorita);
             }
             setUsername(res.data.username);
@@ -72,7 +72,7 @@ function EditProfile() {
         formData.append('username', username);
         formData.append('email', email);
         formData.append('new_password', newPassword);
-        formData.append('confirm_password', confirmNewPassword)
+        formData.append('confirm_password', confirmNewPassword);
         if (profilePicture) {
             formData.append('avatar', profilePicture);
         }
@@ -100,9 +100,10 @@ function EditProfile() {
             }
             if (error.response && error.response.status === 409) {
                 alert('Las contraseñas no coinciden');
-
             }
-            console.error('Error al actualizar el perfil:', error);
+            if (error.response && error.response.status === 400) {
+                alert('El email ingresado es inválido');
+            }
         }
     };
 
@@ -226,23 +227,22 @@ function EditProfile() {
                     )}
                     <button type="submit" className="button-unique">Aplicar Cambios</button>
                 </form>
+
                 <div className="image-form-unique">
+                    {/* Mostrar foto actual */}
+                    {userInfo && userInfo.avatar && !profilePicture && (
+                        <div className="image-preview-container">
+                            <img src={`http://127.0.0.1:8000${userInfo.avatar}`} alt="Foto de perfil actual" className='profile-picture-preview-unique' />
+                        </div>
+                    )}
+
                     <div className="form-group-editProfile-unique">
                         {profilePicture ? (
                             <div className="image-preview-container">
                                 <img src={URL.createObjectURL(profilePicture)} alt="Vista previa de la imagen" className='profile-picture-preview-unique' />
-                                <div className="button-container">
-                                    <button
-                                        type="button"
-                                        onClick={handleEliminarFoto}
-                                        className="eliminar-foto-button"
-                                    >
-                                        Eliminar foto
-                                    </button>
-                                </div>
                             </div>
                         ) : (
-                            <label htmlFor="file-upload" className="custom-file-upload">
+                            <label htmlFor="file-upload" className="custom-file-upload-editProfile">
                                 Subir foto
                                 <input
                                     id="file-upload"
@@ -252,6 +252,18 @@ function EditProfile() {
                                     style={{ display: 'none' }}
                                 />
                             </label>
+                        )}
+
+                        {profilePicture && (
+                            <div className="button-container">
+                                <button
+                                    type="button"
+                                    onClick={handleEliminarFoto}
+                                    className="eliminar-foto-button"
+                                >
+                                    Eliminar foto
+                                </button>
+                            </div>
                         )}
                     </div>
                 </div>
