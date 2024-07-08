@@ -14,20 +14,14 @@ export default function Sucursales() {
     useEffect(() => {
         async function loadSucursales() {
             try {
-                const response = await axios.get(`${baseURL}adminview/sucursales/`, {
-                    params: { q: query }
-                });
-                if (query) {
-                    setSearchResults(response.data);
-                } else {
-                    setSucursales(response.data);
-                }
+                const response = await axios.get(`${baseURL}adminview/sucursales/`);
+                setSucursales(response.data);
             } catch (error) {
                 console.error('Error:', error);
             }
         }
         loadSucursales();
-    }, [query]);
+    }, []);
 
     const handleSearchChange = (e) => {
         setQuery(e.target.value);

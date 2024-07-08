@@ -16,20 +16,14 @@ export default function Users() {
     useEffect(() => {
         async function loadUsers() {
             try {
-                const response = await axios.get(`${baseURL}adminview/search-users/`, {
-                    params: { q: query }
-                });
-                if (query) {
-                    setSearchResults(response.data);
-                } else {
-                    setUsers(response.data);
-                }
+                const response = await axios.get(`${baseURL}adminview/search-users/`)
+                setUsers(response.data);
             } catch (error) {
                 console.error('Error:', error);
             }
         }
         loadUsers();
-    }, [query]);
+    }, []);
 
     const handleSearchChange = (e) => {
         setQuery(e.target.value);
