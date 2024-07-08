@@ -9,6 +9,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 
 .historial-container {
@@ -16,9 +17,12 @@
     padding: 20px;
     border-radius: 8px;
     background-color: rgba(249, 249, 249, 0.6); /* Slightly transparent to show the background image */
+    background: linear-gradient(145deg, #f2f0e4, #f2ada7);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     width: 100%;
+    overflow-y: auto;
+    animation-delay: 1s;
 }
 
 .historial-title {
@@ -26,11 +30,13 @@
     margin-bottom: 20px;
     text-align: center;
     color: #333;
+    
 }
 
 .historial-table {
     width: 100%;
     border-collapse: collapse;
+    
 }
 
 .historial-table th, .historial-table td {
@@ -40,15 +46,19 @@
     text-align: left;
     border-bottom: 1px solid #ddd;
     font-size: 150%;
+    
 }
 
 .historial-table th {
     background-color: #f2f2f2;
     font-weight: bold;
+    
 }
 
 .historial-table tr:hover {
-    background-color: #f1f1f1;
+    background-color: #f2ada7;
+    color:#bf4c41;
+    background: linear-gradient(145deg, #f2ada7, #f2f0e4) ;
 }
 
 .loading, .error {

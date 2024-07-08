@@ -60,8 +60,9 @@ function Support() {
                 <h1>Contactar a soporte</h1>
                 <form onSubmit={handleSubmit} className="support-form">
                     <div className="form-group-support">
-                        <label htmlFor="subject" className="label-support">Asunto:</label>
+                        <label htmlFor="subject" className="label-support"></label>
                         <input
+                            placeholder='Asunto'
                             type="text"
                             id="subject"
                             value={subject}
@@ -71,13 +72,14 @@ function Support() {
                         />
                     </div>
                     <div className="form-group-support">
-                        <label htmlFor="description" className="label-support">Descripción (máx. 500 caracteres):</label>
+                        <label htmlFor="description" className="label-support"></label>
                         <textarea
                             id="description"
                             value={description}
                             onChange={handleDescriptionChange}
                             className="textarea-description-support"
                             maxLength={500}
+                            placeholder='Descripcion'
                             style={{ resize: 'none' }} // Evita que el textarea sea redimensionable
                         />
                         <div className="character-counter">{remainingCharacters} caracteres restantes</div>

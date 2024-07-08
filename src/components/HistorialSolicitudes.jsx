@@ -1,8 +1,11 @@
-import '../styles/HistorialSolicitudes.css';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
 import { baseURL } from '../api/trueque.api';
-import { IoChevronBackCircle } from "react-icons/io5";
+import { IoChevronBackCircle } from 'react-icons/io5'; 
+import '../styles/HistorialSolicitudes.css';
+import 'animate.css';
+import 'animate.css/animate.min.css';
+
 
 function HistorialSolicitudes() {
     const [solicitudes, setSolicitudes] = useState([]);
@@ -30,6 +33,10 @@ function HistorialSolicitudes() {
         loadSolicitudes();
     }, []);
 
+    const handleGoBack = () => {
+        window.history.back(); // Redirige a la página anterior en el historial del navegador
+    };
+
     if (loading) {
         return <div className="loading">Cargando...</div>;
     }
@@ -38,17 +45,13 @@ function HistorialSolicitudes() {
         return <div className="error">{error}</div>;
     }
 
-    const handleGoBack = () => {
-        window.history.back(); // Redirige a la página anterior en el historial del navegador
-      };
-
     return (
         <div className="background-container">
             <button className="volver-btn" onClick={handleGoBack}>
-                    <IoChevronBackCircle size={25} />
-                    Volver
+                <IoChevronBackCircle size={25} />
+                Volver
             </button>
-            <div className="historial-container">
+            <div className="historial-container animate__animated animate__rotateIn">
                 <h1 className="historial-title">Historial de solicitudes</h1>
                 <table className="historial-table">
                     <thead>
