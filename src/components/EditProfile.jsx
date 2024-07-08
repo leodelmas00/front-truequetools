@@ -4,6 +4,8 @@ import axios from 'axios';
 import '../styles/EditProfile.css';
 import { getAllSucursales, getUserInfo } from '../api/trueque.api';
 import { baseURL } from '../api/trueque.api';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 function EditProfile() {
     const [favoriteBranch, setFavoriteBranch] = useState('');
@@ -24,6 +26,8 @@ function EditProfile() {
         username: false,
         email: false
     });
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
 
     useEffect(() => {
         async function loadSucursales() {
@@ -87,22 +91,21 @@ function EditProfile() {
             });
 
             if (response.status === 200) {
-                alert('Perfil actualizado con éxito');
+                setSuccess('Perfil actualizado con éxito');
                 setPassword('');
                 setNewPassword('');
                 setConfirmNewPassword('');
                 setChangingPassword(false);
-                window.history.back();
             }
         } catch (error) {
             if (error.response && error.response.status === 406) {
-                alert('La contraseña debe tener al menos 6 caracteres');
+                setError('La contraseña debe tener al menos 6 caracteres');
             }
             if (error.response && error.response.status === 409) {
-                alert('Las contraseñas no coinciden');
+                setError('Las contraseñas no coinciden');
             }
             if (error.response && error.response.status === 400) {
-                alert('El email ingresado es inválido');
+                setError('El email ingresado es inválido');
             }
         }
     };
@@ -116,6 +119,11 @@ function EditProfile() {
             ...editFields,
             [field]: !editFields[field]
         });
+    };
+
+    const handleCloseSnackbar = () => {
+        setError(null);
+        setSuccess(null);
     };
 
     return (
@@ -268,8 +276,29 @@ function EditProfile() {
                     </div>
                 </div>
             </div>
+
+            <Snackbar
+                open={Boolean(error)}
+                autoHideDuration={6000}
+                onClose={handleCloseSnackbar}
+            >
+                <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
+                    {error}
+                </Alert>
+            </Snackbar>
+
+            <Snackbar
+                open={Boolean(success)}
+                autoHideDuration={6000}
+                onClose={handleCloseSnackbar}
+            >
+                <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+                    {success}
+                </Alert>
+            </Snackbar>
         </div>
     );
 }
 
 export default EditProfile;
+
