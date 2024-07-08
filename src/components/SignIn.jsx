@@ -289,6 +289,7 @@ function SignIn() {
                                 <h2 className="title-signin">
                                     {post.titulo}
                                 </h2>
+                                
                                 {post.imagen && <img src={post.imagen} alt="Imagen del post" className="post-image" />}
                                 <p>{Object.keys(post.comentarios).length} comentario(s)</p>
                             </div>
