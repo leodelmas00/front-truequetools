@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import '../styles/adminView.css';
-
+// aaaa
 function AdminView() {
     const [confirmLogout, setConfirmLogout] = useState(false); // Estado para mostrar el modal de confirmación de cerrar sesión
     const [loggedIn, setLoggedIn] = useState(false); // Estado para verificar si el usuario está logueado
