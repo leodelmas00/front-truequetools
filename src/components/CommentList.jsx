@@ -4,13 +4,13 @@ import { baseURL } from '../api/trueque.api';
 import '../styles/PostDetailStyle.css';
 import { formatFecha } from '../utils';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { URL_IMAGES } from '../api/trueque.api';
 
 function CommentList({ comments, postId, userInfo, updateComments, postOwnerId, deleteComment, post }) {
     const [replies, setReplies] = useState({});
     const [errorMessages, setErrorMessages] = useState({});
     const [confirmationOpen, setConfirmationOpen] = useState(false);
     const [commentToDelete, setCommentToDelete] = useState(null);
-
     const handleReplyChange = (commentId, event) => {
         setReplies({
             ...replies,
@@ -98,7 +98,7 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId, 
             {comments.map((comentario, index) => (
                 <div key={index} className="comment">
                     <p className='comment-letter' style={{ display: 'flex', alignItems: 'center' }}>
-                        {<img src={`http://127.0.0.1:8000${comentario.usuario_propietario.avatar}  `} alt="Imagen de perfil" className='profile-picture-comment' />} {comentario.usuario_propietario.username}  {formatFecha(comentario.fecha)}
+                        {<img src={`${URL_IMAGES}${comentario.usuario_propietario.avatar}  `} alt="Imagen de perfil" className='profile-picture-comment' />} {comentario.usuario_propietario.username}  {formatFecha(comentario.fecha)}
                         {userInfo &&
                             (userInfo.id === comentario.usuario_propietario.id && !comentario.respuesta || userInfo.email === 'admin@truequetools.com') && (
                                 <button className="eliminar-comentario" onClick={() => handleDelete(postId, comentario.id, userInfo.email)}>Eliminar</button>
@@ -137,7 +137,7 @@ function CommentList({ comments, postId, userInfo, updateComments, postOwnerId, 
                             <hr />
                             <div className="respuesta">
                                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    {<img src={`http://127.0.0.1:8000${post.usuario_propietario.avatar}  `} alt="Imagen de perfil" className='profile-picture-comment' />} {post.usuario_propietario.username}  {formatFecha(comentario.respuesta.fecha)}
+                                    {<img src={`${URL_IMAGES}${post.usuario_propietario.avatar}  `} alt="Imagen de perfil" className='profile-picture-comment' />} {post.usuario_propietario.username}  {formatFecha(comentario.respuesta.fecha)}
 
                                 </div>
                                 <p className='comment-letter respuesta-letter'><b>Respuesta:</b> {comentario.respuesta.contenido}</p>

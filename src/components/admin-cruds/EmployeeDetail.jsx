@@ -3,6 +3,7 @@ import axios from "axios";
 import { useRoute, Link } from "wouter";
 import '../../styles/EmployeeDetail.css';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { URL_IMAGES } from "../../api/trueque.api";
 
 export default function EmployeeDetail() {
     const [match, params] = useRoute('/adminview/EmployeeDetail/:employeeId');
@@ -12,8 +13,8 @@ export default function EmployeeDetail() {
     useEffect(() => {
         const fetchEmployee = async () => {
             try {
-                console.log(`http://127.0.0.1:8000/api/employee/${params.employeeId}/detail/`);
-                const response = await axios.get(`http://127.0.0.1:8000/api/employee/${params.employeeId}/detail/`);
+                console.log(`${URL_IMAGES}employee/${params.employeeId}/detail/`);
+                const response = await axios.get(`${URL_IMAGES}employee/${params.employeeId}/detail/`);
                 setEmployee(response.data);
             } catch (error) {
                 console.error('Error al cargar empleado:', error);
@@ -27,7 +28,7 @@ export default function EmployeeDetail() {
 
     const handleDeleteEmployee = async () => {
         try {
-            const response = await axios.delete(`http://127.0.0.1:8000/api/employee/${params.employeeId}/`);
+            const response = await axios.delete(`${URL_IMAGES}/employee/${params.employeeId}/`);
             if (response.status === 200) {
                 console.log('Empleado eliminado exitosamente');
                 alert('Empleado dado de baja con éxito')

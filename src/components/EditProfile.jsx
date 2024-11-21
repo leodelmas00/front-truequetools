@@ -6,6 +6,7 @@ import { getAllSucursales, getUserInfo } from '../api/trueque.api';
 import { baseURL } from '../api/trueque.api';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import { URL_IMAGES } from '../api/trueque.api';
 
 function EditProfile() {
     const [favoriteBranch, setFavoriteBranch] = useState('');
@@ -240,7 +241,7 @@ function EditProfile() {
                     {/* Mostrar foto actual */}
                     {userInfo && userInfo.avatar && !profilePicture && (
                         <div className="image-preview-container">
-                            <img src={`http://127.0.0.1:8000${userInfo.avatar}`} alt="Foto de perfil actual" className='profile-picture-preview-unique' />
+                            <img src={`${URL_IMAGES}${userInfo.avatar}`} alt="Foto de perfil actual" className='profile-picture-preview-unique' />
                         </div>
                     )}
 

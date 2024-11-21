@@ -1,5 +1,6 @@
 import axios from 'axios';
 export const baseURL = 'https://truequetools.onrender.com/api/'
+export const URL_IMAGES = "https://truequetools.onrender.com:8000/"
 
 export const getAllPosts = () => {
     const token = localStorage.getItem('token');

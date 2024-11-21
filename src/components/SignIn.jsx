@@ -12,6 +12,7 @@ import { MdOutlineStarBorderPurple500 } from "react-icons/md";
 import { IoIosNotifications } from "react-icons/io";
 import { FaEye } from "react-icons/fa";
 import { CiUnread } from "react-icons/ci";
+import { URL_IMAGES } from '../api/trueque.api';
 
 function SignIn() {
     const [menuOpen, setMenuOpen] = useState(true);
@@ -266,7 +267,7 @@ function SignIn() {
                                     <h2 className="title-signin">
                                         {post.titulo}
                                     </h2>
-                                    {post.imagen && <img src={`http://127.0.0.1:8000/${post.imagen}/`} alt="Imagen del post" className="post-image" />}
+                                    {post.imagen && <img src={`${URL_IMAGES}${post.imagen}/`} alt="Imagen del post" className="post-image" />}
                                     <p>{Object.keys(post.comentarios).length} comentario(s)</p>
                                 </div>
                             </Link>
@@ -304,7 +305,7 @@ function SignIn() {
                 <div className='menuItems'>
                     <div className="profile-box">
                         {console.log(user.avatar)}
-                        <img src={`http://127.0.0.1:8000${user.avatar}`} alt="foto de perfil" className='profile-picture' />
+                        <img src={`${URL_IMAGES}${user.avatar}`} alt="foto de perfil" className='profile-picture' />
                     </div>
                     <p className='usuario'> {user.username} </p>
                     <p className='puntos'> <MdOutlineStarBorderPurple500 /> {user.reputacion} pts</p>

@@ -5,6 +5,7 @@ import { Redirect, Link } from 'wouter'; // Importa Redirect y Link desde wouter
 import '../styles/PostList.css'
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { URL_IMAGES } from "../api/trueque.api";
 
 export default function PostList() {
     const [posts, setPosts] = useState([]);
@@ -80,7 +81,7 @@ export default function PostList() {
                         <h3 className="author">
                             Autor: {post.usuario_propietario.username}
                         </h3>
-                        {post.imagen && <img src={`http://127.0.0.1:8000/${post.imagen}`} alt="Imagen del post" className="post-image" />}
+                        {post.imagen && <img src={`${URL_IMAGES}${post.imagen}`} alt="Imagen del post" className="post-image" />}
                     </div>
                 </Link>
             ))}
