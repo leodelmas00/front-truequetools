@@ -119,14 +119,14 @@ function PostSolicitudes() {
                                 <p>Recibida el {formatFechaHistorial(solicitud.fecha)}</p>
                                 <p>
                                     {solicitud.publicacion_a_intercambiar.usuario_propietario.username} te ofreció intercambiar su{' '}
-                                    <a href={`http://localhost:3000/post/${solicitud.publicacion_a_intercambiar.id}/`} className="enlace-clickeable">
+                                    <a href={`https://front-truequetools.vercel.app/post/${solicitud.publicacion_a_intercambiar.id}/`} className="enlace-clickeable">
                                         {solicitud.publicacion_a_intercambiar.titulo}
                                     </a>
                                     <h4>Fecha y horario: {formatFechaSolicitud(solicitud.fecha_del_intercambio)}</h4>
                                     {solicitud.publicacion_a_intercambiar.imagen && (
                                         <div>
                                             <p>Imagen del producto:</p>
-                                            <img className="preview-img" src={`http://127.0.0.1:8000/${solicitud.publicacion_a_intercambiar.imagen}/`} alt="imagen del post" />
+                                            <img className="preview-img" src={`https://truequetools.onrender.com/${solicitud.publicacion_a_intercambiar.imagen}/`} alt="imagen del post" />
                                         </div>
                                     )}
                                     <h5>* Recuerda: si te interesa el producto pero no puedes asistir en el horario proporcionado, puedes
