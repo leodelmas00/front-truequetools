@@ -12,7 +12,7 @@ import { MdOutlineStarBorderPurple500 } from "react-icons/md";
 import { IoIosNotifications } from "react-icons/io";
 import { FaEye } from "react-icons/fa";
 import { CiUnread } from "react-icons/ci";
-import { URL_IMAGES } from '../api/trueque.api';
+import { URL_IMAGES, POST_IMAGE_PLACEHOLDER } from '../api/trueque.api';
 
 function SignIn() {
     const [menuOpen, setMenuOpen] = useState(true);
@@ -267,7 +267,7 @@ function SignIn() {
                                     <h2 className="title-signin">
                                         {post.titulo}
                                     </h2>
-                                    {post.imagen && <img src={`${URL_IMAGES}${post.imagen}/`} alt="Imagen del post" className="post-image" />}
+                                    {post.imagen && <img src={`${POST_IMAGE_PLACEHOLDER}`} alt="Imagen del post" className="post-image" />}
                                     <p>{Object.keys(post.comentarios).length} comentario(s)</p>
                                 </div>
                             </Link>

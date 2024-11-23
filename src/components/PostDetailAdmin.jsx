@@ -10,7 +10,7 @@ import * as MDIcons from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { MdOutlineStarBorderPurple500 } from "react-icons/md";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { URL_IMAGES } from '../api/trueque.api';
+import { URL_IMAGES, POST_IMAGE_PLACEHOLDER, USER_IMAGE_PLACEHOLDER } from '../api/trueque.api';
 
 function PostDetail() {
     const [post, setPost] = useState(null);
@@ -22,24 +22,6 @@ function PostDetail() {
     const [userInfo, setUserInfo] = useState('')
     const [openDialog, setOpenDialog] = useState(false);
 
-    /*
-    const handleDelete = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            await axios.delete(
-                `${baseURL}publicaciones/${params.postId}/`,
-                {
-                    headers: {
-                        Authorization: `Token ${token}`,
-                    }
-                }
-            );
-            console.log("Publicación eliminada");
-        } catch (error) {
-            console.log("Error", error.status)
-        }
-    }
-    */
 
     const handleDelete = async () => {
         try {
@@ -158,7 +140,7 @@ function PostDetail() {
                     <h3>Subido por: {post.usuario_propietario.username} - <MdOutlineStarBorderPurple500 /> {post.usuario_propietario.reputacion} pts.</h3>
                     <h1 className="post-title">{post.titulo}</h1>
                     <p className="post-description">{post.descripcion}</p>
-                    {post.imagen && <img src={`${URL_IMAGES}${post.imagen}`} alt="Imagen del post" className='imagen-preview-detail' />}
+                    {post.imagen && <img src={`${POST_IMAGE_PLACEHOLDER}`} alt="Imagen del post" className='imagen-preview-detail' />}
                     <h5>Este producto pertenece a la categoria {post.categoria}</h5>
 
                 </div>
